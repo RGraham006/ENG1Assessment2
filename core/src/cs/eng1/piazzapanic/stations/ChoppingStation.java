@@ -1,10 +1,14 @@
 package cs.eng1.piazzapanic.stations;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import java.util.LinkedList;
@@ -23,6 +27,7 @@ public class ChoppingStation extends Station {
   protected float timeChopped;
   protected float totalTimeToChop = 5f;
   private boolean progressVisible = false;
+  private boolean powerUpUsed = false;
 
   /**
    * The constructor method for the class
@@ -50,6 +55,7 @@ public class ChoppingStation extends Station {
    */
   @Override
   public void act(float delta) {
+    getInput();
     if (inUse) {
       timeChopped += delta;
       uiController.updateProgressValue(this, (timeChopped / totalTimeToChop) * 100f);
@@ -59,6 +65,7 @@ public class ChoppingStation extends Station {
         uiController.showActions(this, getActionTypes());
         progressVisible = false;
         nearbyChef.setPaused(false);
+        resetCookingSpeed();
       }
     }
     super.act(delta);
@@ -158,12 +165,18 @@ public class ChoppingStation extends Station {
     super.reset();
   }
 
-  public void doubleCookingSpeed(){
+  private void doubleCookingSpeed(){
     totalTimeToChop = 1f;
   }
 
-  public void resetCookingSpeed(){
+  private void resetCookingSpeed(){
     totalTimeToChop = 5f;
+  }
+
+  private void getInput(){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)){
+      doubleCookingSpeed();
+    }
   }
 
   /**

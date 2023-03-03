@@ -99,7 +99,7 @@ public class Chef extends Actor implements Disposable {
     }
     float x = 0f;
     float y = 0f;
-    if (Gdx.input.isKeyJustPressed(Input.Keys.Z) && usedChefSpeed == false){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && usedChefSpeed == false){
       doubleChefSpeed();
       startTimer();
       usedChefSpeed = true;
@@ -338,7 +338,7 @@ public class Chef extends Actor implements Disposable {
             timer.cancel(); // stop the timer after the task is executed
         }
     };
-    timer.schedule(task, 15000); // schedule the resetChefSpeed() to run after 15 seconds
+    timer.schedule(task, 10000); // schedule the resetChefSpeed() to run after 15 seconds
   }
 
   /**
