@@ -6,6 +6,7 @@ import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +21,7 @@ public class ChoppingStation extends Station {
   protected final Ingredient[] validIngredients;
   protected Ingredient currentIngredient = null;
   protected float timeChopped;
-  protected final float totalTimeToChop = 5f;
+  protected float totalTimeToChop = 5f;
   private boolean progressVisible = false;
 
   /**
@@ -157,6 +158,13 @@ public class ChoppingStation extends Station {
     super.reset();
   }
 
+  public void doubleCookingSpeed(){
+    totalTimeToChop = 1f;
+  }
+
+  public void resetCookingSpeed(){
+    totalTimeToChop = 5f;
+  }
 
   /**
    * Displays ingredients that have been placed on the station

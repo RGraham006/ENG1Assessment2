@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.stations.Station;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The Chef class is an actor representing a chef in the kitchen. It can pick up and put down
@@ -30,7 +32,8 @@ public class Chef extends Actor implements Disposable {
   private final FixedStack<Ingredient> ingredientStack = new FixedStack<>(5);
 
   private final Vector2 inputVector;
-  private final float speed = 3f;
+  private float speed = 3f;
+  private boolean usedChefSpeed = false;
 
   /**
    * a parameter which adds a small amount of distance between the chef's boundaries and any other
@@ -88,6 +91,7 @@ public class Chef extends Actor implements Disposable {
    * Set the input vector based on the input keys for movement
    */
   private void getInput() {
+    
     inputVector.x = 0;
     inputVector.y = 0;
     if (!isInputEnabled() || isPaused()) {
@@ -95,6 +99,11 @@ public class Chef extends Actor implements Disposable {
     }
     float x = 0f;
     float y = 0f;
+    if (Gdx.input.isKeyJustPressed(Input.Keys.Z) && usedChefSpeed == false){
+      doubleChefSpeed();
+      startTimer();
+      usedChefSpeed = true;
+    }
     if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
       y += 1f;
     }
@@ -310,6 +319,26 @@ public class Chef extends Actor implements Disposable {
 
   public Texture getTexture() {
     return image;
+  }
+
+  private void doubleChefSpeed(){
+    this.speed = 6f;
+  }
+
+  private void resetChefSpeed(){
+    this.speed = 3f;
+  }
+
+  private void startTimer() {
+    final Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            resetChefSpeed();
+            timer.cancel(); // stop the timer after the task is executed
+        }
+    };
+    timer.schedule(task, 15000); // schedule the resetChefSpeed() to run after 15 seconds
   }
 
   /**
