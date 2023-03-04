@@ -27,7 +27,7 @@ public class ChoppingStation extends Station {
   protected float timeChopped;
   protected float totalTimeToChop = 5f;
   private boolean progressVisible = false;
-  private boolean powerUpUsed = false;
+  private boolean isPowerUpUsed = false;
 
   /**
    * The constructor method for the class
@@ -174,8 +174,9 @@ public class ChoppingStation extends Station {
   }
 
   private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && isPowerUpUsed == false){
       doubleCookingSpeed();
+      isPowerUpUsed = true;
     }
   }
 

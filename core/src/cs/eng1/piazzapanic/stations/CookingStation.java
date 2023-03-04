@@ -1,5 +1,7 @@
 package cs.eng1.piazzapanic.stations;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
@@ -21,8 +23,9 @@ public class CookingStation extends Station {
   protected final Ingredient[] validIngredients;
   protected Ingredient currentIngredient;
   protected float timeCooked;
-  protected final float totalTimeToCook = 10f;
+  protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
+  private boolean isPowerUpUsed = false;
 
   /**
    * The constructor method for the class
@@ -56,6 +59,7 @@ public class CookingStation extends Station {
    */
   @Override
   public void act(float delta) {
+    getInput();
     if (inUse) {
       timeCooked += delta;
       uiController.updateProgressValue(this, (timeCooked / totalTimeToCook) * 100f);
@@ -65,10 +69,12 @@ public class CookingStation extends Station {
         } else if (currentIngredient instanceof Patty
             && ((Patty) currentIngredient).getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
+          resetCookingSpeed();
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
         uiController.showActions(this, getActionTypes());
+        nearbyChef.setPaused(false);
       }
     }
     super.act(delta);
@@ -139,6 +145,7 @@ public class CookingStation extends Station {
         inUse = true;
         uiController.hideActions(this);
         uiController.showProgressBar(this);
+        nearbyChef.setPaused(true);
         progressVisible = true;
         break;
 
@@ -146,6 +153,7 @@ public class CookingStation extends Station {
         timeCooked = 0;
         uiController.hideActions(this);
         uiController.showProgressBar(this);
+        nearbyChef.setPaused(true);
         progressVisible = true;
         break;
 
@@ -168,6 +176,22 @@ public class CookingStation extends Station {
         break;
     }
   }
+
+  private void doubleCookingSpeed(){
+    totalTimeToCook = 2f;
+  }
+
+  private void resetCookingSpeed(){
+    totalTimeToCook = 10f;
+  }
+
+  private void getInput(){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && isPowerUpUsed == false){
+      doubleCookingSpeed();
+      isPowerUpUsed = true;
+    }
+  }
+
 
   /**
    * Displays ingredients that have been placed on the station
