@@ -33,10 +33,10 @@ public class UIOverlay {
   private final TextureRegionDrawable removeBtnDrawable;
   private final Image recipeImagesBG;
   private final VerticalGroup recipeImages;
-  private final TimerLabel timer;
+  private final Timer timer;
   private final Label recipeCountLabel;
   private final Label resultLabel;
-  private final TimerLabel resultTimer;
+  private final Timer resultTimer;
   private final PiazzaPanicGame game;
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
@@ -75,7 +75,7 @@ public class UIOverlay {
     LabelStyle timerStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
     timerStyle.background = new TextureRegionDrawable(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
-    timer = new TimerLabel(timerStyle);
+    timer = new Timer(timerStyle);
     timer.setAlignment(Align.center);
 
     // Initialize the home button
@@ -109,7 +109,7 @@ public class UIOverlay {
     LabelStyle labelStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
     resultLabel = new Label("Congratulations! Your final time was:", labelStyle);
     resultLabel.setVisible(false);
-    resultTimer = new TimerLabel(labelStyle);
+    resultTimer = new Timer(labelStyle);
     resultTimer.setVisible(false);
 
     // Add everything
