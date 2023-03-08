@@ -38,6 +38,7 @@ public class UIOverlay {
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
+  private ReputationPoint points;
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
     this.game = game;
@@ -78,6 +79,13 @@ public class UIOverlay {
     timer = new Timer(timerStyle);
     timer.setAlignment(Align.center);
 
+    // Initialize the Reputation Points
+    LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
+    repPointsStyle.background = new TextureRegionDrawable(new Texture(
+      "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
+    points = new ReputationPoint(repPointsStyle);
+    points.setAlignment(Align.center);
+
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
@@ -111,12 +119,14 @@ public class UIOverlay {
     resultLabel.setVisible(false);
     resultTimer = new Timer(labelStyle);
     resultTimer.setVisible(false);
-
+    
     // Add everything
     Value scale = Value.percentWidth(0.04f, table);
     Value timerWidth = Value.percentWidth(0.2f, table);
+    Value repPointsWidth = Value.percentWidth(0.36f, table);
     table.add(chefDisplay).left().width(scale).height(scale);
     table.add(timer).expandX().width(timerWidth).height(scale);
+    table.add(points).expandX().width(repPointsWidth).height(scale);
     table.add(homeButton).right().width(scale).height(scale);
     table.row().padTop(10f);
     table.add(ingredientStackDisplay).left().top().width(scale);
