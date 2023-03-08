@@ -32,8 +32,9 @@ public class Chef extends Actor implements Disposable {
   private final FixedStack<Ingredient> ingredientStack = new FixedStack<>(5);
 
   private final Vector2 inputVector;
+  private float powerupTime = 15f;
   private float speed = 3f;
-  private boolean usedChefSpeed = false;
+  private boolean isPowerupActive = false;
 
   /**
    * a parameter which adds a small amount of distance between the chef's boundaries and any other
@@ -84,6 +85,15 @@ public class Chef extends Actor implements Disposable {
     Vector2 movement = calculateMovement(delta);
     moveBy(movement.x, movement.y);
 
+    if (isPowerupActive) {
+      powerupTime -= delta;
+      if (powerupTime <= 0) {
+        resetChefSpeed();
+        isPowerupActive = false;
+        powerupTime = 15f;
+      }
+    }
+
     super.act(delta);
   }
 
@@ -99,10 +109,9 @@ public class Chef extends Actor implements Disposable {
     }
     float x = 0f;
     float y = 0f;
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && usedChefSpeed == false){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && !isPowerupActive){
       doubleChefSpeed();
-      startTimer();
-      usedChefSpeed = true;
+      isPowerupActive = true;
     }
     if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
       y += 1f;
@@ -327,18 +336,6 @@ public class Chef extends Actor implements Disposable {
 
   private void resetChefSpeed(){
     this.speed = 3f;
-  }
-
-  private void startTimer() {
-    final Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            resetChefSpeed();
-            timer.cancel(); // stop the timer after the task is executed
-        }
-    };
-    timer.schedule(task, 10000); // schedule the resetChefSpeed() to run after 15 seconds
   }
 
   /**
