@@ -28,6 +28,7 @@ public class CookingStation extends Station {
   protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
+  private float timeToBurn = 10f;
 
   /**
    * The constructor method for the class

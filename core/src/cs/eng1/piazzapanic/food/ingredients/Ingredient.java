@@ -12,6 +12,8 @@ public class Ingredient {
   protected  boolean isChopped = false;
   protected boolean isBaked = false;
 
+  protected boolean isBurnt = false;
+
   public Ingredient(String type, FoodTextureManager textureManager) {
     this.type = type;
     this.textureManager = textureManager;
@@ -103,5 +105,13 @@ public class Ingredient {
 
   public void setBaked(boolean value){
     isBaked = value;
+  }
+
+  public boolean getIsBurnt() {
+    return isBurnt;
+  }
+
+  public void setIsBurnt(boolean value){
+    isBurnt = value;
   }
 }

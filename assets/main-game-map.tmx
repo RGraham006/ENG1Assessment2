@@ -155,7 +155,7 @@
   <object id="56" class="Station" gid="129" x="1152" y="512" width="128" height="128">
    <properties>
     <property name="actionAlignment" value="RIGHT"/>
-    <property name="collisionObjectIDs" value="38, 58"/>
+    <property name="collisionObjectIDs" value="38,58"/>
     <property name="ingredients" value="cheese"/>
     <property name="stationType" value="ingredientStation"/>
    </properties>
