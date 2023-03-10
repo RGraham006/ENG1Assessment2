@@ -44,6 +44,7 @@
   </object>
   <object id="11" class="Station" gid="129" x="768" y="384" width="128" height="128">
    <properties>
+    <property name="actionAlignment" value="LEFT"/>
     <property name="collisionObjectIDs" value="45,46,47"/>
     <property name="ingredients" value="lettuce"/>
     <property name="stationType" value="ingredientStation"/>
@@ -51,31 +52,15 @@
   </object>
   <object id="12" class="Station" gid="129" x="1152" y="384" width="128" height="128">
    <properties>
-    <property name="actionAlignment" value="TOP"/>
+    <property name="actionAlignment" value="RIGHT"/>
     <property name="collisionObjectIDs" value="44,48,49"/>
     <property name="ingredients" value="patty"/>
     <property name="stationType" value="ingredientStation"/>
    </properties>
   </object>
-  <object id="55" class="Station" gid="129" x="1153.14" y="514.757" width="128" height="128">
-   <properties>
-    <property name="actionAlignment" value="RIGHT"/>
-    <property name="collisionObjectIDs" value="38,58"/>
-    <property name="ingredients" value="potato"/>
-    <property name="stationType" value="ingredientStation"/>
-   </properties>
-  </object>
-  <object id="56" class="Station" gid="129" x="768" y="512" width="128" height="128">
-   <properties>
-    <property name="actionAlignment" value="LEFT"/>
-    <property name="collisionObjectIDs" value="43,57"/>
-    <property name="ingredients" value="cheese"/>
-    <property name="stationType" value="ingredientStation"/>
-   </properties>
-  </object>
   <object id="13" class="Station" gid="129" x="1152" y="640" width="128" height="128">
    <properties>
-    <property name="actionAlignment" value="TOP"/>
+    <property name="actionAlignment" value="RIGHT"/>
     <property name="collisionObjectIDs" value="40,41,42"/>
     <property name="ingredients" value="dough"/>
     <property name="stationType" value="ingredientStation"/>
@@ -83,6 +68,7 @@
   </object>
   <object id="14" class="Station" gid="129" x="768" y="640" width="128" height="128">
    <properties>
+    <property name="actionAlignment" value="LEFT"/>
     <property name="collisionObjectIDs" value="36,37,39"/>
     <property name="ingredients" value="tomato"/>
     <property name="stationType" value="ingredientStation"/>
@@ -160,6 +146,7 @@
   </object>
   <object id="55" class="Station" gid="129" x="768" y="512" width="128" height="128">
    <properties>
+    <property name="actionAlignment" value="LEFT"/>
     <property name="collisionObjectIDs" value="57,43"/>
     <property name="ingredients" value="potato"/>
     <property name="stationType" value="ingredientStation"/>
@@ -167,7 +154,8 @@
   </object>
   <object id="56" class="Station" gid="129" x="1152" y="512" width="128" height="128">
    <properties>
-    <property name="collisionObjectIDs" value="59,60"/>
+    <property name="actionAlignment" value="RIGHT"/>
+    <property name="collisionObjectIDs" value="38, 58"/>
     <property name="ingredients" value="cheese"/>
     <property name="stationType" value="ingredientStation"/>
    </properties>
