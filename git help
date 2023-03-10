@@ -1,0 +1,128 @@
+[33mcommit e7c7a9dabd81c4ab724863156311b82bb7f28f89[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: ae410c5 22f9d62
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Fri Mar 10 16:58:10 2023 +0300
+
+    Merge branch 'master' of https://github.com/RGraham006/ENG1Assessment2
+
+[33mcommit ae410c5e4f9768ab956fcecdbefe32763a11fa50[m
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Fri Mar 10 16:57:36 2023 +0300
+
+    removed useless imports
+
+[33mcommit 22f9d6222a7d3271eda3b91170c5ccf70228b4ba[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Fri Mar 10 13:51:31 2023 +0000
+
+    fixed even more merge issues
+
+[33mcommit 3ab2eb3284b743964a0252b052493222ac366907[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Fri Mar 10 13:46:07 2023 +0000
+
+    fixed map merge conflicts and cleaned up hitboxes
+
+[33mcommit 8573092ea0e6ffb186632ebcfeb53e7dc75df9a3[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Fri Mar 10 13:39:53 2023 +0000
+
+    more merge conflict fixes
+
+[33mcommit 03f943084b7099c9c0fbe2631497a860ccc5c322[m
+Merge: be4ef35 e885e77
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Fri Mar 10 13:35:25 2023 +0000
+
+    fixed merge conflicts
+
+[33mcommit be4ef35d7bc731944f431286a4439977018638d6[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Fri Mar 10 13:22:40 2023 +0000
+
+    added dough class
+
+[33mcommit e885e7740de4534033cf7bd28bed6773bc273021[m
+Merge: cc22b17 7d5cae6
+Author: RGraham006 <117930274+RGraham006@users.noreply.github.com>
+Date:   Fri Mar 10 13:13:10 2023 +0000
+
+    Merge pull request #3 from Amu-x/master
+    
+    Added additional recipes & changed table format
+
+[33mcommit 7d5cae65446ad8ec3033b8b9ba1367c4a79dd299[m
+Author: Amu-x <amy1545@outlook.com>
+Date:   Fri Mar 10 11:22:53 2023 +0000
+
+    Added additional recipes, changed table format
+
+[33mcommit cc22b171aeea8408f88dae5e50b8d967a455abd3[m
+Merge: 17a34ac 5c9d6b7
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Wed Mar 8 15:38:21 2023 +0300
+
+    reputation points
+
+[33mcommit 17a34ac191225c2305606d917348b9ab3b7f780c[m
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Wed Mar 8 15:28:29 2023 +0300
+
+    added rep points
+
+[33mcommit 5c9d6b745d37cac4982782ea4c7071581cbb8c9c[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Wed Mar 8 11:26:03 2023 +0000
+
+    added baking stations to the map
+
+[33mcommit 60724f719dcdcf41491821f1f8d5d97c5ce9ed6e[m
+Author: RGraham006 <rcg525@york.ac.uk>
+Date:   Wed Mar 8 11:17:26 2023 +0000
+
+    Implemented BakingStation
+
+[33mcommit 749e62ec3def56d3c399c97741df448156bd24ab[m
+Merge: 9daee0a 7851da6
+Author: RGraham006 <117930274+RGraham006@users.noreply.github.com>
+Date:   Wed Mar 8 09:49:29 2023 +0000
+
+    Merge pull request #1 from Amu-x/master
+    
+    Altered chef speed powerup code
+
+[33mcommit 7851da6eadd8dc6916ca548fa87725cf2ceaba5c[m
+Author: Amu-x <amy1545@outlook.com>
+Date:   Mon Mar 6 09:16:48 2023 +0000
+
+    Altered chef speed powerup code
+
+[33mcommit 9daee0ab9cbe67ce8bcef7987c7b6dd7f80e5fc8[m
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Fri Mar 3 18:07:34 2023 +0300
+
+    added frying powerup and locked the chef while frying
+
+[33mcommit 5affdbcc6556bcce17c71ff528d7f3aef02b93ee[m
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Fri Mar 3 17:17:29 2023 +0300
+
+    implemented chopping speed power up
+
+[33mcommit 5b37279ad8508cb1d3c92c38de98752812ee77ce[m
+Author: LabibZabaneh <labibraedzabaneh@gmail.com>
+Date:   Fri Mar 3 16:22:35 2023 +0300
+
+    Chef speed powerup implemented
+
+[33mcommit a73f4a1c6f4cb2a6f360e29e38abb348f94afcad[m
+Author: RGraham006 <117930274+RGraham006@users.noreply.github.com>
+Date:   Fri Mar 3 12:59:24 2023 +0000
+
+    cloned the other groups repo
+
+[33mcommit fc4e7a63d5262c42e644315845bb681d9453b44f[m
+Author: RGraham006 <117930274+RGraham006@users.noreply.github.com>
+Date:   Fri Mar 3 12:53:20 2023 +0000
+
+    initialise the git repo

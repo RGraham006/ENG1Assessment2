@@ -19,6 +19,7 @@ public class BakingStation extends Station{
     protected float timeBaked;
     protected float totalTimeToCook = 5f;
     private boolean progressVisible = false;
+    private boolean isPowerupUsed = false;
 
     public BakingStation(int id, TextureRegion image, StationUIController uiController, StationActionUI.ActionAlignment alignment, Ingredient[] ingredients) {
         super(id, image, uiController, alignment);
@@ -26,7 +27,7 @@ public class BakingStation extends Station{
     }
 
     public void act(float delta) {
-        // getInput();
+        getInput();
         if (inUse) {
             timeBaked += delta;
             uiController.updateProgressValue(this, (timeBaked / totalTimeToCook) * 100f);
@@ -113,26 +114,26 @@ public class BakingStation extends Station{
         timeBaked = 0;
         currentIngredient = null;
         progressVisible = false;
-        // resetCookingSpeed();
+        resetCookingSpeed();
         super.reset();
     }
 
-    /*
+
     private void doubleCookingSpeed(){
-        totalTimeToCook = 5f;
+        totalTimeToCook = 1f;
     }
 
     private void getInput(){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && !isPowerupUsed){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerupUsed){
             doubleCookingSpeed();
             isPowerupUsed = true;
         }
     }
 
     private void resetCookingSpeed(){
-        totalTimeToCook = 10f;
+        totalTimeToCook = 5f;
     }
-    */
+
 
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
