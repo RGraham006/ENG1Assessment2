@@ -31,7 +31,7 @@ public class BakingStation extends Station{
             timeBaked += delta;
             uiController.updateProgressValue(this, (timeBaked / totalTimeToCook) * 100f);
             if (timeBaked >= totalTimeToCook && progressVisible) {
-                currentIngredient.setIsBaked(true);
+                currentIngredient.setBaked(true);
                 uiController.hideProgressBar(this);
                 uiController.showActions(this, getActionTypes());
                 progressVisible = false;
@@ -42,7 +42,7 @@ public class BakingStation extends Station{
     }
 
     private boolean isCorrectIngredient(Ingredient ingredientToCheck) {
-        if (!ingredientToCheck.getIsBaked()) {
+        if (!ingredientToCheck.getBaked()) {
             for (Ingredient item : this.validIngredients) {
                 if (Objects.equals(ingredientToCheck.getType(), item.getType())) {
                     return true;
@@ -64,7 +64,7 @@ public class BakingStation extends Station{
             }
         } else {
             //check to see if total number of seconds has passed to progress the state of the pizza base.
-            if (currentIngredient.getIsBaked()) {
+            if (currentIngredient.getBaked()) {
                 actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
             }
             if (!inUse) {

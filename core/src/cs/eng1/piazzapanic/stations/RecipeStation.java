@@ -84,7 +84,7 @@ public class RecipeStation extends Station {
     if (nearbyChef != null) {
       if (!nearbyChef.getStack().isEmpty()) {
         Ingredient checkItem = nearbyChef.getStack().peek();
-        if (checkItem.getIsChopped() || checkItem.getIsCooked() || checkItem.getIsBaked() || Objects.equals(
+        if (checkItem.getIsChopped() || checkItem.getIsCooked() || checkItem.getBaked() || Objects.equals(
             checkItem.getType(), "cheese")) {
           //If a chef is nearby and is carrying at least one ingredient
           // and the top ingredient is cooked, chopped or a bun then display the action
