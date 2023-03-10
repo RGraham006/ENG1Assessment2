@@ -67,6 +67,7 @@ public class CookingStation extends Station {
     getInput();
     if(checkIfBurnt(delta)){
       currentIngredient.setIsBurnt(true);
+      uiController.showActions(this, getActionTypes());
     }
     if (inUse) {
       timeCooked += delta;
@@ -138,10 +139,9 @@ public class CookingStation extends Station {
     else if(currentIngredient.getIsBurnt()){
       actionTypes.add(StationAction.ActionType.CLEAR_STATION);
       return actionTypes;
-    } else {
-      //check to see if total number of seconds has passed to progress the state of the patty.
-      if (currentIngredient instanceof Patty && currentIngredient.getIsHalfCooked()
-          && !currentIngredient.getIsCooked() && !progressVisible && !currentIngredient.getIsBurnt()) {
+    }
+    else {
+      if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked() && !progressVisible && !currentIngredient.getIsBurnt()) {
         actionTypes.add(StationAction.ActionType.FLIP_ACTION);
       } else if (currentIngredient.getIsCooked()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
