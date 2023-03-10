@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="55">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="63">
  <tileset firstgid="1" source="Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/Tilesheet/Topdown Shooter Full 2.xml"/>
  <layer id="1" name="Background" width="16" height="9">
   <data encoding="csv">
@@ -61,7 +61,7 @@
    <properties>
     <property name="actionAlignment" value="TOP"/>
     <property name="collisionObjectIDs" value="40,41,42,43"/>
-    <property name="ingredients" value="bun"/>
+    <property name="ingredients" value="dough"/>
     <property name="stationType" value="ingredientStation"/>
    </properties>
   </object>
@@ -76,7 +76,7 @@
    <properties>
     <property name="actionAlignment" value="TOP"/>
     <property name="collisionObjectIDs" value="22"/>
-    <property name="ingredients" value="patty"/>
+    <property name="ingredients" value="patty,dough"/>
     <property name="stationType" value="cookingStation"/>
    </properties>
   </object>
@@ -84,7 +84,7 @@
    <properties>
     <property name="actionAlignment" value="BOTTOM"/>
     <property name="collisionObjectIDs" value="24"/>
-    <property name="ingredients" value="patty"/>
+    <property name="ingredients" value="patty,dough"/>
     <property name="stationType" value="cookingStation"/>
    </properties>
   </object>
@@ -124,21 +124,39 @@
   <object id="47" x="768" y="128" width="128" height="128"/>
   <object id="48" x="1152" y="128" width="128" height="128"/>
   <object id="49" x="1280" y="256" width="128" height="128"/>
-  <object id="53" gid="243" x="1278.82" y="2.60093" width="128" height="233.743" rotation="180">
+  <object id="53" gid="1073742067" x="1280" y="0" width="128" height="128" rotation="180">
    <properties>
     <property name="actionAlignment" value="RIGHT"/>
     <property name="collisionObjectIDs" value="48"/>
-    <property name="ingredients" value=""/>
+    <property name="ingredients" value="dough,potato"/>
     <property name="stationType" value="bakingStation"/>
    </properties>
   </object>
-  <object id="54" gid="243" x="894.508" y="1.46391" width="128" height="233.743" rotation="180">
+  <object id="54" gid="243" x="768" y="128" width="128" height="128">
    <properties>
-    <property name="actionAlignment" value="RIGHT"/>
+    <property name="actionAlignment" value="LEFT"/>
     <property name="collisionObjectIDs" value="47"/>
-    <property name="ingredients" value=""/>
+    <property name="ingredients" value="dough,potato"/>
     <property name="stationType" value="bakingStation"/>
    </properties>
   </object>
+  <object id="55" class="Station" gid="129" x="768" y="512" width="128" height="128">
+   <properties>
+    <property name="collisionObjectIDs" value="57,58"/>
+    <property name="ingredients" value="potato"/>
+    <property name="stationType" value="ingredientStation"/>
+   </properties>
+  </object>
+  <object id="56" class="Station" gid="129" x="1152" y="512" width="128" height="128">
+   <properties>
+    <property name="collisionObjectIDs" value="59,60"/>
+    <property name="ingredients" value="cheese"/>
+    <property name="stationType" value="ingredientStation"/>
+   </properties>
+  </object>
+  <object id="57" x="640" y="384" width="128" height="128"/>
+  <object id="58" x="896" y="384" width="128" height="128"/>
+  <object id="59" x="1024" y="384" width="128" height="128"/>
+  <object id="60" x="1280" y="384" width="128" height="128"/>
  </objectgroup>
 </map>

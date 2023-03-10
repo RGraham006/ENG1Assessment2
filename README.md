@@ -162,7 +162,7 @@ All of this setup allows the code to automatically instantiate the stations in t
 with their corresponding textures and station colliders.
 
 To add a new type of station to the tile map, go to View->Custom Types Editor, select the
-StationType enum, and add it there. You can also add possible ingredients here with the Ingredient
+StationType enum, and add it in there. You can also add possible ingredients here with the Ingredient
 enum. The station properties can be edited here too.
 
 ### Additional Documentation
