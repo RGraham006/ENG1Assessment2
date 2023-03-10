@@ -217,7 +217,7 @@ public class CookingStation extends Station {
   }
 
   private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && !isPowerUpUsed){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerUpUsed){
       doubleCookingSpeed();
       isPowerUpUsed = true;
     }
