@@ -119,16 +119,15 @@ public class UIOverlay {
     resultLabel.setVisible(false);
     resultTimer = new Timer(labelStyle);
     resultTimer.setVisible(false);
-    
+
     // Add everything
     Value scale = Value.percentWidth(0.04f, table);
     Value timerWidth = Value.percentWidth(0.2f, table);
     Value repPointsWidth = Value.percentWidth(0.36f, table);
     table.add(chefDisplay).left().width(scale).height(scale);
-    table.add(timer).expandX().width(timerWidth).height(scale);
-    table.add(points).expandX().width(repPointsWidth).height(scale);
+    table.add().expandX().width(timerWidth);
     table.add(homeButton).right().width(scale).height(scale);
-    table.row().padTop(10f);
+    table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(scale);
     table.add().expandX().width(timerWidth);
     table.add(recipeDisplay).right().top().width(scale);
@@ -136,6 +135,10 @@ public class UIOverlay {
     table.add(resultLabel).colspan(3);
     table.row();
     table.add(resultTimer).colspan(3);
+    table.row().expand().padBottom(10f);
+    table.add().expandX().width(scale).height(scale);
+    table.add(timer).bottom().expandX().width(timerWidth).height(scale);
+    table.add(points).bottom().expandX().width(repPointsWidth).height(scale);
   }
 
   /**
