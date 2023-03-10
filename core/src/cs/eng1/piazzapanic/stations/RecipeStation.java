@@ -3,6 +3,9 @@ package cs.eng1.piazzapanic.stations;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import cs.eng1.piazzapanic.food.recipes.Burger;
+import cs.eng1.piazzapanic.food.recipes.JacketPotato;
+import cs.eng1.piazzapanic.food.recipes.Pizza;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.FoodTextureManager;
@@ -24,10 +27,15 @@ import java.util.Objects;
 public class RecipeStation extends Station {
   private final FoodTextureManager textureManager;
   private final CustomerManager customerManager;
+
   protected int bunCount = 0;
   protected int pattyCount = 0;
   protected int lettuceCount = 0;
   protected int tomatoCount = 0;
+  protected int pizzaBaseCount = 0;
+  protected int potatoCount = 0;
+  protected int cheeseCount = 0;
+
   private Recipe completedRecipe = null;
 
   /**
@@ -57,6 +65,9 @@ public class RecipeStation extends Station {
     pattyCount = 0;
     lettuceCount = 0;
     tomatoCount = 0;
+    pizzaBaseCount = 0;
+    potatoCount = 0;
+    cheeseCount = 0;
     completedRecipe = null;
     super.reset();
   }
@@ -73,8 +84,8 @@ public class RecipeStation extends Station {
     if (nearbyChef != null) {
       if (!nearbyChef.getStack().isEmpty()) {
         Ingredient checkItem = nearbyChef.getStack().peek();
-        if (checkItem.getIsChopped() || checkItem.getIsCooked() || Objects.equals(
-            checkItem.getType(), "bun")) {
+        if (checkItem.getIsChopped() || checkItem.getIsCooked() || checkItem.getBaked() || Objects.equals(
+            checkItem.getType(), "cheese")) {
           //If a chef is nearby and is carrying at least one ingredient
           // and the top ingredient is cooked, chopped or a bun then display the action
           actionTypes.add(ActionType.PLACE_INGREDIENT);
@@ -86,6 +97,12 @@ public class RecipeStation extends Station {
         }
         if (tomatoCount >= 1 && lettuceCount >= 1 && nearbyChef.getStack().hasSpace()) {
           actionTypes.add(ActionType.MAKE_SALAD);
+        }
+        if (tomatoCount >= 1 && pizzaBaseCount >= 1 && nearbyChef.getStack().hasSpace()) {
+          actionTypes.add(ActionType.MAKE_PIZZA);
+        }
+        if (potatoCount >= 1 && cheeseCount >=1 && nearbyChef.getStack().hasSpace()) {
+          actionTypes.add(ActionType.MAKE_JACKET_POTATO);
         }
       } else if (customerManager.checkRecipe(completedRecipe)) {
         actionTypes.add(ActionType.SUBMIT_ORDER);
@@ -122,6 +139,18 @@ public class RecipeStation extends Station {
             nearbyChef.placeIngredient();
             bunCount += 1;
             break;
+          case "pizza_base":
+            nearbyChef.placeIngredient();
+            pizzaBaseCount += 1;
+            break;
+          case "potato":
+            nearbyChef.placeIngredient();
+            potatoCount += 1;
+            break;
+          case "cheese":
+            nearbyChef.placeIngredient();
+            cheeseCount += 1;
+            break;
         }
 
         break;
@@ -135,6 +164,18 @@ public class RecipeStation extends Station {
         completedRecipe = new Salad(textureManager);
         tomatoCount -= 1;
         lettuceCount -= 1;
+        break;
+
+      case MAKE_PIZZA:
+        completedRecipe = new Pizza(textureManager);
+        tomatoCount -= 1;
+        pizzaBaseCount -= 1;
+        break;
+
+      case MAKE_JACKET_POTATO:
+        completedRecipe = new JacketPotato(textureManager);
+        potatoCount -= 1;
+        cheeseCount -= 1;
         break;
 
       case SUBMIT_ORDER:
@@ -170,6 +211,15 @@ public class RecipeStation extends Station {
     }
     if (tomatoCount > 0) {
       drawFoodTexture(batch, textureManager.getTexture("tomato_chopped"));
+    }
+    if (pizzaBaseCount > 0) {
+      drawFoodTexture(batch, textureManager.getTexture("pizza_base"));
+    }
+    if (potatoCount > 0) {
+      drawFoodTexture(batch, textureManager.getTexture("potato_baked"));
+    }
+    if (cheeseCount > 0) {
+      drawFoodTexture(batch, textureManager.getTexture("cheese"));
     }
     if (completedRecipe != null) {
       drawFoodTexture(batch, completedRecipe.getTexture());

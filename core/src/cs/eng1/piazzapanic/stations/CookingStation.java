@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import cs.eng1.piazzapanic.food.ingredients.Dough;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.ingredients.Patty;
 import cs.eng1.piazzapanic.ui.StationActionUI;
@@ -70,6 +72,8 @@ public class CookingStation extends Station {
             && ((Patty) currentIngredient).getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
           resetCookingSpeed();
+        } else if (currentIngredient instanceof Dough) {
+          currentIngredient.setIsCooked(true);
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
@@ -186,12 +190,13 @@ public class CookingStation extends Station {
   }
 
   private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerUpUsed){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && !isPowerUpUsed){
       doubleCookingSpeed();
       isPowerUpUsed = true;
     }
   }
-  
+
+
   /**
    * Displays ingredients that have been placed on the station
    *

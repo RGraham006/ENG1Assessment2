@@ -10,6 +10,7 @@ public class Ingredient {
   protected final FoodTextureManager textureManager;
   protected boolean isCooked = false;
   protected  boolean isChopped = false;
+  protected boolean isBaked = false;
 
   public Ingredient(String type, FoodTextureManager textureManager) {
     this.type = type;
@@ -40,8 +41,12 @@ public class Ingredient {
         return new Tomato(textureManager);
       case "lettuce":
         return new Lettuce(textureManager);
-      case "bun":
-        return new Bun(textureManager);
+      case "dough":
+        return new Dough(textureManager);
+      case "potato":
+        return new Potato(textureManager);
+      case "cheese":
+        return new Cheese(textureManager);
       default:
         return null;
     }
@@ -90,5 +95,13 @@ public class Ingredient {
 
   public FoodTextureManager getTextureManager() {
     return textureManager;
+  }
+
+  public boolean getBaked(){
+    return isBaked;
+  }
+
+  public void setBaked(boolean value){
+    isBaked = value;
   }
 }

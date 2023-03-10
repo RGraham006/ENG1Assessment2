@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import cs.eng1.piazzapanic.food.ingredients.Patty;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
@@ -17,42 +16,25 @@ public class BakingStation extends Station{
 
     protected final Ingredient[] validIngredients;
     protected Ingredient currentIngredient;
-    protected float timeCooked;
-    protected float totalTimeToCook = 10f;
+    protected float timeBaked;
+    protected float totalTimeToCook = 5f;
     private boolean progressVisible = false;
-    private boolean isPowerupUsed = false;
-
 
     public BakingStation(int id, TextureRegion image, StationUIController uiController, StationActionUI.ActionAlignment alignment, Ingredient[] ingredients) {
         super(id, image, uiController, alignment);
         validIngredients = ingredients;
     }
 
-    @Override
-    public void reset() {
-        timeCooked = 0;
-        currentIngredient = null;
-        progressVisible = false;
-        resetCookingSpeed();
-        super.reset();
-    }
-
     public void act(float delta) {
-        getInput();
+        // getInput();
         if (inUse) {
-            timeCooked += delta;
-            uiController.updateProgressValue(this, (timeCooked / totalTimeToCook) * 100f);
-            if (timeCooked >= totalTimeToCook && progressVisible) {
-                if (currentIngredient instanceof Patty && !((Patty) currentIngredient).getIsHalfCooked()) {
-                    ((Patty) currentIngredient).setHalfCooked();
-                } else if (currentIngredient instanceof Patty
-                        && ((Patty) currentIngredient).getIsHalfCooked() && !currentIngredient.getIsCooked()) {
-                    currentIngredient.setIsCooked(true);
-                    resetCookingSpeed();
-                }
+            timeBaked += delta;
+            uiController.updateProgressValue(this, (timeBaked / totalTimeToCook) * 100f);
+            if (timeBaked >= totalTimeToCook && progressVisible) {
+                currentIngredient.setBaked(true);
                 uiController.hideProgressBar(this);
-                progressVisible = false;
                 uiController.showActions(this, getActionTypes());
+                progressVisible = false;
                 nearbyChef.setPaused(false);
             }
         }
@@ -60,7 +42,7 @@ public class BakingStation extends Station{
     }
 
     private boolean isCorrectIngredient(Ingredient ingredientToCheck) {
-        if (!ingredientToCheck.getIsCooked()) {
+        if (!ingredientToCheck.getBaked()) {
             for (Ingredient item : this.validIngredients) {
                 if (Objects.equals(ingredientToCheck.getType(), item.getType())) {
                     return true;
@@ -81,12 +63,12 @@ public class BakingStation extends Station{
                 actionTypes.add(StationAction.ActionType.PLACE_INGREDIENT);
             }
         } else {
-            //check to see if total number of seconds has passed to progress the state of the patty.
-            if (currentIngredient.getIsCooked()) {
+            //check to see if total number of seconds has passed to progress the state of the pizza base.
+            if (currentIngredient.getBaked()) {
                 actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
             }
             if (!inUse) {
-                actionTypes.add(StationAction.ActionType.COOK_ACTION);
+                actionTypes.add(StationAction.ActionType.BAKE_ACTION);
             }
         }
         return actionTypes;
@@ -95,10 +77,10 @@ public class BakingStation extends Station{
     @Override
     public void doStationAction(StationAction.ActionType action) {
         switch (action) {
-            case COOK_ACTION:
+            case BAKE_ACTION:
                 //timeCooked is used to track how long the
                 //ingredient has been cooking for.
-                timeCooked = 0;
+                timeBaked = 0;
                 inUse = true;
                 uiController.hideActions(this);
                 uiController.showProgressBar(this);
@@ -126,6 +108,16 @@ public class BakingStation extends Station{
         }
     }
 
+    @Override
+    public void reset() {
+        timeBaked = 0;
+        currentIngredient = null;
+        progressVisible = false;
+        // resetCookingSpeed();
+        super.reset();
+    }
+
+    /*
     private void doubleCookingSpeed(){
         totalTimeToCook = 5f;
     }
@@ -140,6 +132,7 @@ public class BakingStation extends Station{
     private void resetCookingSpeed(){
         totalTimeToCook = 10f;
     }
+    */
 
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
