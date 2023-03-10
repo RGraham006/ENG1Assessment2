@@ -21,6 +21,9 @@ public class Dough extends Ingredient{
       else if (isCooked) {
         return "bun";
       }
+      else if (isBurnt){
+          return "burnt";
+      }
       else {
         return "dough";
       }

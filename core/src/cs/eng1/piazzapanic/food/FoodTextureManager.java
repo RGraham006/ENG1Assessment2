@@ -46,6 +46,8 @@ public class FoodTextureManager implements Disposable {
         new Texture(Gdx.files.internal("food/glitch/misc/fry_up.png")));  // REPLACE WITH JACKET POTATO
     this.foodTextures.put("cheese",
         new Texture(Gdx.files.internal("food/glitch/dairy/cheese_01.png")));
+    this.foodTextures.put("burnt",
+            new Texture(Gdx.files.internal("food/glitch/spice/black_pepper.png")));
     notFoundImage = new Texture(Gdx.files.internal("badlogic.jpg"));
   }
 

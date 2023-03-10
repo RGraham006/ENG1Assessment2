@@ -5,18 +5,8 @@ import cs.eng1.piazzapanic.food.FoodTextureManager;
 
 public class Patty extends Ingredient {
 
-  protected boolean halfCooked = false;
-
   public Patty(FoodTextureManager textureManager) {
     super("patty", textureManager);
-  }
-
-  public void setHalfCooked() {
-    halfCooked = true;
-  }
-
-  public boolean getIsHalfCooked() {
-    return halfCooked;
   }
 
   /**
@@ -29,6 +19,8 @@ public class Patty extends Ingredient {
     String name = getType() + "_";
     if (isCooked) {
       name += "cooked";
+    } else if (isBurnt){
+      name = "burnt";
     } else {
       name += "raw";
     }

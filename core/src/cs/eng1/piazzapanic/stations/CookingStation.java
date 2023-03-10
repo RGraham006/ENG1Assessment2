@@ -28,7 +28,8 @@ public class CookingStation extends Station {
   protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
-  private float timeToBurn = 10f;
+  private float timeToBurn = 3f;
+  private float burnTimer;
 
   /**
    * The constructor method for the class
@@ -50,6 +51,7 @@ public class CookingStation extends Station {
   public void reset() {
     currentIngredient = null;
     timeCooked = 0;
+    burnTimer = 0;
     progressVisible = false;
     super.reset();
   }
@@ -63,18 +65,18 @@ public class CookingStation extends Station {
   @Override
   public void act(float delta) {
     getInput();
+    if(checkIfBurnt(delta)){
+      currentIngredient.setIsBurnt(true);
+    }
     if (inUse) {
       timeCooked += delta;
       uiController.updateProgressValue(this, (timeCooked / totalTimeToCook) * 100f);
       if (timeCooked >= totalTimeToCook && progressVisible) {
-        if (currentIngredient instanceof Patty && !((Patty) currentIngredient).getIsHalfCooked()) {
-          ((Patty) currentIngredient).setHalfCooked();
-        } else if (currentIngredient instanceof Patty
-            && ((Patty) currentIngredient).getIsHalfCooked() && !currentIngredient.getIsCooked()) {
+        if (!currentIngredient.getIsHalfCooked()) {
+          currentIngredient.setHalfCooked();
+        } else if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
           resetCookingSpeed();
-        } else if (currentIngredient instanceof Dough) {
-          currentIngredient.setIsCooked(true);
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
@@ -83,6 +85,19 @@ public class CookingStation extends Station {
       }
     }
     super.act(delta);
+  }
+
+  private boolean checkIfBurnt(float detla){
+    if(currentIngredient != null){
+      if(currentIngredient.getIsHalfCooked() && !progressVisible && !currentIngredient.getIsBurnt()){
+        burnTimer += detla;
+      }
+    }
+    if(burnTimer >= timeToBurn){
+      burnTimer = 0;
+      return true;
+    }
+    else{return false;}
   }
 
   /**
@@ -119,10 +134,14 @@ public class CookingStation extends Station {
       if (nearbyChef.hasIngredient() && isCorrectIngredient(nearbyChef.getStack().peek())) {
         actionTypes.add(StationAction.ActionType.PLACE_INGREDIENT);
       }
+    }
+    else if(currentIngredient.getIsBurnt()){
+      actionTypes.add(StationAction.ActionType.CLEAR_STATION);
+      return actionTypes;
     } else {
       //check to see if total number of seconds has passed to progress the state of the patty.
-      if (currentIngredient instanceof Patty && ((Patty) currentIngredient).getIsHalfCooked()
-          && !currentIngredient.getIsCooked() && !progressVisible) {
+      if (currentIngredient instanceof Patty && currentIngredient.getIsHalfCooked()
+          && !currentIngredient.getIsCooked() && !progressVisible && !currentIngredient.getIsBurnt()) {
         actionTypes.add(StationAction.ActionType.FLIP_ACTION);
       } else if (currentIngredient.getIsCooked()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
@@ -179,6 +198,13 @@ public class CookingStation extends Station {
         }
         uiController.showActions(this, getActionTypes());
         break;
+
+      case CLEAR_STATION:
+        inUse = false;
+        currentIngredient = null;
+        progressVisible = false;
+        timeToBurn = 10f;
+        uiController.showActions(this, getActionTypes());
     }
   }
 
