@@ -42,6 +42,8 @@ public class Ingredient {
         return new Lettuce(textureManager);
       case "bun":
         return new Bun(textureManager);
+      case "dough":
+        return new Dough(textureManager);
       default:
         return null;
     }
