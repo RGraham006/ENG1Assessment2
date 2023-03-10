@@ -41,8 +41,6 @@ public class Ingredient {
         return new Tomato(textureManager);
       case "lettuce":
         return new Lettuce(textureManager);
-      case "bun":
-        return new Bun(textureManager);
       case "dough":
         return new Dough(textureManager);
       case "potato":
@@ -97,5 +95,13 @@ public class Ingredient {
 
   public FoodTextureManager getTextureManager() {
     return textureManager;
+  }
+
+  public boolean getBaked(){
+    return isBaked;
+  }
+
+  public void setBaked(boolean value){
+    isBaked = value;
   }
 }
