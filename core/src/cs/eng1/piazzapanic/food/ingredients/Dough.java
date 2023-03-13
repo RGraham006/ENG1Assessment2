@@ -15,7 +15,7 @@ public class Dough extends Ingredient{
 
     @Override
     public String getType() {
-      if (isBaked) {
+      if (isBaked && !isBurnt) {
         return "pizza_base";
       }
       else if (isCooked && !isBurnt) {

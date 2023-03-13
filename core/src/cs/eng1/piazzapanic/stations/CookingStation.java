@@ -28,7 +28,7 @@ public class CookingStation extends Station {
   protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
-  private float timeToBurn = 3f;
+  private final float timeToBurn = 5f;
   private float burnTimer;
 
   /**
@@ -204,7 +204,6 @@ public class CookingStation extends Station {
         inUse = false;
         currentIngredient = null;
         progressVisible = false;
-        timeToBurn = 10f;
         uiController.showActions(this, getActionTypes());
     }
   }

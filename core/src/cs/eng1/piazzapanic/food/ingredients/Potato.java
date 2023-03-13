@@ -16,8 +16,10 @@ public class Potato extends Ingredient {
     @Override
     public Texture getTexture() {
         String name = getType() + "_";
-        if (isBaked) {
+        if (isBaked && !isBurnt) {
             name += "baked";
+        }else if (isBurnt){
+            name = "burnt";
         }
         else {
             name += "raw";

@@ -53,6 +53,7 @@ public class Recipe {
       case "pizza":
         ingredientTypes.add("pizza_base");
         ingredientTypes.add("tomato_chopped");
+        ingredientTypes.add("cheese");
         break;
       case "jacket_potato":
         ingredientTypes.add("potato_baked");

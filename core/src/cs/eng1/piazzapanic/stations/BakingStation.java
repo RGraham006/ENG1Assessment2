@@ -20,6 +20,8 @@ public class BakingStation extends Station{
     protected float totalTimeToCook = 5f;
     private boolean progressVisible = false;
     private boolean isPowerupUsed = false;
+    private final float timeToBurn = 5f;
+    private float burnTimer;
 
     public BakingStation(int id, TextureRegion image, StationUIController uiController, StationActionUI.ActionAlignment alignment, Ingredient[] ingredients) {
         super(id, image, uiController, alignment);
@@ -28,6 +30,10 @@ public class BakingStation extends Station{
 
     public void act(float delta) {
         getInput();
+        if(checkIfBurnt(delta)){
+            currentIngredient.setIsBurnt(true);
+            uiController.showActions(this, getActionTypes());
+        }
         if (inUse) {
             timeBaked += delta;
             uiController.updateProgressValue(this, (timeBaked / totalTimeToCook) * 100f);
@@ -40,6 +46,23 @@ public class BakingStation extends Station{
             }
         }
         super.act(delta);
+    }
+
+    private boolean checkIfBurnt(float delta){
+
+        if(currentIngredient != null){
+            if(currentIngredient.getBaked() && !currentIngredient.getIsBurnt()){
+                System.out.println("Burn Timer Increasing");
+                burnTimer += delta;
+            }
+        }
+        if(burnTimer >= timeToBurn){
+            burnTimer = 0;
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private boolean isCorrectIngredient(Ingredient ingredientToCheck) {
@@ -63,7 +86,11 @@ public class BakingStation extends Station{
             if (nearbyChef.hasIngredient() && isCorrectIngredient(nearbyChef.getStack().peek())) {
                 actionTypes.add(StationAction.ActionType.PLACE_INGREDIENT);
             }
-        } else {
+        } else if (currentIngredient.getIsBurnt()) {
+            actionTypes.add(StationAction.ActionType.CLEAR_STATION);
+            return actionTypes;
+        }
+        else {
             //check to see if total number of seconds has passed to progress the state of the pizza base.
             if (currentIngredient.getBaked()) {
                 actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
@@ -87,6 +114,7 @@ public class BakingStation extends Station{
                 uiController.showProgressBar(this);
                 nearbyChef.setPaused(true);
                 progressVisible = true;
+                burnTimer = 0;
                 break;
 
             case PLACE_INGREDIENT:
@@ -106,12 +134,18 @@ public class BakingStation extends Station{
                 }
                 uiController.showActions(this, getActionTypes());
                 break;
+            case CLEAR_STATION:
+                inUse = false;
+                currentIngredient = null;
+                progressVisible = false;
+                uiController.showActions(this, getActionTypes());
         }
     }
 
     @Override
     public void reset() {
         timeBaked = 0;
+        burnTimer = 0;
         currentIngredient = null;
         progressVisible = false;
         resetCookingSpeed();

@@ -98,7 +98,7 @@ public class RecipeStation extends Station {
         if (tomatoCount >= 1 && lettuceCount >= 1 && nearbyChef.getStack().hasSpace()) {
           actionTypes.add(ActionType.MAKE_SALAD);
         }
-        if (tomatoCount >= 1 && pizzaBaseCount >= 1 && nearbyChef.getStack().hasSpace()) {
+        if (tomatoCount >= 1 && pizzaBaseCount >= 1 && cheeseCount >= 1 && nearbyChef.getStack().hasSpace()) {
           actionTypes.add(ActionType.MAKE_PIZZA);
         }
         if (potatoCount >= 1 && cheeseCount >=1 && nearbyChef.getStack().hasSpace()) {
@@ -170,6 +170,7 @@ public class RecipeStation extends Station {
         completedRecipe = new Pizza(textureManager);
         tomatoCount -= 1;
         pizzaBaseCount -= 1;
+        cheeseCount -= 1;
         break;
 
       case MAKE_JACKET_POTATO:
