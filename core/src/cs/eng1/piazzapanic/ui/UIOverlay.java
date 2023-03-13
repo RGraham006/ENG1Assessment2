@@ -22,6 +22,7 @@ import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.ui.ButtonManager.ButtonColour;
+import cs.eng1.piazzapanic.ui.Money;
 
 public class UIOverlay {
 
@@ -38,7 +39,12 @@ public class UIOverlay {
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
+  private  Money money;
+
+  private Label goldBalance;
+
   private ReputationPoint points;
+
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
     this.game = game;
@@ -91,6 +97,10 @@ public class UIOverlay {
             new Texture(
                 Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/home.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
+
+
+
+
     homeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -120,6 +130,14 @@ public class UIOverlay {
     resultTimer = new Timer(labelStyle);
     resultTimer.setVisible(false);
 
+    //  Initialize gold balance
+    money = new Money();
+    goldBalance = new Label(String.valueOf(money.showBalance()), labelStyle);
+
+
+
+
+
     // Add everything
     Value scale = Value.percentWidth(0.04f, table);
     Value timerWidth = Value.percentWidth(0.2f, table);
@@ -135,10 +153,16 @@ public class UIOverlay {
     table.add(resultLabel).colspan(3);
     table.row();
     table.add(resultTimer).colspan(3);
+    table.row();
+    table.add(goldBalance);
+
+
+
     table.row().expand().padBottom(10f);
     table.add().expandX().width(scale).height(scale);
     table.add(timer).bottom().expandX().width(timerWidth).height(scale);
     table.add(points).bottom().expandX().width(repPointsWidth).height(scale);
+
   }
 
   /**
@@ -151,6 +175,12 @@ public class UIOverlay {
     resultTimer.setVisible(false);
     updateChefUI(null);
   }
+  public void updateGold() {
+    money.addGold(100);
+    goldBalance.setText(money.showBalance());
+  }
+
+
 
   /**
    * Show the image of the currently selected chef as well as have the stack of ingredients
@@ -189,6 +219,7 @@ public class UIOverlay {
     ingredientImagesBG.setVisible(!chef.getStack().isEmpty());
 
   }
+
 
   /**
    * Show the label displaying that the game has finished along with the time it took to complete.

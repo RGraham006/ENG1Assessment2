@@ -15,9 +15,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
@@ -27,7 +29,7 @@ import cs.eng1.piazzapanic.stations.*;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.ui.UIOverlay;
-
+import cs.eng1.piazzapanic.ui.Money;
 import java.util.HashMap;
 
 /**
@@ -46,6 +48,7 @@ public class GameScreen implements Screen {
   private final FoodTextureManager foodTextureManager;
   private final CustomerManager customerManager;
   private boolean isFirstFrame = true;
+  
 
   public GameScreen(final PiazzaPanicGame game) {
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
@@ -55,7 +58,7 @@ public class GameScreen implements Screen {
 
     // Initialize stage and camera
     OrthographicCamera camera = new OrthographicCamera();
-    ExtendViewport viewport = new ExtendViewport(sizeX, sizeY, camera); // Number of tiles
+    StretchViewport viewport = new StretchViewport(sizeX, sizeY, camera); // Number of tiles
     this.stage = new Stage(viewport);
 
     ScreenViewport uiViewport = new ScreenViewport();
@@ -75,6 +78,8 @@ public class GameScreen implements Screen {
     // Add tile objects
     initialiseStations(tileUnitSize, objectLayer);
     chefManager.addChefsToStage(stage);
+
+
   }
 
   /**
@@ -129,7 +134,9 @@ public class GameScreen implements Screen {
           break;
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, foodTextureManager, customerManager);
+              alignment, foodTextureManager, customerManager, uiOverlay);
+          customerManager.addRecipeStation((RecipeStation) station);
+
           break;
         case "bakingStation":
           station = new BakingStation(id, tileObject.getTextureRegion(), stationUIController,

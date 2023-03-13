@@ -14,7 +14,8 @@ import cs.eng1.piazzapanic.food.recipes.Salad;
 import cs.eng1.piazzapanic.stations.StationAction.ActionType;
 import cs.eng1.piazzapanic.ui.StationActionUI.ActionAlignment;
 import cs.eng1.piazzapanic.ui.StationUIController;
-
+import cs.eng1.piazzapanic.ui.UIOverlay;
+import cs.eng1.piazzapanic.ui.Money;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +39,12 @@ public class RecipeStation extends Station {
 
   private Recipe completedRecipe = null;
 
+
+  private final UIOverlay uiOverlay;
+
+
+
+
   /**
    * The constructor method for the class
    *
@@ -53,10 +60,12 @@ public class RecipeStation extends Station {
    */
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
       ActionAlignment alignment, FoodTextureManager textureManager,
-      CustomerManager customerManager) {
+      CustomerManager customerManager, UIOverlay uiOverlay) {
     super(id, textureRegion, stationUIController, alignment);
     this.textureManager = textureManager;
     this.customerManager = customerManager;
+    this.uiOverlay = uiOverlay;
+
   }
 
   @Override
@@ -182,6 +191,7 @@ public class RecipeStation extends Station {
       case SUBMIT_ORDER:
         if (completedRecipe != null) {
           if (customerManager.checkRecipe(completedRecipe)) {
+            uiOverlay.updateGold();
             customerManager.nextRecipe();
             completedRecipe = null;
           }
