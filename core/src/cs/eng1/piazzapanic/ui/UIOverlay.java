@@ -38,6 +38,7 @@ public class UIOverlay {
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
+  private ReputationPoint points;
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
     this.game = game;
@@ -78,6 +79,13 @@ public class UIOverlay {
     timer = new Timer(timerStyle);
     timer.setAlignment(Align.center);
 
+    // Initialize the Reputation Points
+    LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
+    repPointsStyle.background = new TextureRegionDrawable(new Texture(
+      "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
+    points = new ReputationPoint(repPointsStyle);
+    points.setAlignment(Align.center);
+
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
@@ -115,10 +123,11 @@ public class UIOverlay {
     // Add everything
     Value scale = Value.percentWidth(0.04f, table);
     Value timerWidth = Value.percentWidth(0.2f, table);
+    Value repPointsWidth = Value.percentWidth(0.36f, table);
     table.add(chefDisplay).left().width(scale).height(scale);
-    table.add(timer).expandX().width(timerWidth).height(scale);
+    table.add().expandX().width(timerWidth);
     table.add(homeButton).right().width(scale).height(scale);
-    table.row().padTop(10f);
+    table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(scale);
     table.add().expandX().width(timerWidth);
     table.add(recipeDisplay).right().top().width(scale);
@@ -126,6 +135,10 @@ public class UIOverlay {
     table.add(resultLabel).colspan(3);
     table.row();
     table.add(resultTimer).colspan(3);
+    table.row().expand().padBottom(10f);
+    table.add().expandX().width(scale).height(scale);
+    table.add(timer).bottom().expandX().width(timerWidth).height(scale);
+    table.add(points).bottom().expandX().width(repPointsWidth).height(scale);
   }
 
   /**

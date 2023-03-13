@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import cs.eng1.piazzapanic.food.ingredients.Dough;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.ingredients.Patty;
 import cs.eng1.piazzapanic.ui.StationActionUI;
@@ -26,6 +28,8 @@ public class CookingStation extends Station {
   protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
+  private float timeToBurn = 3f;
+  private float burnTimer;
 
   /**
    * The constructor method for the class
@@ -47,6 +51,7 @@ public class CookingStation extends Station {
   public void reset() {
     currentIngredient = null;
     timeCooked = 0;
+    burnTimer = 0;
     progressVisible = false;
     super.reset();
   }
@@ -60,14 +65,17 @@ public class CookingStation extends Station {
   @Override
   public void act(float delta) {
     getInput();
+    if(checkIfBurnt(delta)){
+      currentIngredient.setIsBurnt(true);
+      uiController.showActions(this, getActionTypes());
+    }
     if (inUse) {
       timeCooked += delta;
       uiController.updateProgressValue(this, (timeCooked / totalTimeToCook) * 100f);
       if (timeCooked >= totalTimeToCook && progressVisible) {
-        if (currentIngredient instanceof Patty && !((Patty) currentIngredient).getIsHalfCooked()) {
-          ((Patty) currentIngredient).setHalfCooked();
-        } else if (currentIngredient instanceof Patty
-            && ((Patty) currentIngredient).getIsHalfCooked() && !currentIngredient.getIsCooked()) {
+        if (!currentIngredient.getIsHalfCooked()) {
+          currentIngredient.setHalfCooked();
+        } else if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
           resetCookingSpeed();
         }
@@ -78,6 +86,19 @@ public class CookingStation extends Station {
       }
     }
     super.act(delta);
+  }
+
+  private boolean checkIfBurnt(float detla){
+    if(currentIngredient != null){
+      if((currentIngredient.getIsHalfCooked() || currentIngredient.getIsCooked()) && !progressVisible && !currentIngredient.getIsBurnt()){
+        burnTimer += detla;
+      }
+    }
+    if(burnTimer >= timeToBurn){
+      burnTimer = 0;
+      return true;
+    }
+    else{return false;}
   }
 
   /**
@@ -114,10 +135,13 @@ public class CookingStation extends Station {
       if (nearbyChef.hasIngredient() && isCorrectIngredient(nearbyChef.getStack().peek())) {
         actionTypes.add(StationAction.ActionType.PLACE_INGREDIENT);
       }
-    } else {
-      //check to see if total number of seconds has passed to progress the state of the patty.
-      if (currentIngredient instanceof Patty && ((Patty) currentIngredient).getIsHalfCooked()
-          && !currentIngredient.getIsCooked() && !progressVisible) {
+    }
+    else if(currentIngredient.getIsBurnt()){
+      actionTypes.add(StationAction.ActionType.CLEAR_STATION);
+      return actionTypes;
+    }
+    else {
+      if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked() && !progressVisible && !currentIngredient.getIsBurnt()) {
         actionTypes.add(StationAction.ActionType.FLIP_ACTION);
       } else if (currentIngredient.getIsCooked()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
@@ -155,6 +179,7 @@ public class CookingStation extends Station {
         uiController.showProgressBar(this);
         nearbyChef.setPaused(true);
         progressVisible = true;
+        burnTimer = 0;
         break;
 
       case PLACE_INGREDIENT:
@@ -174,6 +199,13 @@ public class CookingStation extends Station {
         }
         uiController.showActions(this, getActionTypes());
         break;
+
+      case CLEAR_STATION:
+        inUse = false;
+        currentIngredient = null;
+        progressVisible = false;
+        timeToBurn = 10f;
+        uiController.showActions(this, getActionTypes());
     }
   }
 
@@ -186,7 +218,7 @@ public class CookingStation extends Station {
   }
 
   private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) && !isPowerUpUsed){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerUpUsed){
       doubleCookingSpeed();
       isPowerUpUsed = true;
     }
