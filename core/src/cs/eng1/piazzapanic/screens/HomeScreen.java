@@ -22,7 +22,7 @@ public class HomeScreen implements Screen {
   public HomeScreen(final PiazzaPanicGame game) {
     // Initialize the root UI stage and table
     ScreenViewport uiViewport = new ScreenViewport();
-    uiStage = new Stage(uiViewport);
+    uiStage = new Stage();
     Table table = new Table();
     table.setFillParent(true);
     uiStage.addActor(table);
@@ -84,6 +84,7 @@ public class HomeScreen implements Screen {
     table.add(settingsButton).padBottom(20f);
     table.row();
     table.add(quitButton);
+    table.row();
   }
 
   @Override
