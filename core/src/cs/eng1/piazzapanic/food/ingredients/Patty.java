@@ -17,13 +17,12 @@ public class Patty extends Ingredient {
   @Override
   public Texture getTexture() {
     String name = getType() + "_";
-    if (isCooked) {
-      name += "cooked";
+    if (isCooked && !isBurnt) {
+      return textureManager.getTexture(name += "cooked");
     } else if (isBurnt){
-      name = "burnt";
+      return textureManager.getTexture("burnt");
     } else {
-      name += "raw";
+      return textureManager.getTexture(name += "raw");
     }
-    return textureManager.getTexture(name);
   }
 }

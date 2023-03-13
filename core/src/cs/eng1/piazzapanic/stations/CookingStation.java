@@ -90,7 +90,7 @@ public class CookingStation extends Station {
 
   private boolean checkIfBurnt(float detla){
     if(currentIngredient != null){
-      if(currentIngredient.getIsHalfCooked() && !progressVisible && !currentIngredient.getIsBurnt()){
+      if((currentIngredient.getIsHalfCooked() || currentIngredient.getIsCooked()) && !progressVisible && !currentIngredient.getIsBurnt()){
         burnTimer += detla;
       }
     }
@@ -179,6 +179,7 @@ public class CookingStation extends Station {
         uiController.showProgressBar(this);
         nearbyChef.setPaused(true);
         progressVisible = true;
+        burnTimer = 0;
         break;
 
       case PLACE_INGREDIENT:

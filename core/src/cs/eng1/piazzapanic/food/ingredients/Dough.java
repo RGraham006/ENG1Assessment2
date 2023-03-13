@@ -18,7 +18,7 @@ public class Dough extends Ingredient{
       if (isBaked) {
         return "pizza_base";
       }
-      else if (isCooked) {
+      else if (isCooked && !isBurnt) {
         return "bun";
       }
       else if (isBurnt){
