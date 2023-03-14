@@ -73,7 +73,7 @@ public class GameScreen implements Screen {
 
     foodTextureManager = new FoodTextureManager();
     chefManager = new ChefManager(tileUnitSize * 2.5f, collisionLayer, uiOverlay);
-    customerManager = new CustomerManager(uiOverlay);
+    customerManager = new CustomerManager(uiOverlay, foodTextureManager);
 
     // Add tile objects
     initialiseStations(tileUnitSize, objectLayer);
@@ -187,7 +187,6 @@ public class GameScreen implements Screen {
     Gdx.input.setInputProcessor(multiplexer);
     uiOverlay.init();
     chefManager.init();
-    customerManager.init(foodTextureManager);
 
     for (Actor actor : stage.getActors().items) {
       if (actor instanceof Station) {
@@ -215,8 +214,9 @@ public class GameScreen implements Screen {
     stage.draw();
     uiStage.draw();
 
+    customerManager.updateCustomerOrders(delta);
+
     if (isFirstFrame) {
-      customerManager.nextRecipe();
       isFirstFrame = false;
     }
   }

@@ -7,7 +7,6 @@ public class ReputationPoint extends Label {
     private int points = 3;
     private boolean gameover = false;
     
-
     public ReputationPoint(Label.LabelStyle labelStyle){
         super("Reputation Points: 3", labelStyle);
     }
