@@ -100,6 +100,7 @@ public class RecipeStation extends Station {
           actionTypes.add(ActionType.PLACE_INGREDIENT);
         }
       }
+      System.out.println(completedRecipe);
       if (completedRecipe == null) {
         if (pattyCount >= 1 && bunCount >= 1 && nearbyChef.getStack().hasSpace()) {
           actionTypes.add(ActionType.MAKE_BURGER);
@@ -191,8 +192,9 @@ public class RecipeStation extends Station {
       case SUBMIT_ORDER:
         if (completedRecipe != null) {
           if (customerManager.checkRecipe(completedRecipe)) {
+            customerManager.removeCustomerOrder(completedRecipe);
+            customerManager.setRemainingCustomers();
             uiOverlay.updateGold();
-            customerManager.nextRecipe();
             completedRecipe = null;
           }
         }

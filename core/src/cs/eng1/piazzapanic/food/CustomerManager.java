@@ -22,7 +22,7 @@ import java.util.List;
 public class CustomerManager {
 
   private int remainingCustomers = 5;
-  private final float waitTime = 40f;
+  private final float waitTime = 100f;
   private ArrayList<Recipe> customerOrders;
   private ArrayList<Float> customerWaitTimes;
   private ArrayList<ProgressBar> customerWaitProgressBars;
@@ -93,10 +93,7 @@ public class CustomerManager {
       
       progress.setValue(wait);
       if (wait <= 0) {
-        Recipe recipeToRemove = customerOrders.get(i);
-        removeCustomerOrder(recipeToRemove);
-        customerWaitTimes.remove(i);
-        customerWaitProgressBars.remove(i);
+        removeCustomerOrder(i);
       }
       else {
         customerWaitTimes.set(i, wait);
@@ -106,8 +103,19 @@ public class CustomerManager {
     overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
   }
 
+  public void removeCustomerOrder(int index) {
+    customerOrders.remove(index);
+    customerWaitTimes.remove(index);
+    customerWaitProgressBars.remove(index);
+  }
+
   public void removeCustomerOrder(Recipe recipe) {
-    customerOrders.remove(recipe);
+    for (int i = 0; i < customerOrders.size(); i++) {
+      Recipe order = customerOrders.get(i);
+      if (order.getType() == recipe.getType()) {
+        removeCustomerOrder(i);
+      }
+    }
   }
 
   /**
@@ -117,10 +125,13 @@ public class CustomerManager {
    * @return a boolean signifying if the recipe is correct.
    */
   public boolean checkRecipe(Recipe recipe) {
-    if (currentOrder == null) {
-      return false;
+    for (int i = 0; i < customerOrders.size(); i++) {
+      Recipe order = customerOrders.get(i);
+      if (order.getType() == recipe.getType()) {
+        return true;
+      }
     }
-    return recipe.getType().equals(currentOrder.getType());
+    return false;
   }
 
   /**
