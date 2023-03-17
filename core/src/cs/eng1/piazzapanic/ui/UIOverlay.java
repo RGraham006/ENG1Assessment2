@@ -1,5 +1,7 @@
 package cs.eng1.piazzapanic.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,7 +29,6 @@ import cs.eng1.piazzapanic.ui.Money;
 
 public class UIOverlay {
 
-  private final Image pointer;
   private final Stack chefDisplay;
   private final Image chefImage;
   private final Image ingredientImagesBG;
@@ -35,13 +37,11 @@ public class UIOverlay {
   private final Image recipeImagesBG;
   private final VerticalGroup recipeImages;
   private final Timer timer;
-  private final Label recipeCountLabel;
+  private final Label orderLabel;
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
-  private  Money money;
-
-  private Label goldBalance;
+  private final Money money;
 
   private ReputationPoint points;
 
@@ -54,11 +54,6 @@ public class UIOverlay {
     table.setFillParent(true);
     table.center().top().pad(15f);
     uiStage.addActor(table);
-
-    // Initialise pointer image
-    pointer = new Image(
-        new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_sliderDown.png"));
-    pointer.setScaling(Scaling.none);
 
     // Initialize UI for showing current chef
     chefDisplay = new Stack();
@@ -79,27 +74,33 @@ public class UIOverlay {
     ingredientStackDisplay.add(ingredientImages);
 
     // Initialize the timer
-    LabelStyle timerStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
+    LabelStyle timerStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     timerStyle.background = new TextureRegionDrawable(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     timer = new Timer(timerStyle);
     timer.setAlignment(Align.center);
 
     // Initialize the Reputation Points
-    LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
+    LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     repPointsStyle.background = new TextureRegionDrawable(new Texture(
       "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     points = new ReputationPoint(repPointsStyle);
     points.setAlignment(Align.center);
+
+    //  Initialize money
+    LabelStyle moneyStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
+    moneyStyle.background = new TextureRegionDrawable(new Texture(
+      "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
+    money = new Money(moneyStyle);
+    money.setAlignment(Align.center);
+    
+
 
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
                 Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/home.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
-
-
-
 
     homeButton.addListener(new ClickListener() {
       @Override
@@ -117,11 +118,15 @@ public class UIOverlay {
     recipeImagesBG.setVisible(false);
     recipeDisplay.add(recipeImagesBG);
     recipeImages = new VerticalGroup();
+    recipeImages.padTop(20f);
+    recipeImages.padBottom(20f);
+    recipeImages.setWidth(80f);
+
     recipeDisplay.add(recipeImages);
 
     // Initialize counter for showing remaining recipes
-    LabelStyle counterStyle = new LabelStyle(game.getFontManager().getHeaderFont(), Color.BLACK);
-    recipeCountLabel = new Label("0", counterStyle);
+    LabelStyle orderStyle = new LabelStyle(game.getFontManager().getSubHeaderFont(), Color.BLACK);
+    orderLabel = new Label("Orders", orderStyle);
 
     // Initialize winning label
     LabelStyle labelStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
@@ -130,39 +135,24 @@ public class UIOverlay {
     resultTimer = new Timer(labelStyle);
     resultTimer.setVisible(false);
 
-    //  Initialize gold balance
-    money = new Money();
-    goldBalance = new Label(String.valueOf(money.showBalance()), labelStyle);
-
-
-
-
-
     // Add everything
-    Value scale = Value.percentWidth(0.04f, table);
-    Value timerWidth = Value.percentWidth(0.2f, table);
-    Value repPointsWidth = Value.percentWidth(0.36f, table);
-    table.add(chefDisplay).left().width(scale).height(scale);
-    table.add().expandX().width(timerWidth);
-    table.add(homeButton).right().width(scale).height(scale);
+
+    table.add(chefDisplay).left().width(40f).height(40f);
+    table.add().expandX();
+    table.add(homeButton).right().width(80f).height(40f);
     table.row().padTop(10f).expand();
-    table.add(ingredientStackDisplay).left().top().width(scale);
-    table.add().expandX().width(timerWidth);
-    table.add(recipeDisplay).right().top().width(scale);
+    table.add(ingredientStackDisplay).left().top().width(40f);
+    table.add().expandX().width(250f);
+    table.add(recipeDisplay).right().top().width(80f);
     table.row();
     table.add(resultLabel).colspan(3);
     table.row();
     table.add(resultTimer).colspan(3);
     table.row();
-    table.add(goldBalance);
-
-
-
-    table.row().expand().padBottom(10f);
-    table.add().expandX().width(scale).height(scale);
-    table.add(timer).bottom().expandX().width(timerWidth).height(scale);
-    table.add(points).bottom().expandX().width(repPointsWidth).height(scale);
-
+    table.add(money).bottom().width(300f).height(30f);
+    table.add(timer).bottom().expandX().width(200f).height(30f);
+    table.add(points).bottom().width(300f).height(30f);
+    table.setDebug(true);
   }
 
   /**
@@ -175,12 +165,11 @@ public class UIOverlay {
     resultTimer.setVisible(false);
     updateChefUI(null);
   }
+
   public void updateGold() {
-    money.addGold(100);
-    goldBalance.setText(money.showBalance());
+    money.addMoney(100);
+    money.setText("Money: " + money.getMoney());
   }
-
-
 
   /**
    * Show the image of the currently selected chef as well as have the stack of ingredients
@@ -235,37 +224,25 @@ public class UIOverlay {
    * Show the current requested recipe that the player needs to make, the ingredients for that, and
    * the number of remaining recipes.
    *
-   * @param recipe The recipe to display the ingredients for.
+   * @param recipes The recipes to display.
+   * @param progressBars The order waiting times to display.
    */
-  public void updateRecipeUI(Recipe recipe) {
-    // recipe will be null when we reach the end of the scenario
-    if (recipe == null) {
-      recipeImages.clearChildren();
-      recipeImagesBG.setVisible(false);
-      return;
-    }
+  public void updateRecipeUI(ArrayList<Recipe> recipes, ArrayList<ProgressBar> progressBars) {
+    
     recipeImages.clearChildren();
-    recipeImages.addActor(recipeCountLabel);
-    for (String recipeIngredient : recipe.getRecipeIngredients()) {
-      Image image = new Image(recipe.getTextureManager().getTexture(recipeIngredient));
-      image.getDrawable().setMinHeight(chefDisplay.getHeight());
-      image.getDrawable().setMinWidth(chefDisplay.getWidth());
-      recipeImages.addActor(image);
-    }
-    recipeImages.addActor(pointer);
-    Image recipeImage = new Image(recipe.getTexture());
-    recipeImage.getDrawable().setMinHeight(chefDisplay.getHeight());
-    recipeImage.getDrawable().setMinWidth(chefDisplay.getWidth());
-    recipeImages.addActor(recipeImage);
-    recipeImagesBG.setVisible(true);
-  }
+    recipeImages.addActor(orderLabel);
+    if (recipes.isEmpty()) {
+      recipeImagesBG.setVisible(false);
+    } 
+    else { 
+      for (int i = 0; i < recipes.size(); i++) {
+        ProgressBar progress = progressBars.get(i);
+        recipeImages.addActor(progress);
 
-  /**
-   * Update the number of remaining recipes to be displayed.
-   *
-   * @param remainingRecipes The number of remaining recipes.
-   */
-  public void updateRecipeCounter(int remainingRecipes) {
-    recipeCountLabel.setText(remainingRecipes);
+        Image recipeImage = new Image(recipes.get(i).getTexture());
+        recipeImages.addActor(recipeImage);
+      }
+      recipeImagesBG.setVisible(true);
+    } 
   }
 }

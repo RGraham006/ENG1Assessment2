@@ -15,6 +15,7 @@ public class FontManager implements Disposable {
   private final FreeTypeFontGenerator fontGenerator;
   private final BitmapFont titleFont;
   private final BitmapFont headerFont;
+  private final BitmapFont subHeaderFont;
   private final BitmapFont labelFont;
 
   public FontManager() {
@@ -28,6 +29,10 @@ public class FontManager implements Disposable {
     headerFontParameters.size = 24;
     headerFont = fontGenerator.generateFont(headerFontParameters);
 
+    FreeTypeFontParameter subHeaderFontParameters = new FreeTypeFontParameter();
+    subHeaderFontParameters.size = 18;
+    subHeaderFont = fontGenerator.generateFont(subHeaderFontParameters);
+
     FreeTypeFontParameter labelFontParameters = new FreeTypeFontParameter();
     labelFontParameters.size = 12;
     labelFont = fontGenerator.generateFont(labelFontParameters);
@@ -39,6 +44,10 @@ public class FontManager implements Disposable {
 
   public BitmapFont getHeaderFont() {
     return headerFont;
+  }
+
+  public BitmapFont getSubHeaderFont() {
+    return subHeaderFont;
   }
 
   public BitmapFont getLabelFont() {
