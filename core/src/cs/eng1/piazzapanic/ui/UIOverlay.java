@@ -94,7 +94,11 @@ public class UIOverlay {
     money = new Money(moneyStyle);
     money.setAlignment(Align.center);
     
-
+    //Initialize the Shop Button
+    ImageButton shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
+            new Texture(
+                    Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/cart.png"))),
+            ButtonColour.BLUE, -1.5f);
 
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
@@ -110,6 +114,13 @@ public class UIOverlay {
     });
     removeBtnDrawable = new TextureRegionDrawable(
         new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_crossWhite.png"));
+
+    shopButton.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y){
+        game.loadShopScreen();
+      }
+    });
 
     // Initialize the UI to display the currently requested recipe
     Stack recipeDisplay = new Stack();
@@ -139,10 +150,12 @@ public class UIOverlay {
 
     table.add(chefDisplay).left().width(40f).height(40f);
     table.add().expandX();
+    table.add(shopButton).right().width(80f).height(40f);
     table.add(homeButton).right().width(80f).height(40f);
     table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(40f);
     table.add().expandX().width(250f);
+    table.add().expandX().width(80f);
     table.add(recipeDisplay).right().top().width(80f);
     table.row();
     table.add(resultLabel).colspan(3);
