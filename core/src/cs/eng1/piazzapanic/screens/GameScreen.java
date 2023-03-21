@@ -15,9 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
@@ -47,13 +45,18 @@ public class GameScreen implements Screen {
   private final FoodTextureManager foodTextureManager;
   private final CustomerManager customerManager;
   private boolean isFirstFrame = true;
+
+  private final PiazzaPanicGame game;
+
+  private final float tileUnitSize;
   
 
   public GameScreen(final PiazzaPanicGame game) {
+    this.game = game;
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
     int sizeX = map.getProperties().get("width", Integer.class);
     int sizeY = map.getProperties().get("height", Integer.class);
-    float tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
+    this.tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
 
     // Initialize stage and camera
     OrthographicCamera camera = new OrthographicCamera();
@@ -214,6 +217,7 @@ public class GameScreen implements Screen {
     uiStage.draw();
 
     customerManager.updateCustomerOrders(delta);
+    chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked());
 
     if (isFirstFrame) {
       isFirstFrame = false;

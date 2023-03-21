@@ -15,7 +15,7 @@ public class PiazzaPanicGame extends Game {
   private ButtonManager buttonManager;
   private GameScreen gameScreen;
   private HomeScreen homeScreen;
-  private ShopScreen shopScreen;
+  public ShopScreen shopScreen;
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
 
@@ -25,6 +25,7 @@ public class PiazzaPanicGame extends Game {
     buttonManager = new ButtonManager(fontManager);
     tutorialOverlay = new TutorialOverlay(this);
     settingsOverlay = new SettingsOverlay(this);
+    shopScreen = new ShopScreen(this);
     loadHomeScreen();
   }
 
@@ -35,6 +36,9 @@ public class PiazzaPanicGame extends Game {
     }
     if (homeScreen != null) {
       homeScreen.dispose();
+    }
+    if(shopScreen != null){
+      shopScreen.dispose();
     }
     fontManager.dispose();
     buttonManager.dispose();

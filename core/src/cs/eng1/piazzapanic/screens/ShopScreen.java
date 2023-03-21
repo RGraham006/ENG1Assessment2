@@ -12,10 +12,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import cs.eng1.piazzapanic.ui.ButtonManager;
+import cs.eng1.piazzapanic.chef.ChefManager;
 
 public class ShopScreen implements Screen {
 
     private final Stage uiStage;
+    private boolean chefUnlocked = false;
 
     public ShopScreen(final PiazzaPanicGame game){
         ScreenViewport uiViewport = new ScreenViewport();
@@ -27,16 +29,17 @@ public class ShopScreen implements Screen {
         Label shopLabel = new Label("Game Shop",
                 new Label.LabelStyle(game.getFontManager().getHeaderFont(), null));
 
-        TextButton chefButton = game.getButtonManager().createTextButton("3rd Chef", ButtonManager.ButtonColour.BLUE);
+        TextButton chefButton = game.getButtonManager().createTextButton("3rd Chef 200C", ButtonManager.ButtonColour.BLUE);
         chefButton.sizeBy(3f);
         chefButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                chefUnlocked = true;
                 game.loadGameScreen();
             }
         });
 
-        TextButton cuttingButton = game.getButtonManager().createTextButton("New Cutting Board", ButtonManager.ButtonColour.BLUE);
+        TextButton cuttingButton = game.getButtonManager().createTextButton("New Cutting Board 400C", ButtonManager.ButtonColour.BLUE);
         cuttingButton.sizeBy(3f);
         cuttingButton.addListener(new ClickListener(){
             @Override
@@ -45,7 +48,7 @@ public class ShopScreen implements Screen {
             }
         });
 
-        TextButton ovenButton = game.getButtonManager().createTextButton("New Baking Oven", ButtonManager.ButtonColour.BLUE);
+        TextButton ovenButton = game.getButtonManager().createTextButton("New Baking Oven 400C", ButtonManager.ButtonColour.BLUE);
         ovenButton.sizeBy(3f);
         ovenButton.addListener(new ClickListener(){
             @Override
@@ -54,7 +57,7 @@ public class ShopScreen implements Screen {
             }
         });
 
-        TextButton fryingButton = game.getButtonManager().createTextButton("New Frying Pan", ButtonManager.ButtonColour.BLUE);
+        TextButton fryingButton = game.getButtonManager().createTextButton("New Frying Pan 400C", ButtonManager.ButtonColour.BLUE);
         fryingButton.sizeBy(3f);
         fryingButton.addListener(new ClickListener(){
             @Override
@@ -73,6 +76,10 @@ public class ShopScreen implements Screen {
         table.row();
         table.add(fryingButton);
         table.row();
+    }
+
+    public boolean getChefUnlocked(){
+        return chefUnlocked;
     }
 
     @Override
