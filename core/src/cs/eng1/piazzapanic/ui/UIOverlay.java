@@ -27,6 +27,8 @@ import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.ui.ButtonManager.ButtonColour;
 import cs.eng1.piazzapanic.ui.Money;
 
+import static com.badlogic.gdx.utils.Align.center;
+
 public class UIOverlay {
 
   private final Stack chefDisplay;
@@ -41,9 +43,8 @@ public class UIOverlay {
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
-  private final Money money;
-
   private ReputationPoint points;
+  private final MoneyLabel moneyLabel;
 
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
@@ -78,21 +79,22 @@ public class UIOverlay {
     timerStyle.background = new TextureRegionDrawable(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     timer = new Timer(timerStyle);
-    timer.setAlignment(Align.center);
+    timer.setAlignment(center);
 
     // Initialize the Reputation Points
     LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     repPointsStyle.background = new TextureRegionDrawable(new Texture(
       "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     points = new ReputationPoint(repPointsStyle);
-    points.setAlignment(Align.center);
+    points.setAlignment(center);
 
     //  Initialize money
     LabelStyle moneyStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     moneyStyle.background = new TextureRegionDrawable(new Texture(
-      "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
-    money = new Money(moneyStyle);
-    money.setAlignment(Align.center);
+            "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
+    moneyLabel = new MoneyLabel(moneyStyle, game);
+    moneyLabel.setAlignment(center);
+
     
     //Initialize the Shop Button
     ImageButton shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
@@ -162,7 +164,7 @@ public class UIOverlay {
     table.row();
     table.add(resultTimer).colspan(3);
     table.row();
-    table.add(money).bottom().width(300f).height(30f);
+    table.add(moneyLabel).bottom().width(300f).height(30f);
     table.add(timer).bottom().expandX().width(200f).height(30f);
     table.add(points).bottom().width(300f).height(30f);
     table.setDebug(true);
@@ -177,11 +179,6 @@ public class UIOverlay {
     resultLabel.setVisible(false);
     resultTimer.setVisible(false);
     updateChefUI(null);
-  }
-
-  public void updateGold() {
-    money.addMoney(100);
-    money.setText("Money: " + money.getMoney());
   }
 
   /**
@@ -220,6 +217,10 @@ public class UIOverlay {
     }
     ingredientImagesBG.setVisible(!chef.getStack().isEmpty());
 
+  }
+
+  public void updateMoney(){
+    moneyLabel.act();
   }
 
 

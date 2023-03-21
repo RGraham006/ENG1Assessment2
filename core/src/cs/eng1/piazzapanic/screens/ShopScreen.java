@@ -13,6 +13,7 @@ import cs.eng1.piazzapanic.PiazzaPanicGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import cs.eng1.piazzapanic.ui.ButtonManager;
 import cs.eng1.piazzapanic.chef.ChefManager;
+import cs.eng1.piazzapanic.ui.UIOverlay;
 
 public class ShopScreen implements Screen {
 
@@ -34,8 +35,13 @@ public class ShopScreen implements Screen {
         chefButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                chefUnlocked = true;
-                game.loadGameScreen();
+                if(game.money.getMoney() >= 200){
+                    game.money.setMoney((-200));
+                    chefUnlocked = true;
+                    game.loadGameScreen();
+                }else{
+                    game.loadGameScreen();
+                }
             }
         });
 

@@ -112,7 +112,7 @@ public class ChefManager implements Disposable {
     });
   }
 
-  public void addThirdChef(float tileUnitSize, boolean chefUnlocked){
+  public boolean addThirdChef(float tileUnitSize, boolean chefUnlocked){
     if(chefUnlocked && chefs.size() == 2) {
       float chefScale = tileUnitSize * 2.5f;
       Texture chefTexture = new Texture(Gdx.files.internal("Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Man Red/manRed_hold.png"));
@@ -122,7 +122,9 @@ public class ChefManager implements Disposable {
               chefTexture.getHeight() * chefScale);
       chef.setInputEnabled(false);
       chefs.add(chef);
+      return true;
     }
+    return false;
   }
 
   /**

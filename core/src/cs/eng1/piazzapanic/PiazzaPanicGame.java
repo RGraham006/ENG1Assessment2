@@ -4,10 +4,7 @@ import com.badlogic.gdx.Game;
 import cs.eng1.piazzapanic.screens.GameScreen;
 import cs.eng1.piazzapanic.screens.HomeScreen;
 import cs.eng1.piazzapanic.screens.ShopScreen;
-import cs.eng1.piazzapanic.ui.SettingsOverlay;
-import cs.eng1.piazzapanic.ui.TutorialOverlay;
-import cs.eng1.piazzapanic.ui.ButtonManager;
-import cs.eng1.piazzapanic.ui.FontManager;
+import cs.eng1.piazzapanic.ui.*;
 
 public class PiazzaPanicGame extends Game {
 
@@ -19,6 +16,8 @@ public class PiazzaPanicGame extends Game {
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
 
+  public Money money;
+
   @Override
   public void create() {
     fontManager = new FontManager();
@@ -26,6 +25,9 @@ public class PiazzaPanicGame extends Game {
     tutorialOverlay = new TutorialOverlay(this);
     settingsOverlay = new SettingsOverlay(this);
     shopScreen = new ShopScreen(this);
+    homeScreen = new HomeScreen(this);
+    gameScreen = new GameScreen(this);
+    money = new Money();
     loadHomeScreen();
   }
 
@@ -45,23 +47,14 @@ public class PiazzaPanicGame extends Game {
   }
 
   public void loadHomeScreen() {
-    if (homeScreen == null) {
-      homeScreen = new HomeScreen(this);
-    }
     setScreen(homeScreen);
   }
 
   public void loadGameScreen() {
-    if (gameScreen == null) {
-      gameScreen = new GameScreen(this);
-    }
     setScreen(gameScreen);
   }
 
   public void loadShopScreen(){
-    if(shopScreen == null){
-      shopScreen = new ShopScreen(this);
-    }
     setScreen(shopScreen);
   }
 

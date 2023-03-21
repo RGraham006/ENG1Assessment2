@@ -136,7 +136,7 @@ public class GameScreen implements Screen {
           break;
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, foodTextureManager, customerManager, uiOverlay);
+              alignment, foodTextureManager, customerManager, game);
           customerManager.addRecipeStation((RecipeStation) station);
 
           break;
@@ -217,7 +217,10 @@ public class GameScreen implements Screen {
     uiStage.draw();
 
     customerManager.updateCustomerOrders(delta);
-    chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked());
+    uiOverlay.updateMoney();
+    if(chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked())){
+      chefManager.addChefsToStage(stage);
+    }
 
     if (isFirstFrame) {
       isFirstFrame = false;
