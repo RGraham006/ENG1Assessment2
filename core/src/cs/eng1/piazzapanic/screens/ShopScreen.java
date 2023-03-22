@@ -19,9 +19,9 @@ public class ShopScreen implements Screen {
 
     private final Stage uiStage;
     private boolean chefUnlocked = false;
+    private boolean ovenLocked = false;
 
     public ShopScreen(final PiazzaPanicGame game){
-        ScreenViewport uiViewport = new ScreenViewport();
         uiStage = new Stage();
         Table table = new Table();
         table.setFillParent(true);
@@ -58,8 +58,14 @@ public class ShopScreen implements Screen {
         ovenButton.sizeBy(3f);
         ovenButton.addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y){
-                game.loadGameScreen();
+            public void clicked(InputEvent event, float x, float y) {
+                if(game.money.getMoney() >= 400){
+                    game.money.setMoney((-400));
+                    ovenLocked = false;
+                    game.loadGameScreen();
+                }else{
+                    game.loadGameScreen();
+                }
             }
         });
 
@@ -86,6 +92,10 @@ public class ShopScreen implements Screen {
 
     public boolean getChefUnlocked(){
         return chefUnlocked;
+    }
+
+    public boolean getOvenLocked(){
+        return ovenLocked;
     }
 
     @Override

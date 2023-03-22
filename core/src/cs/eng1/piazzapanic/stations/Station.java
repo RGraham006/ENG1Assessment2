@@ -1,5 +1,6 @@
 package cs.eng1.piazzapanic.stations;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -63,6 +64,10 @@ public class Station extends Actor implements Observer<Chef> {
    */
   protected void drawFoodTexture(Batch batch, Texture foodTexture) {
     batch.draw(foodTexture, getX() + .2f, getY() + .2f, .6f, .6f);
+  }
+
+  protected void drawLockedTexture(Batch batch){
+    batch.draw(new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/locked.png")), getX() + .2f, getY() + .2f, .6f, .6f);
   }
 
   /**

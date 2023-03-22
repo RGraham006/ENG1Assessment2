@@ -1,6 +1,7 @@
 package cs.eng1.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -138,11 +139,10 @@ public class GameScreen implements Screen {
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
               alignment, foodTextureManager, customerManager, game);
           customerManager.addRecipeStation((RecipeStation) station);
-
           break;
         case "bakingStation":
           station = new BakingStation(id, tileObject.getTextureRegion(), stationUIController,
-                  alignment, Ingredient.arrayFromString(ingredients, foodTextureManager));
+                  alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get("stationLocked", String.class), game);
           break;
         default:
           station = new Station(id, tileObject.getTextureRegion(), stationUIController, alignment);
@@ -224,6 +224,10 @@ public class GameScreen implements Screen {
 
     if (isFirstFrame) {
       isFirstFrame = false;
+    }
+
+    if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){
+      game.money.setMoney(10000);
     }
   }
 
