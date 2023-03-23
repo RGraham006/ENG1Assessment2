@@ -3,11 +3,8 @@ package cs.eng1.piazzapanic.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
@@ -27,6 +24,8 @@ public class ButtonManager implements Disposable {
   private final HashMap<ButtonColour, TextButton.TextButtonStyle> textButtonStyles;
   private final HashMap<ButtonColour, Button.ButtonStyle> imageButtonBaseStyles;
   private final HashMap<ButtonColour, CheckBox.CheckBoxStyle> checkBoxStyles;
+
+
 
   private final Texture checkboxUnchecked;
 

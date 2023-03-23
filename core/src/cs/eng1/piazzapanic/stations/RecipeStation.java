@@ -35,8 +35,8 @@ public class RecipeStation extends Station {
   protected int potatoCount = 0;
   protected int cheeseCount = 0;
 
+  private final int mode;
   private Recipe completedRecipe = null;
-
 
   private final UIOverlay uiOverlay;
 
@@ -58,11 +58,12 @@ public class RecipeStation extends Station {
    */
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
       ActionAlignment alignment, FoodTextureManager textureManager,
-      CustomerManager customerManager, UIOverlay uiOverlay) {
+      CustomerManager customerManager, UIOverlay uiOverlay, int mode) {
     super(id, textureRegion, stationUIController, alignment);
     this.textureManager = textureManager;
     this.customerManager = customerManager;
     this.uiOverlay = uiOverlay;
+    this.mode = mode;
 
   }
 
@@ -191,8 +192,10 @@ public class RecipeStation extends Station {
         if (completedRecipe != null) {
           if (customerManager.checkRecipe(completedRecipe)) {
             customerManager.removeCustomerOrder(completedRecipe);
-            customerManager.setRemainingCustomers();
-            uiOverlay.updateGold();
+            if (mode == 0){
+              customerManager.setRemainingCustomers();
+            }
+            uiOverlay.updateMoney();
             completedRecipe = null;
           }
         }

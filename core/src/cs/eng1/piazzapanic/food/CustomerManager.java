@@ -13,7 +13,6 @@ import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.food.recipes.Salad;
 import cs.eng1.piazzapanic.stations.RecipeStation;
 import cs.eng1.piazzapanic.ui.UIOverlay;
-
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class CustomerManager {
 
-  private int remainingCustomers = 5;
+  private int remainingCustomers;
   private final float waitTime = 100f;
   private ArrayList<Recipe> customerOrders;
   private ArrayList<Float> customerWaitTimes;
@@ -32,11 +31,27 @@ public class CustomerManager {
   private final List<RecipeStation> recipeStations;
   private final UIOverlay overlay;
   private final Recipe[] possibleRecipes;
+  private final int mode;
+
+  private final int customerNum;
   private float nextOrder = 0f;
 
-  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager) {
+
+
+
+  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum ) {
     this.overlay = overlay;
     this.recipeStations = new LinkedList<>();
+    this.mode = mode;
+    this.customerNum = customerNum;
+
+    if (mode == 0){
+      remainingCustomers = customerNum;
+    }
+    if (mode == 1){
+      remainingCustomers = 1;
+    }
+
     
     possibleRecipes = new Recipe[] {new Burger(textureManager), new Salad(textureManager), new Pizza(textureManager), new JacketPotato(textureManager)};
 
@@ -135,7 +150,7 @@ public class CustomerManager {
   }
 
   /**
-   * Complete the current order nad move on to the next one. Then update the UI. If all the recipes
+   * Complete the current order and move on to the next one. Then update the UI. If all the recipes
    * are completed, then show the winning UI.
    */
   public void nextRecipe() {

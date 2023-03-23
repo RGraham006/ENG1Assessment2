@@ -45,9 +45,9 @@ public class PiazzaPanicGame extends Game {
     setScreen(homeScreen);
   }
 
-  public void loadGameScreen() {
+  public void loadGameScreen(int mode, int customerN) {
     if (gameScreen == null) {
-      gameScreen = new GameScreen(this);
+      gameScreen = new GameScreen(this, mode, customerN);
     }
     setScreen(gameScreen);
   }

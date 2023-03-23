@@ -166,7 +166,7 @@ public class UIOverlay {
     updateChefUI(null);
   }
 
-  public void updateGold() {
+  public void updateMoney() {
     money.addMoney(100);
     money.setText("Money: " + money.getMoney());
   }
