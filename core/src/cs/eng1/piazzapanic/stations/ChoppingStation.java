@@ -25,7 +25,6 @@ public class ChoppingStation extends Station {
   protected final Ingredient[] validIngredients;
   protected Ingredient currentIngredient = null;
   protected float timeChopped;
-  protected float totalTimeToChop = 5f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
 
@@ -55,17 +54,16 @@ public class ChoppingStation extends Station {
    */
   @Override
   public void act(float delta) {
-    getInput();
     if (inUse) {
       timeChopped += delta;
-      uiController.updateProgressValue(this, (timeChopped / totalTimeToChop) * 100f);
-      if (timeChopped >= totalTimeToChop && progressVisible) {
+      uiController.updateProgressValue(this, (timeChopped / nearbyChef.getPrepSpeed()) * 100f);
+      if (timeChopped >= nearbyChef.getPrepSpeed() && progressVisible) {
         currentIngredient.setIsChopped(true);
         uiController.hideProgressBar(this);
         uiController.showActions(this, getActionTypes());
         progressVisible = false;
+        nearbyChef.resetPrepSpeed();
         nearbyChef.setPaused(false);
-        resetCookingSpeed();
       }
     }
     super.act(delta);
@@ -163,21 +161,6 @@ public class ChoppingStation extends Station {
     timeChopped = 0;
     progressVisible = false;
     super.reset();
-  }
-
-  private void doubleCookingSpeed(){
-    totalTimeToChop = 1f;
-  }
-
-  private void resetCookingSpeed(){
-    totalTimeToChop = 5f;
-  }
-
-  private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && isPowerUpUsed == false){
-      doubleCookingSpeed();
-      isPowerUpUsed = true;
-    }
   }
 
   /**

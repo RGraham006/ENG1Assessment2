@@ -18,7 +18,6 @@ public class BakingStation extends Station{
     protected final Ingredient[] validIngredients;
     protected Ingredient currentIngredient;
     protected float timeBaked;
-    protected float totalTimeToCook = 5f;
     private boolean progressVisible = false;
     private boolean isPowerupUsed = false;
     private final float timeToBurn = 5f;
@@ -42,19 +41,19 @@ public class BakingStation extends Station{
         if(locked){
             locked = game.shopScreen.getOvenLocked();
         }
-        getInput();
         if(checkIfBurnt(delta)){
             currentIngredient.setIsBurnt(true);
             uiController.showActions(this, getActionTypes());
         }
         if (inUse) {
             timeBaked += delta;
-            uiController.updateProgressValue(this, (timeBaked / totalTimeToCook) * 100f);
-            if (timeBaked >= totalTimeToCook && progressVisible) {
+            uiController.updateProgressValue(this, (timeBaked / nearbyChef.getPrepSpeed()) * 100f);
+            if (timeBaked >= nearbyChef.getPrepSpeed() && progressVisible) {
                 currentIngredient.setBaked(true);
                 uiController.hideProgressBar(this);
                 uiController.showActions(this, getActionTypes());
                 progressVisible = false;
+                nearbyChef.resetPrepSpeed();
                 nearbyChef.setPaused(false);
             }
         }
@@ -163,26 +162,8 @@ public class BakingStation extends Station{
         burnTimer = 0;
         currentIngredient = null;
         progressVisible = false;
-        resetCookingSpeed();
         super.reset();
     }
-
-
-    private void doubleCookingSpeed(){
-        totalTimeToCook = 1f;
-    }
-
-    private void getInput(){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerupUsed){
-            doubleCookingSpeed();
-            isPowerupUsed = true;
-        }
-    }
-
-    private void resetCookingSpeed(){
-        totalTimeToCook = 5f;
-    }
-
 
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);

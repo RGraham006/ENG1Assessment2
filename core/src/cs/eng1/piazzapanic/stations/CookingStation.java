@@ -25,7 +25,6 @@ public class CookingStation extends Station {
   protected final Ingredient[] validIngredients;
   protected Ingredient currentIngredient;
   protected float timeCooked;
-  protected float totalTimeToCook = 10f;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
   private final float timeToBurn = 5f;
@@ -64,20 +63,19 @@ public class CookingStation extends Station {
    */
   @Override
   public void act(float delta) {
-    getInput();
     if(checkIfBurnt(delta)){
       currentIngredient.setIsBurnt(true);
       uiController.showActions(this, getActionTypes());
     }
     if (inUse) {
       timeCooked += delta;
-      uiController.updateProgressValue(this, (timeCooked / totalTimeToCook) * 100f);
-      if (timeCooked >= totalTimeToCook && progressVisible) {
+      uiController.updateProgressValue(this, (timeCooked / nearbyChef.getPrepSpeed()) * 100f);
+      if (timeCooked >= nearbyChef.getPrepSpeed() && progressVisible) {
         if (!currentIngredient.getIsHalfCooked()) {
           currentIngredient.setHalfCooked();
         } else if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
-          resetCookingSpeed();
+          nearbyChef.resetPrepSpeed();
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
@@ -207,22 +205,6 @@ public class CookingStation extends Station {
         uiController.showActions(this, getActionTypes());
     }
   }
-
-  private void doubleCookingSpeed(){
-    totalTimeToCook = 2f;
-  }
-
-  private void resetCookingSpeed(){
-    totalTimeToCook = 10f;
-  }
-
-  private void getInput(){
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) && !isPowerUpUsed){
-      doubleCookingSpeed();
-      isPowerUpUsed = true;
-    }
-  }
-
 
   /**
    * Displays ingredients that have been placed on the station

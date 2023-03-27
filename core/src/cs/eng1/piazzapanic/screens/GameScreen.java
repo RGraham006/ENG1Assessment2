@@ -23,8 +23,10 @@ import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+import cs.eng1.piazzapanic.powerups.PowerupManager;
 import cs.eng1.piazzapanic.food.FoodTextureManager;
 import cs.eng1.piazzapanic.stations.*;
+import cs.eng1.piazzapanic.ui.Money;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.ui.UIOverlay;
@@ -45,6 +47,7 @@ public class GameScreen implements Screen {
   private final UIOverlay uiOverlay;
   private final FoodTextureManager foodTextureManager;
   private final CustomerManager customerManager;
+  private final PowerupManager powerupManager;
   private boolean isFirstFrame = true;
 
   private final PiazzaPanicGame game;
@@ -77,11 +80,12 @@ public class GameScreen implements Screen {
     foodTextureManager = new FoodTextureManager();
     chefManager = new ChefManager(tileUnitSize * 2.5f, collisionLayer, uiOverlay);
     customerManager = new CustomerManager(uiOverlay, foodTextureManager);
+    powerupManager = new PowerupManager(chefManager, customerManager, uiOverlay);
 
     // Add tile objects
     initialiseStations(tileUnitSize, objectLayer);
     chefManager.addChefsToStage(stage);
-
+    powerupManager.addPowerupToStage(stage);
 
   }
 
@@ -137,7 +141,7 @@ public class GameScreen implements Screen {
           break;
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, foodTextureManager, customerManager, game);
+              alignment, foodTextureManager, customerManager, uiOverlay);
           customerManager.addRecipeStation((RecipeStation) station);
           break;
         case "bakingStation":
@@ -181,6 +185,10 @@ public class GameScreen implements Screen {
     }
   }
 
+  public PowerupManager getPowerupManager() {
+    return powerupManager;
+  }
+
   @Override
   public void show() {
     InputMultiplexer multiplexer = new InputMultiplexer();
@@ -217,7 +225,7 @@ public class GameScreen implements Screen {
     uiStage.draw();
 
     customerManager.updateCustomerOrders(delta);
-    uiOverlay.updateMoney();
+    // uiOverlay.updateMoney();
     if(chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked())){
       chefManager.addChefsToStage(stage);
     }
@@ -227,8 +235,12 @@ public class GameScreen implements Screen {
     }
 
     if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){
-      game.money.setMoney(10000);
+      getMoney().addMoney(10000);
     }
+  }
+
+  public Money getMoney() {
+    return uiOverlay.getMoney();
   }
 
   @Override

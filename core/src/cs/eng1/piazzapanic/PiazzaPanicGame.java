@@ -16,8 +16,6 @@ public class PiazzaPanicGame extends Game {
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
 
-  public Money money;
-
   @Override
   public void create() {
     fontManager = new FontManager();
@@ -27,7 +25,6 @@ public class PiazzaPanicGame extends Game {
     shopScreen = new ShopScreen(this);
     homeScreen = new HomeScreen(this);
     gameScreen = new GameScreen(this);
-    money = new Money();
     loadHomeScreen();
   }
 
@@ -56,6 +53,14 @@ public class PiazzaPanicGame extends Game {
 
   public void loadShopScreen(){
     setScreen(shopScreen);
+  }
+
+  public Money getMoney() {
+    return gameScreen.getMoney();
+  }
+
+  public GameScreen getGameScreen() {
+    return gameScreen;
   }
 
   public TutorialOverlay getTutorialOverlay() {
