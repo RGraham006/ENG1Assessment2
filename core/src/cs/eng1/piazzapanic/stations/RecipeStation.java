@@ -39,7 +39,7 @@ public class RecipeStation extends Station {
   private Recipe completedRecipe = null;
 
 
-  private final PiazzaPanicGame game;
+  private final UIOverlay uiOverlay;
 
 
 
@@ -59,11 +59,11 @@ public class RecipeStation extends Station {
    */
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
                        ActionAlignment alignment, FoodTextureManager textureManager,
-                       CustomerManager customerManager, PiazzaPanicGame game) {
+                       CustomerManager customerManager, UIOverlay uiOverlay) {
     super(id, textureRegion, stationUIController, alignment);
     this.textureManager = textureManager;
     this.customerManager = customerManager;
-    this.game = game;
+    this.uiOverlay = uiOverlay;
 
   }
 
@@ -193,7 +193,7 @@ public class RecipeStation extends Station {
           if (customerManager.checkRecipe(completedRecipe)) {
             customerManager.removeCustomerOrder(completedRecipe);
             customerManager.setRemainingCustomers();
-            game.money.setMoney(100);
+            uiOverlay.updateMoney();
             completedRecipe = null;
           }
         }

@@ -19,13 +19,25 @@ public class ShopScreen implements Screen {
 
     private final Stage uiStage;
     private boolean chefUnlocked = false;
-    private boolean ovenLocked = false;
+    private boolean ovenUnlocked = false;
+
+    private final Label purchaseFailedLabel;
 
     public ShopScreen(final PiazzaPanicGame game){
         uiStage = new Stage();
         Table table = new Table();
         table.setFillParent(true);
         uiStage.addActor(table);
+
+        TextButton exitButton = game.getButtonManager().createTextButton("Back to Game", ButtonManager.ButtonColour.BLUE);
+        exitButton.sizeBy(2f);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                purchaseFailedLabel.setVisible(false);
+                game.loadGameScreen();
+            }
+        });
 
         Label shopLabel = new Label("Game Shop",
                 new Label.LabelStyle(game.getFontManager().getHeaderFont(), null));
@@ -35,12 +47,17 @@ public class ShopScreen implements Screen {
         chefButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(game.money.getMoney() >= 200){
-                    game.money.setMoney((-200));
-                    chefUnlocked = true;
-                    game.loadGameScreen();
-                }else{
-                    game.loadGameScreen();
+                purchaseFailedLabel.setVisible(false);
+                if(game.getMoney().getMoney() >= 200) {
+                    if (!chefUnlocked) {
+                        game.getMoney().addMoney((-200));
+                        chefUnlocked = true;
+                        game.loadGameScreen();
+                    } else {
+                        setPurchaseFailedLabel("Chef has already been purchased");
+                    }
+                } else {
+                    setPurchaseFailedLabel("Insufficient Funds");
                 }
             }
         });
@@ -50,6 +67,7 @@ public class ShopScreen implements Screen {
         cuttingButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                purchaseFailedLabel.setVisible(false);
                 game.loadGameScreen();
             }
         });
@@ -59,12 +77,17 @@ public class ShopScreen implements Screen {
         ovenButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(game.money.getMoney() >= 400){
-                    game.money.setMoney((-400));
-                    ovenLocked = false;
-                    game.loadGameScreen();
-                }else{
-                    game.loadGameScreen();
+                purchaseFailedLabel.setVisible(false);
+                if(game.getMoney().getMoney() >= 400){
+                    if (!ovenUnlocked) {
+                        game.getMoney().addMoney((-400));
+                        ovenUnlocked = true;
+                        game.loadGameScreen();
+                    } else {
+                        setPurchaseFailedLabel("Oven has already been purchased");
+                    }
+                } else {
+                    setPurchaseFailedLabel("Insufficient Funds");
                 }
             }
         });
@@ -74,11 +97,17 @@ public class ShopScreen implements Screen {
         fryingButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                purchaseFailedLabel.setVisible(false);
                 game.loadGameScreen();
             }
         });
 
-        table.add(shopLabel).padBottom(100f);
+        // Labels for if the item they are trying to buy has already been unlocked or insufficient funds
+        purchaseFailedLabel = new Label(null, 
+            new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
+        purchaseFailedLabel.setVisible(false);
+
+        table.add(shopLabel).padBottom(50f);
         table.row();
         table.add(chefButton).padBottom(20f);
         table.row();
@@ -86,7 +115,11 @@ public class ShopScreen implements Screen {
         table.row();
         table.add(cuttingButton).padBottom(20f);
         table.row();
-        table.add(fryingButton);
+        table.add(fryingButton).padBottom(20f);
+        table.row();
+        table.add(exitButton).padBottom(20f);
+        table.row();
+        table.add(purchaseFailedLabel);
         table.row();
     }
 
@@ -95,7 +128,12 @@ public class ShopScreen implements Screen {
     }
 
     public boolean getOvenLocked(){
-        return ovenLocked;
+        return !ovenUnlocked;
+    }
+
+    private void setPurchaseFailedLabel(String message) {
+        purchaseFailedLabel.setText(message);
+        purchaseFailedLabel.setVisible(true);
     }
 
     @Override
