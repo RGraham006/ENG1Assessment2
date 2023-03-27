@@ -2,6 +2,7 @@ package cs.eng1.piazzapanic.stations;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.food.recipes.Burger;
 import cs.eng1.piazzapanic.food.recipes.JacketPotato;
 import cs.eng1.piazzapanic.food.recipes.Pizza;
@@ -37,8 +38,8 @@ public class RecipeStation extends Station {
 
   private final int mode;
   private Recipe completedRecipe = null;
-
   private final UIOverlay uiOverlay;
+  private final PiazzaPanicGame game;
 
 
 
@@ -58,12 +59,14 @@ public class RecipeStation extends Station {
    */
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
       ActionAlignment alignment, FoodTextureManager textureManager,
-      CustomerManager customerManager, UIOverlay uiOverlay, int mode) {
+      CustomerManager customerManager, UIOverlay uiOverlay, int mode, PiazzaPanicGame game) {
     super(id, textureRegion, stationUIController, alignment);
     this.textureManager = textureManager;
     this.customerManager = customerManager;
     this.uiOverlay = uiOverlay;
+    this.game = game;
     this.mode = mode;
+
 
   }
 
@@ -195,7 +198,7 @@ public class RecipeStation extends Station {
             if (mode == 0){
               customerManager.setRemainingCustomers();
             }
-            uiOverlay.updateMoney();
+            game.money.setMoney(100);
             completedRecipe = null;
           }
         }

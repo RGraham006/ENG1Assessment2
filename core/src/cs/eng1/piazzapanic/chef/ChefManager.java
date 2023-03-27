@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import com.badlogic.gdx.utils.Disposable;
+import cs.eng1.piazzapanic.screens.GameScreen;
+import cs.eng1.piazzapanic.screens.ShopScreen;
 import cs.eng1.piazzapanic.ui.UIOverlay;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,6 @@ public class ChefManager implements Disposable {
   private final UIOverlay overlay;
   final String[] chefSprites = new String[]{
       "Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Man Brown/manBrown_hold.png",
-      "Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Woman Green/womanGreen_hold.png",
       "Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Woman Green/womanGreen_hold.png"
   };
   final float[] chefX = new float[]{
@@ -109,6 +110,21 @@ public class ChefManager implements Disposable {
         }
       }
     });
+  }
+
+  public boolean addThirdChef(float tileUnitSize, boolean chefUnlocked){
+    if(chefUnlocked && chefs.size() == 2) {
+      float chefScale = tileUnitSize * 2.5f;
+      Texture chefTexture = new Texture(Gdx.files.internal("Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Man Red/manRed_hold.png"));
+      Chef chef = new Chef(chefTexture, new Vector2(chefTexture.getWidth() * chefScale,
+              chefTexture.getHeight() * chefScale), this);
+      chef.setBounds(chefX[2], chefY[2], chefTexture.getHeight() * chefScale,
+              chefTexture.getHeight() * chefScale);
+      chef.setInputEnabled(false);
+      chefs.add(chef);
+      return true;
+    }
+    return false;
   }
 
   /**

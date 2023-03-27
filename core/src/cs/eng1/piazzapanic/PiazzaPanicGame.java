@@ -3,10 +3,8 @@ package cs.eng1.piazzapanic;
 import com.badlogic.gdx.Game;
 import cs.eng1.piazzapanic.screens.GameScreen;
 import cs.eng1.piazzapanic.screens.HomeScreen;
-import cs.eng1.piazzapanic.ui.SettingsOverlay;
-import cs.eng1.piazzapanic.ui.TutorialOverlay;
-import cs.eng1.piazzapanic.ui.ButtonManager;
-import cs.eng1.piazzapanic.ui.FontManager;
+import cs.eng1.piazzapanic.screens.ShopScreen;
+import cs.eng1.piazzapanic.ui.*;
 
 public class PiazzaPanicGame extends Game {
 
@@ -14,8 +12,11 @@ public class PiazzaPanicGame extends Game {
   private ButtonManager buttonManager;
   private GameScreen gameScreen;
   private HomeScreen homeScreen;
+  public ShopScreen shopScreen;
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
+
+  public Money money;
 
   @Override
   public void create() {
@@ -23,6 +24,9 @@ public class PiazzaPanicGame extends Game {
     buttonManager = new ButtonManager(fontManager);
     tutorialOverlay = new TutorialOverlay(this);
     settingsOverlay = new SettingsOverlay(this);
+    shopScreen = new ShopScreen(this);
+    homeScreen = new HomeScreen(this);
+    money = new Money();
     loadHomeScreen();
   }
 
@@ -34,22 +38,33 @@ public class PiazzaPanicGame extends Game {
     if (homeScreen != null) {
       homeScreen.dispose();
     }
+    if (shopScreen != null) {
+      shopScreen.dispose();
+    }
     fontManager.dispose();
     buttonManager.dispose();
   }
 
   public void loadHomeScreen() {
-    if (homeScreen == null) {
-      homeScreen = new HomeScreen(this);
-    }
     setScreen(homeScreen);
   }
 
-  public void loadGameScreen(int mode, int customerN) {
+
+  public void setGameScreen(int mode, int customerN) {
     if (gameScreen == null) {
       gameScreen = new GameScreen(this, mode, customerN);
+      loadGameScreen();
     }
+
+  }
+
+  public void loadGameScreen() {
+
     setScreen(gameScreen);
+  }
+
+  public void loadShopScreen() {
+    setScreen(shopScreen);
   }
 
   public TutorialOverlay getTutorialOverlay() {
@@ -67,4 +82,6 @@ public class PiazzaPanicGame extends Game {
   public ButtonManager getButtonManager() {
     return buttonManager;
   }
+
 }
+

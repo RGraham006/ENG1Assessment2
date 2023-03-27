@@ -49,7 +49,7 @@ public class HomeScreen implements Screen {
    scenarioModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.loadGameScreen(0, customerNum.getSelected());
+        game.setGameScreen(0, customerNum.getSelected());
       }
     });
 
@@ -59,7 +59,7 @@ public class HomeScreen implements Screen {
     endlessModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.loadGameScreen(1, customerNum.getSelected());
+        game.setGameScreen(1, customerNum.getSelected());
       }
     });
 

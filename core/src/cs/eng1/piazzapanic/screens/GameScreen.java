@@ -1,6 +1,7 @@
 package cs.eng1.piazzapanic.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,9 +16,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
@@ -50,11 +49,18 @@ public class GameScreen implements Screen {
   private final int mode;
   private final int customerNum;
 
+    private final PiazzaPanicGame game;
+
+    private final float tileUnitSize;
+
   public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum) {
+
+
+    this.game = game;
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
     int sizeX = map.getProperties().get("width", Integer.class);
     int sizeY = map.getProperties().get("height", Integer.class);
-    float tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
+    this.tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
 
     // Initialize stage and camera
     OrthographicCamera camera = new OrthographicCamera();
@@ -137,13 +143,13 @@ public class GameScreen implements Screen {
           break;
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, foodTextureManager, customerManager, uiOverlay, mode);
-          customerManager.addRecipeStation((RecipeStation) station);
+              alignment, foodTextureManager, customerManager, uiOverlay, mode, game);
 
+          customerManager.addRecipeStation((RecipeStation) station);
           break;
         case "bakingStation":
           station = new BakingStation(id, tileObject.getTextureRegion(), stationUIController,
-                  alignment, Ingredient.arrayFromString(ingredients, foodTextureManager));
+                  alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get("stationLocked", String.class), game);
           break;
         default:
           station = new Station(id, tileObject.getTextureRegion(), stationUIController, alignment);
@@ -218,9 +224,16 @@ public class GameScreen implements Screen {
     uiStage.draw();
 
     customerManager.updateCustomerOrders(delta);
+    if(chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked())){
+      chefManager.addChefsToStage(stage);
+    }
 
     if (isFirstFrame) {
       isFirstFrame = false;
+    }
+
+    if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){
+      game.money.setMoney(10000);
     }
   }
 

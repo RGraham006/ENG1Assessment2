@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
@@ -22,13 +23,25 @@ public class BakingStation extends Station{
     private boolean isPowerupUsed = false;
     private final float timeToBurn = 5f;
     private float burnTimer;
+    private PiazzaPanicGame game;
 
-    public BakingStation(int id, TextureRegion image, StationUIController uiController, StationActionUI.ActionAlignment alignment, Ingredient[] ingredients) {
+    private boolean locked;
+
+    public BakingStation(int id, TextureRegion image, StationUIController uiController, StationActionUI.ActionAlignment alignment, Ingredient[] ingredients, String locked, PiazzaPanicGame game) {
         super(id, image, uiController, alignment);
         validIngredients = ingredients;
+        if(locked.equals("true")){
+            this.locked = true;
+        }else{
+            this.locked = false;
+        }
+        this.game = game;
     }
 
     public void act(float delta) {
+        if(locked){
+            locked = game.shopScreen.getOvenLocked();
+        }
         getInput();
         if(checkIfBurnt(delta)){
             currentIngredient.setIsBurnt(true);
@@ -52,7 +65,6 @@ public class BakingStation extends Station{
 
         if(currentIngredient != null){
             if(currentIngredient.getBaked() && !currentIngredient.getIsBurnt()){
-                System.out.println("Burn Timer Increasing");
                 burnTimer += delta;
             }
         }
@@ -79,6 +91,9 @@ public class BakingStation extends Station{
     @Override
     public List<StationAction.ActionType> getActionTypes() {
         LinkedList<StationAction.ActionType> actionTypes = new LinkedList<>();
+        if(locked){
+            return actionTypes;
+        }
         if (nearbyChef == null) {
             return actionTypes;
         }
@@ -171,8 +186,15 @@ public class BakingStation extends Station{
 
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        if(locked){
+            drawLockedTexture(batch);
+        }
         if (currentIngredient != null) {
             drawFoodTexture(batch, currentIngredient.getTexture());
         }
+    }
+
+    public void unlock(){
+        this.locked = false;
     }
 }
