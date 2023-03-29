@@ -1,22 +1,30 @@
 package cs.eng1.piazzapanic.ui;
 
-public class Money {
-    private int money;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-    public void Money(){
-        money = 0;
+public class Money extends Label {
+
+    private int money = 0;
+
+    public Money(Label.LabelStyle labelStyle) {
+        super("Money: 0", labelStyle);
     }
 
     public int getMoney(){
         return money;
     }
 
-    public void setMoney(int value){
-        money = money + value;
+    public void addMoney(int i){
+        money += i;
+        setMoney();
     }
 
-    public String toString(){
-        String moneyString = String.valueOf(money);
-        return moneyString;
+    public void subtractMoney(int i){
+        money -= i;
+        setMoney();
+    }
+
+    public void setMoney() {
+        this.setText("Money: " + money);
     }
 }

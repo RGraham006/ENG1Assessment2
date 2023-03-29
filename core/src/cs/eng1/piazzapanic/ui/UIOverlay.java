@@ -22,12 +22,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.Chef;
+import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.ui.ButtonManager.ButtonColour;
 import cs.eng1.piazzapanic.ui.Money;
-
-import static com.badlogic.gdx.utils.Align.center;
 
 public class UIOverlay {
 
@@ -43,8 +42,10 @@ public class UIOverlay {
   private final Label resultLabel;
   private final Timer resultTimer;
   private final PiazzaPanicGame game;
-  private ReputationPoint points;
-  private final MoneyLabel moneyLabel;
+  private final Money money;
+  private final ReputationPoint points;
+
+  private int moneyToAdd = 100; // Add money whenever order is complete
 
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
@@ -79,28 +80,48 @@ public class UIOverlay {
     timerStyle.background = new TextureRegionDrawable(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     timer = new Timer(timerStyle);
-    timer.setAlignment(center);
+    timer.setAlignment(Align.center);
 
     // Initialize the Reputation Points
     LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     repPointsStyle.background = new TextureRegionDrawable(new Texture(
       "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     points = new ReputationPoint(repPointsStyle);
-    points.setAlignment(center);
+    points.setAlignment(Align.center);
 
     //  Initialize money
     LabelStyle moneyStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     moneyStyle.background = new TextureRegionDrawable(new Texture(
-            "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
-    moneyLabel = new MoneyLabel(moneyStyle, game);
-    moneyLabel.setAlignment(center);
-
+      "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
+    money = new Money(moneyStyle);
+    money.setAlignment(Align.center);
     
     //Initialize the Shop Button
     ImageButton shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
                     Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/cart.png"))),
             ButtonColour.BLUE, -1.5f);
+
+    shopButton.addListener(new ClickListener(){
+      @Override
+      public void clicked(InputEvent event, float x, float y){
+        game.loadShopScreen();
+      }
+    });
+        
+
+    // Initialise powerup
+    ImageButton powerupButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
+            new Texture(
+                Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/star.png"))),
+        ButtonManager.ButtonColour.BLUE, -1.5f);
+
+    powerupButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.getGameScreen().getPowerupManager().generatePowerup();;
+      }
+    });
 
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
@@ -116,13 +137,6 @@ public class UIOverlay {
     });
     removeBtnDrawable = new TextureRegionDrawable(
         new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_crossWhite.png"));
-
-    shopButton.addListener(new ClickListener(){
-      @Override
-      public void clicked(InputEvent event, float x, float y){
-        game.loadShopScreen();
-      }
-    });
 
     // Initialize the UI to display the currently requested recipe
     Stack recipeDisplay = new Stack();
@@ -150,10 +164,12 @@ public class UIOverlay {
 
     // Add everything
 
-    table.add(chefDisplay).left().width(40f).height(40f);
+    table.add(powerupButton).left().width(40f).height(40f);
     table.add().expandX();
     table.add(shopButton).right().width(80f).height(40f);
     table.add(homeButton).right().width(80f).height(40f);
+    table.row().padTop(10f);
+    table.add(chefDisplay).left().width(40f).height(40f);
     table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(40f);
     table.add().expandX().width(250f);
@@ -164,7 +180,7 @@ public class UIOverlay {
     table.row();
     table.add(resultTimer).colspan(3);
     table.row();
-    table.add(moneyLabel).bottom().width(300f).height(30f);
+    table.add(money).bottom().width(300f).height(30f);
     table.add(timer).bottom().expandX().width(200f).height(30f);
     table.add(points).bottom().width(300f).height(30f);
     table.setDebug(true);
@@ -181,6 +197,35 @@ public class UIOverlay {
     updateChefUI(null);
   }
 
+  public void updateMoney() {
+    if (moneyToAdd == 200) {  // If money has been doubled, reset it after one addition
+      money.addMoney(moneyToAdd);
+      resetMoneyToAdd();
+    }
+    else {
+      money.addMoney(moneyToAdd);
+    }
+  }
+
+  public Money getMoney() {
+    return money;
+  }
+
+  public void doubleMoneyToAdd() {
+    moneyToAdd = 200;
+  }
+
+  public void resetMoneyToAdd() {
+    moneyToAdd = 100;
+  }
+
+  public void addPoint() {
+    points.addRepPoint();
+  }
+
+  public void subPoint() {
+    points.subRepPoint();
+  }
 
   /**
    * Show the image of the currently selected chef as well as have the stack of ingredients
@@ -218,10 +263,6 @@ public class UIOverlay {
     }
     ingredientImagesBG.setVisible(!chef.getStack().isEmpty());
 
-  }
-
-  public void updateMoney(){
-    moneyLabel.act();
   }
 
 

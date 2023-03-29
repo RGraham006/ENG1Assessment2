@@ -34,6 +34,7 @@ public class Chef extends Actor implements Disposable {
   private final Vector2 inputVector;
   private float powerupTime = 15f;
   private float speed = 3f;
+  private float prepSpeed = 5f;
   private boolean isPowerupActive = false;
 
   /**
@@ -330,12 +331,24 @@ public class Chef extends Actor implements Disposable {
     return image;
   }
 
-  private void doubleChefSpeed(){
+  public void doubleChefSpeed(){
     this.speed = 6f;
   }
 
-  private void resetChefSpeed(){
+  public void resetChefSpeed(){
     this.speed = 3f;
+  }
+
+  public float getPrepSpeed() {
+    return prepSpeed;
+  }
+
+  public void doublePrepSpeed() {
+    this.prepSpeed = 2.5f;
+  }
+
+  public void resetPrepSpeed() {
+    this.prepSpeed = 5f;
   }
 
   /**

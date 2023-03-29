@@ -1,6 +1,7 @@
 package cs.eng1.piazzapanic;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import cs.eng1.piazzapanic.screens.GameScreen;
 import cs.eng1.piazzapanic.screens.HomeScreen;
 import cs.eng1.piazzapanic.screens.ShopScreen;
@@ -15,7 +16,6 @@ public class PiazzaPanicGame extends Game {
   public ShopScreen shopScreen;
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
-
   public Money money;
 
   @Override
@@ -26,7 +26,7 @@ public class PiazzaPanicGame extends Game {
     settingsOverlay = new SettingsOverlay(this);
     shopScreen = new ShopScreen(this);
     homeScreen = new HomeScreen(this);
-    money = new Money();
+    money = new Money(new Label.LabelStyle(getFontManager().getHeaderFont(), null));
     loadHomeScreen();
   }
 
@@ -65,6 +65,14 @@ public class PiazzaPanicGame extends Game {
 
   public void loadShopScreen() {
     setScreen(shopScreen);
+  }
+
+  public Money getMoney() {
+    return gameScreen.getMoney();
+  }
+
+  public GameScreen getGameScreen() {
+    return gameScreen;
   }
 
   public TutorialOverlay getTutorialOverlay() {

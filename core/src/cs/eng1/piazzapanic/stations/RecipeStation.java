@@ -38,8 +38,11 @@ public class RecipeStation extends Station {
 
   private final int mode;
   private Recipe completedRecipe = null;
+
   private final UIOverlay uiOverlay;
   private final PiazzaPanicGame game;
+
+
 
 
 
@@ -60,12 +63,15 @@ public class RecipeStation extends Station {
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
       ActionAlignment alignment, FoodTextureManager textureManager,
       CustomerManager customerManager, UIOverlay uiOverlay, int mode, PiazzaPanicGame game) {
+
     super(id, textureRegion, stationUIController, alignment);
     this.textureManager = textureManager;
     this.customerManager = customerManager;
     this.uiOverlay = uiOverlay;
+
     this.game = game;
     this.mode = mode;
+
 
 
   }
@@ -198,7 +204,9 @@ public class RecipeStation extends Station {
             if (mode == 0){
               customerManager.setRemainingCustomers();
             }
-            game.money.setMoney(100);
+            game.money.addMoney(100);
+            uiOverlay.updateMoney();
+
             completedRecipe = null;
           }
         }

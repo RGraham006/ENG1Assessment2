@@ -133,6 +133,14 @@ public class CustomerManager {
     }
   }
 
+  public void resetCustomerWait() {
+    ProgressBar progress = customerWaitProgressBars.get(0);
+    progress.setValue(0);
+    customerWaitProgressBars.set(0, progress);
+    customerWaitTimes.set(0, waitTime);
+  }
+
+
   /**
    * Check to see if the recipe matches the currently requested order.
    *
