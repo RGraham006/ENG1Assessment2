@@ -20,6 +20,8 @@ public class ShopScreen implements Screen {
     private final Stage uiStage;
     private boolean chefUnlocked = false;
     private boolean ovenUnlocked = false;
+    private boolean cuttingUnlocked = false;
+    private boolean fryingUnlocked = false;
 
     private final Label purchaseFailedLabel;
 
@@ -67,8 +69,17 @@ public class ShopScreen implements Screen {
         cuttingButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                purchaseFailedLabel.setVisible(false);
-                game.loadGameScreen();
+                if(game.getMoney().getMoney() >= 400){
+                    if (!cuttingUnlocked) {
+                        game.getMoney().addMoney((-400));
+                        cuttingUnlocked = true;
+                        game.loadGameScreen();
+                    } else {
+                        setPurchaseFailedLabel("Cutting board has already been purchased");
+                    }
+                } else {
+                    setPurchaseFailedLabel("Insufficient Funds");
+                }
             }
         });
 
@@ -98,7 +109,17 @@ public class ShopScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 purchaseFailedLabel.setVisible(false);
-                game.loadGameScreen();
+                if(game.getMoney().getMoney() >= 400){
+                    if (!fryingUnlocked) {
+                        game.getMoney().addMoney((-400));
+                        fryingUnlocked = true;
+                        game.loadGameScreen();
+                    } else {
+                        setPurchaseFailedLabel("Frying pan has already been purchased");
+                    }
+                } else {
+                    setPurchaseFailedLabel("Insufficient Funds");
+                }
             }
         });
 
@@ -130,6 +151,9 @@ public class ShopScreen implements Screen {
     public boolean getOvenLocked(){
         return !ovenUnlocked;
     }
+
+    public boolean getCuttingLocked(){return !cuttingUnlocked;}
+    public boolean getFryingLocked(){return !fryingUnlocked;}
 
     private void setPurchaseFailedLabel(String message) {
         purchaseFailedLabel.setText(message);

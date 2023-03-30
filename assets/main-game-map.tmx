@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="63">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="67">
  <tileset firstgid="1" source="Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/Tilesheet/Topdown Shooter Full 2.xml"/>
  <layer id="1" name="Background" width="16" height="9">
   <data encoding="csv">
@@ -79,6 +79,7 @@
     <property name="actionAlignment" value="TOP"/>
     <property name="collisionObjectIDs" value="22"/>
     <property name="ingredients" value="patty,dough"/>
+    <property name="stationLocked" value="false"/>
     <property name="stationType" value="cookingStation"/>
    </properties>
   </object>
@@ -87,6 +88,16 @@
     <property name="actionAlignment" value="BOTTOM"/>
     <property name="collisionObjectIDs" value="24"/>
     <property name="ingredients" value="patty,dough"/>
+    <property name="stationLocked" value="false"/>
+    <property name="stationType" value="cookingStation"/>
+   </properties>
+  </object>
+  <object id="64" name="Cooker 3" class="Station" gid="324" x="1792" y="512" width="128" height="128" rotation="-90">
+   <properties>
+    <property name="actionAlignment" value="RIGHT"/>
+    <property name="collisionObjectIDs" value="66"/>
+    <property name="ingredients" value="patty,dough"/>
+    <property name="stationLocked" value="true"/>
     <property name="stationType" value="cookingStation"/>
    </properties>
   </object>
@@ -95,6 +106,7 @@
     <property name="actionAlignment" value="TOP"/>
     <property name="collisionObjectIDs" value="32"/>
     <property name="ingredients" value="lettuce,tomato"/>
+    <property name="stationLocked" value="false"/>
     <property name="stationType" value="choppingStation"/>
    </properties>
   </object>
@@ -103,14 +115,26 @@
     <property name="actionAlignment" value="BOTTOM"/>
     <property name="collisionObjectIDs" value="31"/>
     <property name="ingredients" value="lettuce,tomato"/>
+    <property name="stationLocked" value="false"/>
+    <property name="stationType" value="choppingStation"/>
+   </properties>
+  </object>
+  <object id="63" name="Chopping Board 3" class="Station" gid="267" x="384" y="512" width="128" height="128" rotation="-90">
+   <properties>
+    <property name="actionAlignment" value="LEFT"/>
+    <property name="collisionObjectIDs" value="65"/>
+    <property name="ingredients" value="lettuce,tomato"/>
+    <property name="stationLocked" value="true"/>
     <property name="stationType" value="choppingStation"/>
    </properties>
   </object>
   <object id="22" name="Cooker Collider 1" x="1536" y="256" width="128" height="128"/>
   <object id="24" name="Coocker Collider 2" x="1536" y="512" width="128" height="128"/>
+  <object id="66" name="Coocker Collider 3" x="1536" y="384" width="128" height="128"/>
   <object id="29" x="1280" y="768" width="128" height="128"/>
   <object id="30" x="640" y="768" width="128" height="128"/>
   <object id="31" name="Chopping Board Collider 2" x="384" y="512" width="128" height="128"/>
+  <object id="65" name="Chopping Board Collider 3" x="384" y="384" width="128" height="128"/>
   <object id="32" name="Chopping Board Collider 1" x="384" y="256" width="128" height="128"/>
   <object id="36" x="768" y="640" width="128" height="128"/>
   <object id="37" x="640" y="512" width="128" height="128"/>
@@ -149,7 +173,7 @@
   </object>
   <object id="61" gid="243" x="960.455" y="126.508" width="128" height="128">
    <properties>
-    <property name="actionAlignment" value="LEFT"/>
+    <property name="actionAlignment" value="BOTTOM"/>
     <property name="collisionObjectIDs" value="62"/>
     <property name="ingredients" value="dough,potato"/>
     <property name="stationLocked" value="true"/>

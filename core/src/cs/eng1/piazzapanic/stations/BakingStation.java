@@ -174,8 +174,4 @@ public class BakingStation extends Station{
             drawFoodTexture(batch, currentIngredient.getTexture());
         }
     }
-
-    public void unlock(){
-        this.locked = false;
-    }
 }

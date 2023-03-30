@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
@@ -27,6 +28,8 @@ public class ChoppingStation extends Station {
   protected float timeChopped;
   private boolean progressVisible = false;
   private boolean isPowerUpUsed = false;
+  private boolean locked;
+  private final PiazzaPanicGame game;
 
   /**
    * The constructor method for the class
@@ -40,9 +43,11 @@ public class ChoppingStation extends Station {
    *                      chopped
    */
   public ChoppingStation(int id, TextureRegion image, StationUIController uiController,
-      StationActionUI.ActionAlignment alignment, Ingredient[] ingredients) {
+      StationActionUI.ActionAlignment alignment, Ingredient[] ingredients, String locked, PiazzaPanicGame game) {
     super(id, image, uiController, alignment);
     validIngredients = ingredients; //A list of the ingredients that can be used by this station.
+    this.locked = locked.contentEquals("true");
+    this.game = game;
   }
 
   /**
@@ -54,6 +59,9 @@ public class ChoppingStation extends Station {
    */
   @Override
   public void act(float delta) {
+    if(locked){
+      locked = game.shopScreen.getCuttingLocked();
+    }
     if (inUse) {
       timeChopped += delta;
       uiController.updateProgressValue(this, (timeChopped / nearbyChef.getPrepSpeed()) * 100f);
@@ -98,6 +106,9 @@ public class ChoppingStation extends Station {
   @Override
   public List<StationAction.ActionType> getActionTypes() {
     LinkedList<StationAction.ActionType> actionTypes = new LinkedList<>();
+    if(locked){
+      return actionTypes;
+    }
     if (nearbyChef == null) {
       return actionTypes;
     }
@@ -173,6 +184,9 @@ public class ChoppingStation extends Station {
   @Override
   public void draw(Batch batch, float parentAlpha) {
     super.draw(batch, parentAlpha);
+    if(locked){
+      drawLockedTexture(batch);
+    }
     if (currentIngredient != null) {
       drawFoodTexture(batch, currentIngredient.getTexture());
     }

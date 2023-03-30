@@ -137,7 +137,7 @@ public class GameScreen implements Screen {
       switch (tileObject.getProperties().get("stationType", String.class)) {
         case "cookingStation":
           station = new CookingStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager));
+              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get("stationLocked", String.class), game);
           break;
         case "ingredientStation":
           station = new IngredientStation(id, tileObject.getTextureRegion(), stationUIController,
@@ -145,7 +145,7 @@ public class GameScreen implements Screen {
           break;
         case "choppingStation":
           station = new ChoppingStation(id, tileObject.getTextureRegion(), stationUIController,
-              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager));
+              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get("stationLocked", String.class), game);
           break;
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
