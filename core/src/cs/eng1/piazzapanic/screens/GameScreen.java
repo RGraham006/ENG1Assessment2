@@ -206,13 +206,6 @@ public class GameScreen implements Screen {
     multiplexer.addProcessor(stage);
     Gdx.input.setInputProcessor(multiplexer);
     uiOverlay.init();
-    chefManager.init();
-
-    for (Actor actor : stage.getActors().items) {
-      if (actor instanceof Station) {
-        ((Station) actor).reset();
-      }
-    }
     isFirstFrame = true;
   }
 

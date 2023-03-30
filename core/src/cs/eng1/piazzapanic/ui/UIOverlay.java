@@ -190,7 +190,6 @@ public class UIOverlay {
    * Reset values and UI to be in their default state.
    */
   public void init() {
-    timer.reset();
     timer.start();
     resultLabel.setVisible(false);
     resultTimer.setVisible(false);
