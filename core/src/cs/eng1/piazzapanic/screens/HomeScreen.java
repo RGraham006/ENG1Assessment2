@@ -21,7 +21,7 @@ import cs.eng1.piazzapanic.ui.TutorialOverlay;
 public class HomeScreen implements Screen {
 
   private final Stage uiStage;
-  SelectBox<Integer> customerNum;
+  SelectBox<String> customerNum;
 
 
 
@@ -43,6 +43,7 @@ public class HomeScreen implements Screen {
         new Label.LabelStyle(game.getFontManager().getTitleFont(), null));
 
     // Initialize buttons and callbacks
+
     TextButton scenarioModeButton = game.getButtonManager()
         .createTextButton("Scenario Mode", ButtonManager.ButtonColour.BLUE);
     scenarioModeButton.sizeBy(3f);
@@ -104,14 +105,14 @@ public class HomeScreen implements Screen {
     listStyle.fontColorUnselected = Color.WHITE;
     listStyle.selection = new TextureRegionDrawable(new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_up.png")));
     style.listStyle = listStyle;
-    customerNum = new SelectBox<Integer>(style);
-    customerNum.setItems(1,2,3,4,5);
+    customerNum = new SelectBox<String>(style);
+    customerNum.setItems("Customers: 1","Customers: 2","Customers: 3","Customers: 4","Customers: 5");
 
     // Add UI elements to the table and position them
     table.add(welcomeLabel).padBottom(100f);
     table.row();
     table.add(scenarioModeButton).padBottom(20f);
-    table.add(customerNum).width(50).padBottom(20f);
+    table.add(customerNum).padBottom(20f);
     table.row();
     table.add(endlessModeButton).padBottom(20f);
     table.row();
