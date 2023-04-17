@@ -213,7 +213,9 @@ public class UIOverlay {
   public void resetMoneyToAdd() {
     moneyToAdd = 100;
   }
-
+  public int getReputation(){
+    return points.getPoints();
+  }
   public void addPoint() {
     points.addRepPoint();
   }
@@ -222,6 +224,15 @@ public class UIOverlay {
     points.subRepPoint();
   }
 
+  public float getTime(){
+    return timer.getTime();
+  }
+  public void setTime(float time){
+    timer.setTime(time);
+  }
+  public void setCustomPoints(int p){
+    points.setCustomPoints(p);
+  }
   /**
    * Show the image of the currently selected chef as well as have the stack of ingredients
    * currently held by the chef.

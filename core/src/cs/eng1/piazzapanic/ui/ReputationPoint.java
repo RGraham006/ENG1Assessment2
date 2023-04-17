@@ -14,7 +14,9 @@ public class ReputationPoint extends Label {
     public int getPoints(){
         return this.points;
     }
-
+    public void setCustomPoints(int points_set){
+        this.points = points_set;
+    }
     public void addRepPoint(){
         if (this.points < 5){   // For testing, this is now at max 5 points
             this.points += 1;

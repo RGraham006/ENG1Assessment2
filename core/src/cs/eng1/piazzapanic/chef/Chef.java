@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+import cs.eng1.piazzapanic.food.ingredients.Tomato;
 import cs.eng1.piazzapanic.stations.Station;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,7 +31,6 @@ public class Chef extends Actor implements Disposable {
 
   private final ChefManager chefManager;
   private final FixedStack<Ingredient> ingredientStack = new FixedStack<>(5);
-
   private final Vector2 inputVector;
   private float powerupTime = 15f;
   private float speed = 3f;
@@ -349,6 +349,17 @@ public class Chef extends Actor implements Disposable {
 
   public void resetPrepSpeed() {
     this.prepSpeed = 5f;
+  }
+  
+  public float getRotation(){
+    return imageRotation;
+  }
+  public void setRotation(float rotation){
+    imageRotation = rotation;
+  }
+  public void setIngredientStack(Ingredient ingredient){
+    // System.out.println(ingredient);
+    grabIngredient(ingredient);
   }
 
   /**
