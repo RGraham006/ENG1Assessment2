@@ -96,7 +96,7 @@ public class CustomerManager {
         progress.setVisible(true);
         customerWaitProgressBars.add(progress);
 
-        nextOrder = new Random().nextFloat(20f);
+        nextOrder = new Random().nextFloat();
       }
       nextOrder -= delta;
     }
@@ -190,5 +190,11 @@ public class CustomerManager {
 
   public void addRecipeStation(RecipeStation station) {
     recipeStations.add(station);
+  }
+  public int getRemainingCustomers(){
+    return remainingCustomers;
+  }
+  public ArrayList<Recipe> getCustomerOrders(){
+    return customerOrders;
   }
 }

@@ -3,6 +3,7 @@ package cs.eng1.piazzapanic.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,17 +21,27 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
+import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.powerups.PowerupManager;
+import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.food.FoodTextureManager;
 import cs.eng1.piazzapanic.stations.*;
 import cs.eng1.piazzapanic.ui.Money;
+import cs.eng1.piazzapanic.ui.ReputationPoint;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.ui.UIOverlay;
+
+import java.io.StringBufferInputStream;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
+// import java.util.prefs.Preferences;
+
+import javax.swing.plaf.synth.SynthStyle;
 
 /**
  * The screen which can be used to load the tilemap and keep track of everything happening in the
@@ -48,17 +59,24 @@ public class GameScreen implements Screen {
   private final FoodTextureManager foodTextureManager;
   private final CustomerManager customerManager;
   private final PowerupManager powerupManager;
+  private  Preferences save_game = Gdx.app.getPreferences("Saved Game State");
   private boolean isFirstFrame = true;
   private final int mode;
   private final int customerNum;
+  
 
     private final PiazzaPanicGame game;
-
+  
     private final float tileUnitSize;
 
   public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum) {
 
-
+    
+    
+    // com.badlogic.gdx.Preferences save_file = Gdx.app.getPreferences("Save State");
+    // this.save_file = save_file;
+    
+    
     this.game = game;
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
     int sizeX = map.getProperties().get("width", Integer.class);
@@ -128,6 +146,7 @@ public class GameScreen implements Screen {
 
       // Get basic station properties
       Station station;
+      
       int id = tileObject.getProperties().get("id", Integer.class);
       String ingredients = tileObject.getProperties().get("ingredients", String.class);
       StationActionUI.ActionAlignment alignment = StationActionUI.ActionAlignment.valueOf(
@@ -150,7 +169,7 @@ public class GameScreen implements Screen {
         case "recipeStation":
           station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,
 
-              alignment, foodTextureManager, customerManager, uiOverlay, mode, game);
+            alignment, foodTextureManager, customerManager, uiOverlay, mode, game);
 
           customerManager.addRecipeStation((RecipeStation) station);
           break;
@@ -241,11 +260,129 @@ public class GameScreen implements Screen {
     if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){
       getMoney().addMoney(10000);
     }
+    if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)){
+      uiOverlay.addPoint();
+    }
+    // Save game state
+    if(Gdx.input.isKeyJustPressed(Input.Keys.C)){
+      saveGame();
+    }
+    // Load from save file
+    if(Gdx.input.isKeyJustPressed(Input.Keys.V)){
+      loadGame();
+    }
   }
 
   public Money getMoney() {
     return uiOverlay.getMoney();
   }
+
+
+  public void saveGame(){
+    // **************************************************\\
+    //                       SAVE                        \\
+    // **************************************************\\
+    // SAVE FILE LOCATION: %user%/.prefs
+    System.out.println("Saved");
+    // Chef Information
+    for (int i = 0; i < chefManager.getChefs().size(); i++) {
+      // Positions
+      save_game.putFloat("Chef"+i+"_x", chefManager.getChefs().get(i).getX());
+      save_game.putFloat("Chef"+i+"_y", chefManager.getChefs().get(i).getY());
+      save_game.putFloat("Chef"+i+"_rotation", chefManager.getChefs().get(i).getRotation());
+      
+      
+      // Ingredients 
+      String ingredientStackAString = chefManager.getChefs().get(i).getStack().toString();
+      save_game.putString("Chef"+i+"_ingredientStack", ingredientStackAString);      
+    }
+
+    // Saves General Game Information
+    save_game.putInteger("Money", getMoney().getMoney());
+    save_game.putInteger("Reputation", uiOverlay.getReputation());
+    save_game.putFloat("Timer", uiOverlay.getTime());
+    
+    // Customers
+    save_game.putInteger("Remaining_customers", customerManager.getRemainingCustomers());
+    ArrayList<Recipe> orders = customerManager.getCustomerOrders();
+    for (Recipe recipe : orders){
+      save_game.putString("Customer_order", recipe.getType());
+    }
+    
+    // Push changes onto file
+    save_game.flush();
+  }
+
+  public void loadGame(){
+    // **************************************************\\
+    //                       LOAD                        \\
+    // **************************************************\\
+    System.out.println("Loaded");
+
+    // Chef Information
+    for (int i = 0; i < chefManager.getChefs().size(); i++) {
+      // Positions
+      chefManager.getChefs().get(i).setX(save_game.getFloat("Chef"+i+"_x"));
+      chefManager.getChefs().get(i).setY(save_game.getFloat("Chef"+i+"_y"));
+      chefManager.getChefs().get(i).setRotation(save_game.getFloat("Chef"+i+"_rotation"));
+      
+      
+      // Ingredients
+      chefManager.getChefs().get(i).getStack().clear();
+      String stackAsString = save_game.getString("Chef"+i+"_ingredientStack");
+      stackAsString = stackAsString.substring(1, stackAsString.length() - 1);
+      String[] elements = stackAsString.split(", ");
+
+      for (int j = 0; j < elements.length; j++) {
+        
+        // Need to remove underscore
+        try {
+          Ingredient.fromString(elements[j], foodTextureManager);
+          System.out.println(elements[j]);
+          int underscoreIndex = elements[j].indexOf("_");
+          String element_before = elements[j].substring(0, underscoreIndex);
+          // Need to figure out if cooked / chopped ... or not
+          String element_after = elements[j].substring(underscoreIndex+1, elements[j].length());
+          System.out.println("AFTER "+ element_after);
+          if (element_before.equals("bun")){
+            element_before = "dough";
+           }
+          Ingredient ing = Ingredient.fromString(element_before, foodTextureManager);
+          if (element_after.equals("cooked")){
+            
+            ing.setIsCooked(true);
+            chefManager.getChefs().get(i).setIngredientStack(ing);
+          }
+          else if (element_after.equals("chopped")){
+            ing.setIsChopped(true);
+            chefManager.getChefs().get(i).setIngredientStack(ing);
+          }
+          else if (element_after.equals("baked")){
+            ing.setBaked(true);
+            chefManager.getChefs().get(i).setIngredientStack(ing);
+          }
+          else{
+            chefManager.getChefs().get(i).setIngredientStack(ing);
+          }
+        } catch (java.lang.StringIndexOutOfBoundsException e) {
+          // Then stack was empty 
+        } 
+        
+      }
+      // Customers
+      
+     
+    }
+
+
+    // General Game Information
+    getMoney().addMoney(save_game.getInteger("Money"));
+    int reputationPoints = save_game.getInteger("Reputation");
+    uiOverlay.setCustomPoints(reputationPoints);
+    uiOverlay.setTime(save_game.getFloat("Timer"));
+
+  }
+
 
   @Override
   public void resize(int width, int height) {
