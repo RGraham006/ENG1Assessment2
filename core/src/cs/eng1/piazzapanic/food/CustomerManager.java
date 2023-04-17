@@ -66,11 +66,8 @@ public class CustomerManager {
     progressBarStyle.knobBefore = new TextureRegionDrawable(new Texture(Gdx.files.internal(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_gradient_up.png")));
 
-    progressBarStyle.background.setMinHeight(10f);
-    // progressBarStyle.background.setMinWidth(10f);
-
-    progressBarStyle.knobBefore.setMinHeight(10f);
-    // progressBarStyle.knobBefore.setMinWidth(10f);
+    progressBarStyle.background.setMinHeight(12f);
+    progressBarStyle.knobBefore.setMinHeight(12f);
   }
 
   /**
@@ -91,7 +88,6 @@ public class CustomerManager {
         customerWaitTimes.add(waitTime);
         ProgressBar progress = new ProgressBar(0, waitTime, 0.1f, false, progressBarStyle);
         
-        progress.setDebug(true);
         progress.setValue(0);
         progress.setVisible(true);
         customerWaitProgressBars.add(progress);

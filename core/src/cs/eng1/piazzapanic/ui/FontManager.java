@@ -13,10 +13,12 @@ import com.badlogic.gdx.utils.Disposable;
 public class FontManager implements Disposable {
 
   private final FreeTypeFontGenerator fontGenerator;
+  private final FreeTypeFontGenerator fontGeneratorItalic;
   private final BitmapFont titleFont;
   private final BitmapFont headerFont;
   private final BitmapFont subHeaderFont;
   private final BitmapFont labelFont;
+  private final BitmapFont labelFontItalic;
 
   public FontManager() {
     fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/MontserratMedium.ttf"));
@@ -36,6 +38,12 @@ public class FontManager implements Disposable {
     FreeTypeFontParameter labelFontParameters = new FreeTypeFontParameter();
     labelFontParameters.size = 12;
     labelFont = fontGenerator.generateFont(labelFontParameters);
+
+    fontGeneratorItalic = new FreeTypeFontGenerator(Gdx.files.internal("fonts/MontserratMediumItalic.ttf"));
+
+    FreeTypeFontParameter labelFontItalicParameters = new FreeTypeFontParameter();
+    labelFontItalicParameters.size = 12;
+    labelFontItalic = fontGeneratorItalic.generateFont(labelFontItalicParameters);
   }
 
   public BitmapFont getTitleFont() {
@@ -52,6 +60,10 @@ public class FontManager implements Disposable {
 
   public BitmapFont getLabelFont() {
     return labelFont;
+  }
+
+  public BitmapFont getLabelFontItalic() {
+    return labelFontItalic;
   }
 
   public BitmapFont generateFont(FreeTypeFontParameter parameter) {

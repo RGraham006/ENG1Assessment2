@@ -1,5 +1,7 @@
 package cs.eng1.piazzapanic.screens;
 
+import javax.xml.stream.events.EndElement;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -44,6 +46,10 @@ public class HomeScreen implements Screen {
 
     // Initialize buttons and callbacks
 
+    Label scenarioModeLabel = new Label("Play with a set number of\ncustomers",
+        new Label.LabelStyle(game.getFontManager().getLabelFontItalic(), null));
+    scenarioModeLabel.setAlignment(Align.right);
+
     TextButton scenarioModeButton = game.getButtonManager()
         .createTextButton("Scenario Mode", ButtonManager.ButtonColour.BLUE);
     scenarioModeButton.sizeBy(3f);
@@ -53,6 +59,10 @@ public class HomeScreen implements Screen {
         game.setGameScreen(0, customerNum.getSelected());
       }
     });
+
+    Label endlessModeLabel = new Label("Play until your reputation\npoints run out",
+        new Label.LabelStyle(game.getFontManager().getLabelFontItalic(), null));
+    endlessModeLabel.setAlignment(Align.right);
 
     TextButton endlessModeButton = game.getButtonManager()
             .createTextButton("Endless Mode", ButtonManager.ButtonColour.BLUE);
@@ -94,34 +104,42 @@ public class HomeScreen implements Screen {
       }
     });
 
+    // Box to select customer number in scenario mode, different colour so it is distinguishable from buttons
     SelectBox.SelectBoxStyle style = new SelectBox.SelectBoxStyle();
-    style.font = game.getFontManager().getTitleFont();
-    style.fontColor = Color.WHITE;
-    style.background = new TextureRegionDrawable(new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_up.png")));
+    style.font = game.getFontManager().getLabelFont();
+    style.fontColor = Color.BLACK;
+    style.background = new TextureRegionDrawable(
+      new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_flat_up.png")));
     style.scrollStyle = new ScrollPane.ScrollPaneStyle();
     List.ListStyle listStyle = new List.ListStyle();
-    listStyle.font = game.getFontManager().getTitleFont();
+    listStyle.font = game.getFontManager().getLabelFont();
     listStyle.fontColorSelected = Color.BLACK;
     listStyle.fontColorUnselected = Color.WHITE;
-    listStyle.selection = new TextureRegionDrawable(new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_up.png")));
+    listStyle.selection = new TextureRegionDrawable(
+      new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_flat_up.png")));
     style.listStyle = listStyle;
     customerNum = new SelectBox<String>(style);
+    customerNum.setAlignment(Align.center);
+    customerNum.getList().setAlignment(Align.center);
     customerNum.setItems("Customers: 1","Customers: 2","Customers: 3","Customers: 4","Customers: 5");
 
     // Add UI elements to the table and position them
-    table.add(welcomeLabel).padBottom(100f);
+    table.add(welcomeLabel).padBottom(100f).colspan(3);
     table.row();
+    table.add(scenarioModeLabel).padBottom(20f).padLeft(42f).padRight(10f);
     table.add(scenarioModeButton).padBottom(20f);
-    table.add(customerNum).padBottom(20f);
+    table.add(customerNum).padBottom(20f).padLeft(20f);
     table.row();
+    table.add(endlessModeLabel).padBottom(20f).padLeft(42f).padRight(10f);
     table.add(endlessModeButton).padBottom(20f);
     table.row();
-    table.add(tutorialButton).padBottom(20f);
+    table.add(tutorialButton).padBottom(20f).colspan(3);
     table.row();
-    table.add(settingsButton).padBottom(20f);
+    table.add(settingsButton).padBottom(20f).colspan(3);
     table.row();
-    table.add(quitButton);
+    table.add(quitButton).colspan(3);
     table.row();
+
   }
 
 

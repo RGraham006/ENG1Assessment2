@@ -35,8 +35,7 @@ public class UIOverlay {
   private final Image ingredientImagesBG;
   private final VerticalGroup ingredientImages;
   private final TextureRegionDrawable removeBtnDrawable;
-  private final Image recipeImagesBG;
-  private final VerticalGroup recipeImages;
+  private final Table recipeImages;
   private final Timer timer;
   private final Label orderLabel;
   private final Label resultLabel;
@@ -99,7 +98,7 @@ public class UIOverlay {
     //Initialize the Shop Button
     ImageButton shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
-                    Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/cart.png"))),
+                    Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/shoppingCart.png"))),
             ButtonColour.BLUE, -1.5f);
 
     shopButton.addListener(new ClickListener(){
@@ -113,7 +112,7 @@ public class UIOverlay {
     // Initialise powerup
     ImageButton powerupButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
-                Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/star.png"))),
+                Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/star.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
 
     powerupButton.addListener(new ClickListener() {
@@ -126,7 +125,7 @@ public class UIOverlay {
     // Initialize the home button
     ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
-                Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/1x/home.png"))),
+                Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/home.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
 
     homeButton.addListener(new ClickListener() {
@@ -138,18 +137,9 @@ public class UIOverlay {
     removeBtnDrawable = new TextureRegionDrawable(
         new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_crossWhite.png"));
 
-    // Initialize the UI to display the currently requested recipe
-    Stack recipeDisplay = new Stack();
-    recipeImagesBG = new Image(new Texture(
-        "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_square_gradient_down.png"));
-    recipeImagesBG.setVisible(false);
-    recipeDisplay.add(recipeImagesBG);
-    recipeImages = new VerticalGroup();
-    recipeImages.padTop(20f);
-    recipeImages.padBottom(20f);
-    recipeImages.setWidth(80f);
-
-    recipeDisplay.add(recipeImages);
+    recipeImages = new Table();
+    recipeImages.setBackground(new TextureRegionDrawable(
+      new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_square_gradient_down.png")));
 
     // Initialize counter for showing remaining recipes
     LabelStyle orderStyle = new LabelStyle(game.getFontManager().getSubHeaderFont(), Color.BLACK);
@@ -164,26 +154,32 @@ public class UIOverlay {
 
     // Add everything
 
-    table.add(powerupButton).left().width(40f).height(40f);
+    table.add(powerupButton).left().width(Value.percentWidth(.08f, table))
+        .height(Value.percentHeight(.05f, table));
     table.add().expandX();
-    table.add(shopButton).right().width(80f).height(40f);
-    table.add(homeButton).right().width(80f).height(40f);
-    table.row().padTop(10f);
-    table.add(chefDisplay).left().width(40f).height(40f);
+    table.add(homeButton).right().width(Value.percentWidth(.08f, table))
+        .height(Value.percentHeight(.05f, table));
+    table.row().padTop(Value.percentWidth(.01f, table));
+    table.add(chefDisplay).left().width(Value.percentWidth(.03f, table))
+        .height(Value.percentHeight(.05f, table)).padLeft(Value.percentWidth(.025f, table));
+    table.add().expandX();
+    table.add(shopButton).right().width(Value.percentWidth(.08f, table))
+        .height(Value.percentHeight(.05f, table));
     table.row().padTop(10f).expand();
-    table.add(ingredientStackDisplay).left().top().width(40f);
-    table.add().expandX().width(250f);
-    table.add().expandX().width(80f);
-    table.add(recipeDisplay).right().top().width(80f);
+    table.add(ingredientStackDisplay).left().top().width(Value.percentWidth(.08f, table));
+    table.add().expandX();
+    table.add(recipeImages).right().top().width(Value.percentWidth(.08f, table));
     table.row();
     table.add(resultLabel).colspan(3);
     table.row();
     table.add(resultTimer).colspan(3);
     table.row();
-    table.add(money).bottom().width(300f).height(30f);
-    table.add(timer).bottom().expandX().width(200f).height(30f);
-    table.add(points).bottom().width(300f).height(30f);
-    table.setDebug(true);
+    table.add(money).bottom().width(Value.percentWidth(.3f, table))
+        .height(Value.percentHeight(.06f, table));
+    table.add(timer).bottom().expandX().width(Value.percentWidth(.2f, table))
+        .height(Value.percentHeight(.06f, table));
+    table.add(points).bottom().width(Value.percentWidth(.3f, table))
+        .height(Value.percentHeight(.06f, table));
   }
 
   /**
@@ -243,6 +239,7 @@ public class UIOverlay {
     chefImage.setDrawable(new TextureRegionDrawable(texture));
 
     ingredientImages.clearChildren();
+    ingredientImages.padTop(10f);
     for (Ingredient ingredient : chef.getStack()) {
       Image image = new Image(ingredient.getTexture());
       image.getDrawable().setMinHeight(chefDisplay.getHeight());
@@ -285,19 +282,24 @@ public class UIOverlay {
   public void updateRecipeUI(ArrayList<Recipe> recipes, ArrayList<ProgressBar> progressBars) {
     
     recipeImages.clearChildren();
-    recipeImages.addActor(orderLabel);
+    recipeImages.add(orderLabel).align(Align.center).padTop(Value.percentHeight(.1f, recipeImages))
+      .padBottom(Value.percentHeight(.05f, recipeImages));
+    recipeImages.row();
+
     if (recipes.isEmpty()) {
-      recipeImagesBG.setVisible(false);
+      recipeImages.setVisible(false);
     } 
     else { 
       for (int i = 0; i < recipes.size(); i++) {
         ProgressBar progress = progressBars.get(i);
-        recipeImages.addActor(progress);
+        recipeImages.add(progress).width(Value.percentWidth(.8f, recipeImages));
+        recipeImages.row();
 
         Image recipeImage = new Image(recipes.get(i).getTexture());
-        recipeImages.addActor(recipeImage);
+        recipeImages.add(recipeImage).padBottom(Value.percentHeight(.1f, recipeImages));
+        recipeImages.row();
       }
-      recipeImagesBG.setVisible(true);
+      recipeImages.setVisible(true);
     } 
   }
 }
