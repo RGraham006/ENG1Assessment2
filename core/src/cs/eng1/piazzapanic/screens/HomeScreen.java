@@ -24,6 +24,7 @@ public class HomeScreen implements Screen {
 
   private final Stage uiStage;
   SelectBox<String> customerNum;
+  SelectBox<String> difficulty;
 
 
 
@@ -56,7 +57,7 @@ public class HomeScreen implements Screen {
    scenarioModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.setGameScreen(0, customerNum.getSelected());
+        game.setGameScreen(0, customerNum.getSelected(), difficulty.getSelected());
       }
     });
 
@@ -70,7 +71,7 @@ public class HomeScreen implements Screen {
     endlessModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.setGameScreen(1, customerNum.getSelected());
+        game.setGameScreen(1, customerNum.getSelected(), difficulty.getSelected());
       }
     });
 
@@ -123,6 +124,11 @@ public class HomeScreen implements Screen {
     customerNum.getList().setAlignment(Align.center);
     customerNum.setItems("Customers: 1","Customers: 2","Customers: 3","Customers: 4","Customers: 5");
 
+    difficulty  = new SelectBox<String>(style);
+    difficulty.setAlignment(Align.center);
+    difficulty.getList().setAlignment(Align.center);
+    difficulty.setItems("Difficulty 1", "Difficulty 2", "Difficulty 3");
+
     // Add UI elements to the table and position them
     table.add(welcomeLabel).padBottom(100f).colspan(3);
     table.row();
@@ -132,6 +138,7 @@ public class HomeScreen implements Screen {
     table.row();
     table.add(endlessModeLabel).padBottom(20f).padLeft(42f).padRight(10f);
     table.add(endlessModeButton).padBottom(20f);
+    table.add(difficulty).padBottom(20f).padLeft(20f);
     table.row();
     table.add(tutorialButton).padBottom(20f).colspan(3);
     table.row();

@@ -21,7 +21,7 @@ import java.util.List;
 public class CustomerManager {
 
   private int remainingCustomers;
-  private final float waitTime = 100f;
+  private float waitTime;
   private ArrayList<Recipe> customerOrders;
   private ArrayList<Float> customerWaitTimes;
   private ArrayList<ProgressBar> customerWaitProgressBars;
@@ -39,11 +39,21 @@ public class CustomerManager {
 
 
 
-  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum ) {
+  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum, int difficulty ) {
     this.overlay = overlay;
     this.recipeStations = new LinkedList<>();
     this.mode = mode;
     this.customerNum = customerNum;
+    switch(difficulty){
+      case 3:
+        waitTime = 75f;
+        break;
+      case 1:
+        waitTime = 125f;
+        break;
+      default:
+        waitTime = 100f;
+    }
 
     if (mode == 0){
       remainingCustomers = customerNum;

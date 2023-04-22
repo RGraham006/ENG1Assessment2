@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
   
     private final float tileUnitSize;
 
-  public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum) {
+  public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum, final int difficulty) {
 
     
     
@@ -105,7 +105,7 @@ public class GameScreen implements Screen {
     this.mode = mode;
     this.customerNum = customerNum;
 
-    customerManager = new CustomerManager(uiOverlay, foodTextureManager, mode , customerNum);
+    customerManager = new CustomerManager(uiOverlay, foodTextureManager, mode , customerNum, difficulty);
     powerupManager = new PowerupManager(chefManager, customerManager, uiOverlay);
 
     // Add tile objects

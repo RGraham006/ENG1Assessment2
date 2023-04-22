@@ -49,28 +49,41 @@ public class PiazzaPanicGame extends Game {
     setScreen(homeScreen);
   }
 
-  public void setGameScreen(int mode, String value) {
-    int customerN;
-    switch(value){
+  public void setGameScreen(int mode, String customerNum, String diffStr) {
+    int customers;
+    int difficulty;
+    switch(customerNum){
       case "Customers: 1":
-        customerN = 1;
+        customers = 1;
         break;
       case "Customers: 2":
-        customerN = 2;
+        customers = 2;
         break;
       case "Customers: 3":
-        customerN = 3;
+        customers = 3;
         break;
       case "Customers: 4":
-        customerN = 4;
+        customers = 4;
         break;
       default:
-        customerN  = 5;
+        customers  = 5;
+        break;
+    }
+
+    switch(diffStr){
+      case "Difficulty 1":
+        difficulty = 1;
+        break;
+      case "Difficulty 3":
+        difficulty = 3;
+        break;
+      default:
+        difficulty = 2;
         break;
     }
 
     if (gameScreen == null) {
-      gameScreen = new GameScreen(this, mode, customerN);
+      gameScreen = new GameScreen(this, mode, customers, difficulty);
       loadGameScreen();
     }
 
