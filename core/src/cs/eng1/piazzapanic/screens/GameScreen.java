@@ -15,13 +15,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
-import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
@@ -30,18 +28,12 @@ import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.food.FoodTextureManager;
 import cs.eng1.piazzapanic.stations.*;
 import cs.eng1.piazzapanic.ui.Money;
-import cs.eng1.piazzapanic.ui.ReputationPoint;
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.ui.UIOverlay;
-
-import java.io.StringBufferInputStream;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
-// import java.util.prefs.Preferences;
 
-import javax.swing.plaf.synth.SynthStyle;
 
 /**
  * The screen which can be used to load the tilemap and keep track of everything happening in the
@@ -59,7 +51,7 @@ public class GameScreen implements Screen {
   private final FoodTextureManager foodTextureManager;
   private final CustomerManager customerManager;
   private final PowerupManager powerupManager;
-  private  Preferences save_game = Gdx.app.getPreferences("Saved Game State");
+  private Preferences save_game = Gdx.app.getPreferences("Saved Game State");
   private boolean isFirstFrame = true;
   private final int mode;
   private final int customerNum;
@@ -75,7 +67,6 @@ public class GameScreen implements Screen {
     
     // com.badlogic.gdx.Preferences save_file = Gdx.app.getPreferences("Save State");
     // this.save_file = save_file;
-    
     
     this.game = game;
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
@@ -279,6 +270,11 @@ public class GameScreen implements Screen {
 
 
   public void saveGame(){
+
+    if (uiOverlay.isGameFinished()) {
+      return;
+    }
+
     // **************************************************\\
     //                       SAVE                        \\
     // **************************************************\\

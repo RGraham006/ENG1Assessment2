@@ -87,7 +87,7 @@ public class CustomerManager {
    */
   public void updateCustomerOrders(float delta) {
     if (remainingCustomers == 0) {
-      overlay.finishGameUI();
+      overlay.finishGameUI("win");
     }
     if (customerOrders.size() < remainingCustomers) {
       if (nextOrder <= 0f) {
@@ -115,6 +115,7 @@ public class CustomerManager {
       progress.setValue(wait);
       if (wait <= 0) {
         removeCustomerOrder(i);
+        overlay.subPoint();
       }
       else {
         customerWaitTimes.set(i, wait);
@@ -176,7 +177,7 @@ public class CustomerManager {
     notifyRecipeStations();
     overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
     if (currentOrder == null) {
-      overlay.finishGameUI();
+      overlay.finishGameUI("win");
     }
   }
 

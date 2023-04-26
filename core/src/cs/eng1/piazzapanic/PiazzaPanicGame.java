@@ -1,6 +1,8 @@
 package cs.eng1.piazzapanic;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import cs.eng1.piazzapanic.screens.GameScreen;
 import cs.eng1.piazzapanic.screens.HomeScreen;
@@ -49,7 +51,13 @@ public class PiazzaPanicGame extends Game {
     setScreen(homeScreen);
   }
 
+  // Called when starting new game, so dispose of any previous game screen and start again
   public void setGameScreen(int mode, String customerNum, String diffStr) {
+
+    if (gameScreen != null) {
+      gameScreen.dispose();
+    }
+
     int customers;
     int difficulty;
     switch(customerNum){
@@ -82,15 +90,17 @@ public class PiazzaPanicGame extends Game {
         break;
     }
 
-    if (gameScreen == null) {
-      gameScreen = new GameScreen(this, mode, customers, difficulty);
-      loadGameScreen();
-    }
+    gameScreen = new GameScreen(this, mode, customers, difficulty);
+
+    loadGameScreen();
 
   }
 
   public void loadGameScreen() {
 
+    if (gameScreen == null) { // this should only be true if the loadGame btn is pressed, so values will be overwritten
+      gameScreen = new GameScreen(this, 0, 1, 1);
+    }
     setScreen(gameScreen);
   }
 
