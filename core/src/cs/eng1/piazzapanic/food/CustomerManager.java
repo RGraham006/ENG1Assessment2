@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Queue;
 import cs.eng1.piazzapanic.food.recipes.Burger;
 import cs.eng1.piazzapanic.food.recipes.JacketPotato;
 import cs.eng1.piazzapanic.food.recipes.Pizza;
@@ -21,7 +20,7 @@ import java.util.List;
 public class CustomerManager {
 
   private int remainingCustomers;
-  private final float waitTime = 100f;
+  private float waitTime;
   private ArrayList<Recipe> customerOrders;
   private ArrayList<Float> customerWaitTimes;
   private ArrayList<ProgressBar> customerWaitProgressBars;
@@ -31,19 +30,29 @@ public class CustomerManager {
   private final List<RecipeStation> recipeStations;
   private final UIOverlay overlay;
   private final Recipe[] possibleRecipes;
-  private final int mode;
-
-  private final int customerNum;
   private float nextOrder = 0f;
 
-
-
-
-  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum ) {
+  /**
+   * Handles all orders from the customers, including recipes and wait times.
+   * @param overlay        The overlay for UI elements.
+   * @param textureManager The manager for any food textures.
+   * @param mode           The game mode, either scenario or endless (0 or 1).
+   * @param customerNum    The number of orders placed in scenario mode.
+   * @param difficulty     The game difficulty.
+   */
+  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum, int difficulty ) {
     this.overlay = overlay;
     this.recipeStations = new LinkedList<>();
-    this.mode = mode;
-    this.customerNum = customerNum;
+    switch(difficulty){
+      case 3:
+        waitTime = 75f;
+        break;
+      case 1:
+        waitTime = 125f;
+        break;
+      default:
+        waitTime = 100f;
+    }
 
     if (mode == 0){
       remainingCustomers = customerNum;
@@ -52,7 +61,6 @@ public class CustomerManager {
       remainingCustomers = 1;
     }
 
-    
     possibleRecipes = new Recipe[] {new Burger(textureManager), new Salad(textureManager), new Pizza(textureManager), new JacketPotato(textureManager)};
 
     customerOrders = new ArrayList<>();
@@ -73,11 +81,11 @@ public class CustomerManager {
   /**
    * Updates info relating to customer orders. Generates a new one if enough time has passed and their is space.
    * Sets progress bars to new values according to remaining wait time.
-   * @param delta The time passed since last call
+   * @param delta The time passed since last call.
    */
   public void updateCustomerOrders(float delta) {
     if (remainingCustomers == 0) {
-      overlay.finishGameUI();
+      overlay.finishGameUI("win");
     }
     if (customerOrders.size() < remainingCustomers) {
       if (nextOrder <= 0f) {
@@ -115,12 +123,21 @@ public class CustomerManager {
     overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
   }
 
+  /**
+   * Clears customer order arrays when a recipe is removed, including the order, wait times and progress.
+   * @param index The recipe location to be removed.
+   */
   public void removeCustomerOrder(int index) {
     customerOrders.remove(index);
     customerWaitTimes.remove(index);
     customerWaitProgressBars.remove(index);
   }
 
+  /**
+   * Alternative method for removeCustomerOrder(int index) should the index not be known.
+   * Searches the orders array for the first instance of the given recipe.
+   * @param recipe The recipe to be removed.
+   */
   public void removeCustomerOrder(Recipe recipe) {
     for (int i = 0; i < customerOrders.size(); i++) {
       Recipe order = customerOrders.get(i);
@@ -140,9 +157,8 @@ public class CustomerManager {
 
   /**
    * Check to see if the recipe matches the currently requested order.
-   *
    * @param recipe The recipe to check against the current order.
-   * @return a boolean signifying if the recipe is correct.
+   * @return       A boolean signifying if the recipe is correct.
    */
   public boolean checkRecipe(Recipe recipe) {
     for (int i = 0; i < customerOrders.size(); i++) {
@@ -167,7 +183,7 @@ public class CustomerManager {
     notifyRecipeStations();
     overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
     if (currentOrder == null) {
-      overlay.finishGameUI();
+      overlay.finishGameUI("win");
     }
   }
 

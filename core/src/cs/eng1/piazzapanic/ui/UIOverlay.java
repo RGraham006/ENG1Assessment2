@@ -22,14 +22,16 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.Chef;
-import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.food.recipes.Recipe;
 import cs.eng1.piazzapanic.ui.ButtonManager.ButtonColour;
-import cs.eng1.piazzapanic.ui.Money;
 
 public class UIOverlay {
 
+  private final Table table;
+  private final ImageButton homeButton;
+  private final ImageButton powerupButton;
+  private final ImageButton shopButton;
   private final Stack chefDisplay;
   private final Image chefImage;
   private final Image ingredientImagesBG;
@@ -44,19 +46,24 @@ public class UIOverlay {
   private final Money money;
   private final ReputationPoint points;
 
+  private final Stage uiStage;
+
   private int moneyToAdd = 100; // Add money whenever order is complete
+
+  private boolean isGameFinished = false;
 
 
   public UIOverlay(Stage uiStage, final PiazzaPanicGame game) {
     this.game = game;
+    this.uiStage = uiStage;
 
-    // Initialize table
-    Table table = new Table();
+    // Initialise table
+     table = new Table();
     table.setFillParent(true);
     table.center().top().pad(15f);
-    uiStage.addActor(table);
+    this.uiStage.addActor(table);
 
-    // Initialize UI for showing current chef
+    // Initialise UI for showing current chef
     chefDisplay = new Stack();
     chefDisplay.add(new Image(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_square_gradient_down.png")));
@@ -64,7 +71,7 @@ public class UIOverlay {
     chefImage.setScaling(Scaling.fit);
     chefDisplay.add(chefImage);
 
-    // Initialize UI for showing current chef's ingredient stack
+    // Initialise UI for showing current chef's ingredient stack
     Stack ingredientStackDisplay = new Stack();
     ingredientImagesBG = new Image(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_square_gradient_down.png"));
@@ -74,29 +81,29 @@ public class UIOverlay {
     ingredientImages.padBottom(10f);
     ingredientStackDisplay.add(ingredientImages);
 
-    // Initialize the timer
+    // Initialise the timer
     LabelStyle timerStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     timerStyle.background = new TextureRegionDrawable(new Texture(
         "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     timer = new Timer(timerStyle);
     timer.setAlignment(Align.center);
 
-    // Initialize the Reputation Points
+    // Initialise the Reputation Points
     LabelStyle repPointsStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     repPointsStyle.background = new TextureRegionDrawable(new Texture(
       "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     points = new ReputationPoint(repPointsStyle);
     points.setAlignment(Align.center);
 
-    //  Initialize money
+    //  Initialise money
     LabelStyle moneyStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), null);
     moneyStyle.background = new TextureRegionDrawable(new Texture(
       "Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_gradient_down.png"));
     money = new Money(moneyStyle);
     money.setAlignment(Align.center);
     
-    //Initialize the Shop Button
-    ImageButton shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
+    //Initialise the Shop Button
+    shopButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
                     Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/shoppingCart.png"))),
             ButtonColour.BLUE, -1.5f);
@@ -108,9 +115,8 @@ public class UIOverlay {
       }
     });
         
-
-    // Initialise powerup
-    ImageButton powerupButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
+    // Initialise the powerup button
+    powerupButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
                 Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/star.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
@@ -122,8 +128,8 @@ public class UIOverlay {
       }
     });
 
-    // Initialize the home button
-    ImageButton homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
+    // Initialise the home button, game saves when button is pressed
+    homeButton = game.getButtonManager().createImageButton(new TextureRegionDrawable(
             new Texture(
                 Gdx.files.internal("Kenney-Game-Assets-1/2D assets/Game Icons/PNG/White/2x/home.png"))),
         ButtonManager.ButtonColour.BLUE, -1.5f);
@@ -131,6 +137,7 @@ public class UIOverlay {
     homeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
+        game.getGameScreen().saveGame(); 
         game.loadHomeScreen();
       }
     });
@@ -141,19 +148,16 @@ public class UIOverlay {
     recipeImages.setBackground(new TextureRegionDrawable(
       new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_square_gradient_down.png")));
 
-    // Initialize counter for showing remaining recipes
+    // Initialise counter for showing remaining recipes
     LabelStyle orderStyle = new LabelStyle(game.getFontManager().getSubHeaderFont(), Color.BLACK);
     orderLabel = new Label("Orders", orderStyle);
 
-    // Initialize winning label
-    LabelStyle labelStyle = new Label.LabelStyle(game.getFontManager().getTitleFont(), null);
-    resultLabel = new Label("Congratulations! Your final time was:", labelStyle);
-    resultLabel.setVisible(false);
+    // Initialise winning label
+    LabelStyle labelStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), Color.BLACK);
+    resultLabel = new Label(null, labelStyle);
     resultTimer = new Timer(labelStyle);
-    resultTimer.setVisible(false);
 
     // Add everything
-
     table.add(powerupButton).left().width(Value.percentWidth(.08f, table))
         .height(Value.percentHeight(.05f, table));
     table.add().expandX();
@@ -167,12 +171,10 @@ public class UIOverlay {
         .height(Value.percentHeight(.05f, table));
     table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(Value.percentWidth(.08f, table));
-    table.add().expandX();
+    table.add(resultLabel).bottom().padTop(10f);
     table.add(recipeImages).right().top().width(Value.percentWidth(.08f, table));
     table.row();
-    table.add(resultLabel).colspan(3);
-    table.row();
-    table.add(resultTimer).colspan(3);
+    table.add(resultTimer).top().padTop(10f).expand().colspan(3);
     table.row();
     table.add(money).bottom().width(Value.percentWidth(.3f, table))
         .height(Value.percentHeight(.06f, table));
@@ -189,11 +191,16 @@ public class UIOverlay {
     timer.start();
     resultLabel.setVisible(false);
     resultTimer.setVisible(false);
+    isGameFinished = false;
     updateChefUI(null);
   }
 
+  /**
+   * Increase money by chosen amount once order has been submitted.
+   * If the money has been doubled, this is reset for later additions.
+   */
   public void updateMoney() {
-    if (moneyToAdd == 200) {  // If money has been doubled, reset it after one addition
+    if (moneyToAdd == 200) { 
       money.addMoney(moneyToAdd);
       resetMoneyToAdd();
     }
@@ -206,6 +213,9 @@ public class UIOverlay {
     return money;
   }
 
+  /**
+   * Double money due to the powerup.
+   */
   public void doubleMoneyToAdd() {
     moneyToAdd = 200;
   }
@@ -222,21 +232,26 @@ public class UIOverlay {
 
   public void subPoint() {
     points.subRepPoint();
+    if (points.getPoints() <= 0) {
+      finishGameUI("lose");
+    }
   }
 
   public float getTime(){
     return timer.getTime();
   }
+
   public void setTime(float time){
     timer.setTime(time);
   }
+
   public void setCustomPoints(int p){
     points.setCustomPoints(p);
   }
+
   /**
    * Show the image of the currently selected chef as well as have the stack of ingredients
    * currently held by the chef.
-   *
    * @param chef The chef that is currently selected for which to show the UI.
    */
   public void updateChefUI(final Chef chef) {
@@ -274,20 +289,41 @@ public class UIOverlay {
 
 
   /**
-   * Show the label displaying that the game has finished along with the time it took to complete.
+   * End game and output the appropriate label stating the player's result.
+   * Everything on the UI is cleared but the home button.
+   * @param outcome The result of the game, either "win" or "lose".
    */
-  public void finishGameUI() {
-    resultLabel.setVisible(true);
-    resultTimer.setTime(timer.getTime());
-    resultTimer.setVisible(true);
+  public void finishGameUI(String outcome) {
+
+    // Remove all elements but the home button
+    table.removeActor(recipeImages);
+    table.removeActor(chefDisplay);
+    table.removeActor(powerupButton);
+    table.removeActor(shopButton);
+    table.removeActor(ingredientImages);
+    table.removeActor(money);
+    table.removeActor(timer);
+    table.removeActor(points);
+
+    if (outcome == "win") {
+      resultLabel.setText("Congratulations!\nYour final time was:");
+      resultTimer.setTime(timer.getTime());
+      resultTimer.setVisible(true);
+    } else {
+      resultLabel.setText("Out of reputation points!\nGame is over.");
+    }
     timer.stop();
+
+    resultLabel.setVisible(true);
+ 
+    isGameFinished = true;
+
   }
 
   /**
    * Show the current requested recipe that the player needs to make, the ingredients for that, and
    * the number of remaining recipes.
-   *
-   * @param recipes The recipes to display.
+   * @param recipes      The recipes to display.
    * @param progressBars The order waiting times to display.
    */
   public void updateRecipeUI(ArrayList<Recipe> recipes, ArrayList<ProgressBar> progressBars) {
@@ -312,5 +348,9 @@ public class UIOverlay {
       }
       recipeImages.setVisible(true);
     } 
+  }
+
+  public boolean isGameFinished() {
+    return isGameFinished;
   }
 }

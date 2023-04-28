@@ -1,20 +1,18 @@
 package cs.eng1.piazzapanic.screens;
 
-import javax.xml.stream.events.EndElement;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.ui.ButtonManager;
 import cs.eng1.piazzapanic.ui.SettingsOverlay;
@@ -24,12 +22,15 @@ public class HomeScreen implements Screen {
 
   private final Stage uiStage;
   SelectBox<String> customerNum;
+  SelectBox<String> difficulty;
 
+  private Preferences save_game = Gdx.app.getPreferences("Saved Game State");
+  private TextButton loadButton;
 
 
   public HomeScreen(final PiazzaPanicGame game) {
-    // Initialize the root UI stage and table
-    ScreenViewport uiViewport = new ScreenViewport();
+
+    // Initialise the root UI stage and table
     uiStage = new Stage();
     Table table = new Table();
     table.setFillParent(true);
@@ -44,8 +45,11 @@ public class HomeScreen implements Screen {
     Label welcomeLabel = new Label("Welcome to Piazza Panic!",
         new Label.LabelStyle(game.getFontManager().getTitleFont(), null));
 
-    // Initialize buttons and callbacks
+    // Initialise buttons and callbacks
 
+    Label newGameLabel = new Label("----- Start New Game -----",
+        new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
+    
     Label scenarioModeLabel = new Label("Play with a set number of\ncustomers",
         new Label.LabelStyle(game.getFontManager().getLabelFontItalic(), null));
     scenarioModeLabel.setAlignment(Align.right);
@@ -56,7 +60,7 @@ public class HomeScreen implements Screen {
    scenarioModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.setGameScreen(0, customerNum.getSelected());
+        game.setGameScreen(0, customerNum.getSelected(), difficulty.getSelected());
       }
     });
 
@@ -70,9 +74,33 @@ public class HomeScreen implements Screen {
     endlessModeButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.setGameScreen(1, customerNum.getSelected());
+        game.setGameScreen(1, customerNum.getSelected(), difficulty.getSelected());
       }
     });
+
+    Label loadGameLabel = new Label("-------- Load Game --------",
+        new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
+
+    // Load button will only be available to click if there is a save file
+    loadButton = game.getButtonManager()
+        .createTextButton("Load Game", ButtonManager.ButtonColour.BLUE);
+    loadButton.sizeBy(3f);
+    loadButton.addListener(new ClickListener() {
+      @Override
+      public void clicked(InputEvent event, float x, float y) {
+        game.loadGameScreen();
+        game.getGameScreen().loadGame();
+      }
+    });
+    loadButton.getStyle().disabled = new TextureRegionDrawable(new Texture("assets/Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_disabled.png"));
+
+    if (save_game.get().isEmpty()) {
+      loadButton.setTouchable(Touchable.disabled);
+      loadButton.setDisabled(true);
+    } 
+
+    Label optionsLabel = new Label("---------- Options ----------",
+        new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
 
     TextButton tutorialButton = game.getButtonManager()
         .createTextButton("Tutorial", ButtonManager.ButtonColour.BLUE);
@@ -104,7 +132,7 @@ public class HomeScreen implements Screen {
       }
     });
 
-    // Box to select customer number in scenario mode, different colour so it is distinguishable from buttons
+    // Initialise customer number and difficult selection boxes, different colour to distinguish from buttons
     SelectBox.SelectBoxStyle style = new SelectBox.SelectBoxStyle();
     style.font = game.getFontManager().getLabelFont();
     style.fontColor = Color.BLACK;
@@ -118,27 +146,39 @@ public class HomeScreen implements Screen {
     listStyle.selection = new TextureRegionDrawable(
       new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_flat_up.png")));
     style.listStyle = listStyle;
+
     customerNum = new SelectBox<String>(style);
     customerNum.setAlignment(Align.center);
     customerNum.getList().setAlignment(Align.center);
     customerNum.setItems("Customers: 1","Customers: 2","Customers: 3","Customers: 4","Customers: 5");
 
+    difficulty  = new SelectBox<String>(style);
+    difficulty.setAlignment(Align.center);
+    difficulty.getList().setAlignment(Align.center);
+    difficulty.setItems("Difficulty 1", "Difficulty 2", "Difficulty 3");
+
     // Add UI elements to the table and position them
-    table.add(welcomeLabel).padBottom(100f).colspan(3);
+    table.add(welcomeLabel).pad(20f).colspan(3);
+    table.row().pad(5f);
+    table.add(newGameLabel).colspan(3);
+    table.row().padBottom(5f);
+    table.add(scenarioModeLabel).padLeft(42f).padRight(10f);
+    table.add(scenarioModeButton);
+    table.add(customerNum).padLeft(20f);
+    table.row().padBottom(10f);
+    table.add(endlessModeLabel).padLeft(42f).padRight(10f);
+    table.add(endlessModeButton);
+    table.add(difficulty).padLeft(20f);
+    table.row().pad(5f);
+    table.add(loadGameLabel).colspan(3);
+    table.row().padBottom(10f);
+    table.add(loadButton).colspan(3);
+    table.row().pad(5f);
+    table.add(optionsLabel).colspan(3);
     table.row();
-    table.add(scenarioModeLabel).padBottom(20f).padLeft(42f).padRight(10f);
-    table.add(scenarioModeButton).padBottom(20f);
-    table.add(customerNum).padBottom(20f).padLeft(20f);
-    table.row();
-    table.add(endlessModeLabel).padBottom(20f).padLeft(42f).padRight(10f);
-    table.add(endlessModeButton).padBottom(20f);
-    table.row();
-    table.add(tutorialButton).padBottom(20f).colspan(3);
-    table.row();
-    table.add(settingsButton).padBottom(20f).colspan(3);
-    table.row();
-    table.add(quitButton).colspan(3);
-    table.row();
+    table.add(tutorialButton);
+    table.add(quitButton);
+    table.add(settingsButton);
 
   }
 
@@ -146,17 +186,25 @@ public class HomeScreen implements Screen {
   @Override
   public void show() {
     Gdx.input.setInputProcessor(uiStage);
+
+    // Check if loadButton needs to be enabled when screen is shown
+    save_game = Gdx.app.getPreferences("Saved Game State");
+    if (!save_game.get().isEmpty()) {
+      loadButton.setTouchable(Touchable.enabled);
+      loadButton.setDisabled(false);
+    }
   }
 
   @Override
   public void render(float delta) {
-    // Initialize screen
+    // Initialise screen
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     uiStage.getCamera().update();
 
     // Render stage
     uiStage.act(delta);
     uiStage.draw();
+
   }
 
   @Override

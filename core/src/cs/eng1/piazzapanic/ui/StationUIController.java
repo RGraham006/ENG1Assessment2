@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * The controller of all UI relating to all stations. It enables showing and hiding action buttons
- * and displaying progress bars (WIP).
+ * and displaying progress bars.
  */
 public class StationUIController {
 
@@ -26,8 +26,7 @@ public class StationUIController {
 
   /**
    * Keep track of another station and initialize UI for that station.
-   *
-   * @param station the station to keep track of.
+   * @param station The station to keep track of.
    */
   public void addStation(Station station) {
     StationActionUI buttons = new StationActionUI(station, game);
@@ -39,7 +38,6 @@ public class StationUIController {
   /**
    * Display a set of actions for a given station. If the station is not one that this class knows,
    * then it will initialize the UI for it and then show the actions.
-   *
    * @param station The station for which the UI should be displayed.
    * @param actions The list of actions to show.
    */
@@ -55,7 +53,6 @@ public class StationUIController {
 
   /**
    * Hide any actions that may be visible for a given station.
-   *
    * @param station The station for which action should be hidden.
    */
   public void hideActions(Station station) {
@@ -69,7 +66,6 @@ public class StationUIController {
   /**
    * Display a progress bar for a station. If the station is not one that this class knows, then it
    * will initialize the UI for it and then show the actions.
-   *
    * @param station The station for which the UI should be displayed.
    */
   public void showProgressBar(Station station) {
@@ -85,7 +81,6 @@ public class StationUIController {
   /**
    * Update progress bar for a station. If the station is not one that this class knows, then it
    * will initialize the UI for it and then show the actions.
-   *
    * @param station The station for which the progress should be updated.
    * @param value   The value to be shown on the progress bar.
    */
@@ -101,7 +96,6 @@ public class StationUIController {
 
   /**
    * Hide any actions that may be visible for a given station.
-   *
    * @param station The station for which action should be hidden.
    */
   public void hideProgressBar(Station station) {

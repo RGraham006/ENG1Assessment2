@@ -49,35 +49,59 @@ public class PiazzaPanicGame extends Game {
     setScreen(homeScreen);
   }
 
-  public void setGameScreen(int mode, String value) {
-    int customerN;
-    switch(value){
+  /**
+   * Create a game screen with the specified parameters entered on the home screen.
+   * This new game screen replaces any previous game screen.
+   * @param mode The game mode, either scenario or endless (0 or 1).
+   * @param customerNum The number of orders to be placed in scenario mode.
+   * @param diffStr The selected difficulty.
+   */
+  public void setGameScreen(int mode, String customerNum, String diffStr) {
+
+    if (gameScreen != null) {
+      gameScreen.dispose();
+    }
+
+    int customers;
+    int difficulty;
+    switch(customerNum){
       case "Customers: 1":
-        customerN = 1;
+        customers = 1;
         break;
       case "Customers: 2":
-        customerN = 2;
+        customers = 2;
         break;
       case "Customers: 3":
-        customerN = 3;
+        customers = 3;
         break;
       case "Customers: 4":
-        customerN = 4;
+        customers = 4;
         break;
       default:
-        customerN  = 5;
+        customers  = 5;
         break;
     }
 
-    if (gameScreen == null) {
-      gameScreen = new GameScreen(this, mode, customerN);
-      loadGameScreen();
+    switch(diffStr){
+      case "Difficulty 1":
+        difficulty = 1;
+        break;
+      case "Difficulty 3":
+        difficulty = 3;
+        break;
+      default:
+        difficulty = 2;
+        break;
     }
 
+    gameScreen = new GameScreen(this, mode, customers, difficulty);
+    loadGameScreen();
   }
 
   public void loadGameScreen() {
-
+    if (gameScreen == null) { // Only true if the loadGame btn is pressed, so values will be overwritten
+      gameScreen = new GameScreen(this, 0, 1, 1);
+    }
     setScreen(gameScreen);
   }
 

@@ -59,7 +59,7 @@ public class StationActionUI extends Table {
   }
 
   /**
-   * @param percentage A value between 0 and 100 representing the percentage completed
+   * @param percentage A value between 0 and 100 representing the percentage completed.
    */
   public void updateProgress(float percentage) {
     progress.setValue(percentage);
@@ -72,7 +72,6 @@ public class StationActionUI extends Table {
   /**
    * Take a list of actions, clear the current visible buttons and replace them with one for every
    * possible action and generate callbacks to the station.
-   *
    * @param actions The list of possible station actions to display.
    */
   public void showActions(List<StationAction.ActionType> actions) {

@@ -11,8 +11,7 @@ public class Tomato extends Ingredient {
 
   /**
    * Get the texture based on whether the tomato has been chopped.
-   *
-   * @return the texture to display.
+   * @return The texture to display.
    */
   @Override
   public Texture getTexture() {

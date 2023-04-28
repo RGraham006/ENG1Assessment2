@@ -12,6 +12,7 @@ public class Potato extends Ingredient {
 
     /**
      * Get texture based on whether potato has been baked.
+     * @return The texture to display.
      */
     @Override
     public Texture getTexture() {

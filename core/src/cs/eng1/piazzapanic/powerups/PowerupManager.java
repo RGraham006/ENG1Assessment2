@@ -8,6 +8,10 @@ import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.ui.UIOverlay;
 
+
+/**
+ * The controller that gives initialises all powerups and handles any powerup applications.
+ */
 public class PowerupManager {
 
     private final String[] powerupTypes = new String[] {
@@ -19,9 +23,7 @@ public class PowerupManager {
     };
     private final ArrayList<Powerup> powerups;
     private final UIOverlay overlay;
-
     private Powerup appliedPowerup = null;
-
     private final ChefManager chefManager;
     private final CustomerManager customerManager;
     

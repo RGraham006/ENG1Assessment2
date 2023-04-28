@@ -9,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
 import com.badlogic.gdx.utils.Disposable;
-import cs.eng1.piazzapanic.screens.GameScreen;
-import cs.eng1.piazzapanic.screens.ShopScreen;
 import cs.eng1.piazzapanic.ui.UIOverlay;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +36,10 @@ public class ChefManager implements Disposable {
   };
 
   /**
-   * @param chefScale      the amount to scale the texture by so that each chef is an accurate
+   * @param chefScale      The amount to scale the texture by so that each chef is an accurate
    *                       size.
-   * @param collisionLayer the tile map layer which the chefs can collide with.
-   * @param overlay        the user interface overlay to display information about the current chef
+   * @param collisionLayer The tile map layer which the chefs can collide with.
+   * @param overlay        The user interface overlay to display information about the current chef
    *                       and time, and to provide more controls.
    */
   public ChefManager(float chefScale, TiledMapTileLayer collisionLayer, UIOverlay overlay) {
@@ -52,7 +49,7 @@ public class ChefManager implements Disposable {
     // Load chef sprites
     chefs = new ArrayList<>(chefSprites.length);
 
-    // Initialize chefs
+    // Initialise chefs
     for (int i = 0; i < chefSprites.length; i++) {
       String sprite = chefSprites[i];
       Texture chefTexture = new Texture(Gdx.files.internal(sprite));
@@ -66,7 +63,7 @@ public class ChefManager implements Disposable {
   }
 
   /**
-   * Reset each chef to their original position when you load
+   * Reset each chef to their original position.
    */
   public void init() {
     for (int i = 0; i < chefs.size(); i++) {
@@ -75,11 +72,10 @@ public class ChefManager implements Disposable {
   }
 
   /**
-   * Get the tile in the foreground collision layer at the specified point
-   *
-   * @param x the x coordinate of the tile
-   * @param y the y coordinate of the tile
-   * @return the cell/tile at the coordinates
+   * Get the tile in the foreground collision layer at the specified point.
+   * @param x The x coordinate of the tile.
+   * @param y The y coordinate of the tile.
+   * @return  The cell/tile at the coordinates.
    */
   public Cell getCellAtPosition(int x, int y) {
     return collisionLayer.getCell(x, y);
@@ -90,8 +86,7 @@ public class ChefManager implements Disposable {
   }
 
   /**
-   * Add the created Chefs to the game world
-   *
+   * Add the created Chefs to the game world.
    * @param stage The game world to which the chefs should be added.
    */
   public void addChefsToStage(final Stage stage) {
@@ -112,6 +107,12 @@ public class ChefManager implements Disposable {
     });
   }
 
+  /**
+   * Third chef is added when it has been unlocked.
+   * @param tileUnitSize The map's tile size.
+   * @param chefUnlocked States whether the chef should be added.
+   * @return             A bool value depending on whether the chef has been added.
+   */
   public boolean addThirdChef(float tileUnitSize, boolean chefUnlocked){
     if(chefUnlocked && chefs.size() == 2) {
       float chefScale = tileUnitSize * 2.5f;
@@ -129,8 +130,7 @@ public class ChefManager implements Disposable {
 
   /**
    * Given a chef, update the state of the chefs to make sure that only one has input enabled.
-   *
-   * @param chef the chef to be controlled by the user
+   * @param chef The chef to be controlled by the user.
    */
   public void setCurrentChef(Chef chef) {
     if (chef == null && currentChef != null) {
@@ -152,7 +152,7 @@ public class ChefManager implements Disposable {
   }
 
   /**
-   * Update the UI when the current chef's stack has been updated
+   * Update the UI when the current chef's stack has been updated.
    */
   public void currentChefStackUpdated() {
     overlay.updateChefUI(currentChef);
