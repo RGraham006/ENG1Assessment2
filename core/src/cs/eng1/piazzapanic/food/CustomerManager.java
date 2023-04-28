@@ -105,6 +105,7 @@ public class CustomerManager {
       progress.setValue(wait);
       if (wait <= 0) {
         removeCustomerOrder(i);
+        overlay.subPoint();
       }
       else {
         customerWaitTimes.set(i, wait);
