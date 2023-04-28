@@ -30,7 +30,7 @@ public class ButtonManager implements Disposable {
   private final Texture checkboxUnchecked;
 
   /**
-   * @param fontManager the fontManager from which this class can get the right fonts required.
+   * @param fontManager The fontManager from which this class can get the right fonts required.
    */
   public ButtonManager(FontManager fontManager) {
     textButtonStyles = new HashMap<>();
@@ -79,10 +79,9 @@ public class ButtonManager implements Disposable {
 
   /**
    * Create a text button with certain parameters.
-   *
    * @param text   The string to display on the button.
    * @param colour The colour of the base button.
-   * @return The text button constructed based on the input.
+   * @return       The text button constructed based on the input.
    */
   public TextButton createTextButton(String text, ButtonColour colour) {
     return new TextButton(text, textButtonStyles.get(colour));
@@ -90,11 +89,10 @@ public class ButtonManager implements Disposable {
 
   /**
    * Create an image button with certain parameters.
-   *
    * @param image          The image to display on top of the button. It can have transparency.
    * @param colour         The colour of the base button.
    * @param yPressedOffset The amount to move the top image when the button has been pressed.
-   * @return The image button constructed based on the input with a default of 0 padding.
+   * @return               The image button constructed based on the input with a default of 0 padding.
    */
   public ImageButton createImageButton(Drawable image, ButtonColour colour, float yPressedOffset) {
     ImageButton.ImageButtonStyle btnStyle = new ImageButton.ImageButtonStyle(
@@ -106,10 +104,9 @@ public class ButtonManager implements Disposable {
 
   /**
    * Create a text button with certain parameters.
-   *
    * @param text   The string to display on the button.
    * @param colour The colour of the base button.
-   * @return The text button constructed based on the input.
+   * @return       The text button constructed based on the input.
    */
   public CheckBox createCheckbox(String text, ButtonColour colour) {
     return new CheckBox(text, checkBoxStyles.get(colour));

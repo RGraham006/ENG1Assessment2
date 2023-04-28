@@ -54,27 +54,20 @@ public class GameScreen implements Screen {
   private Preferences save_game = Gdx.app.getPreferences("Saved Game State");
   private boolean isFirstFrame = true;
   private final int mode;
-  private final int customerNum;
-  
-
-    private final PiazzaPanicGame game;
-  
-    private final float tileUnitSize;
+  private final PiazzaPanicGame game;
+  private final float tileUnitSize;
 
   public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum, final int difficulty) {
 
-    
-    
-    // com.badlogic.gdx.Preferences save_file = Gdx.app.getPreferences("Save State");
-    // this.save_file = save_file;
-    
     this.game = game;
+    this.mode = mode;
+
     TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
     int sizeX = map.getProperties().get("width", Integer.class);
     int sizeY = map.getProperties().get("height", Integer.class);
     this.tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
 
-    // Initialize stage and camera
+    // Initialise stage and camera
     OrthographicCamera camera = new OrthographicCamera();
     StretchViewport viewport = new StretchViewport(sizeX, sizeY, camera); // Number of tiles
     this.stage = new Stage(viewport);
@@ -84,18 +77,13 @@ public class GameScreen implements Screen {
     this.stationUIController = new StationUIController(uiStage, game);
     uiOverlay = new UIOverlay(uiStage, game);
 
-    // Initialize tilemap
+    // Initialise tilemap
     this.tileMapRenderer = new OrthogonalTiledMapRenderer(map, tileUnitSize);
     MapLayer objectLayer = map.getLayers().get("Stations");
     TiledMapTileLayer collisionLayer = (TiledMapTileLayer) map.getLayers().get("Foreground");
 
     foodTextureManager = new FoodTextureManager();
     chefManager = new ChefManager(tileUnitSize * 2.5f, collisionLayer, uiOverlay);
-
-
-    this.mode = mode;
-    this.customerNum = customerNum;
-
     customerManager = new CustomerManager(uiOverlay, foodTextureManager, mode , customerNum, difficulty);
     powerupManager = new PowerupManager(chefManager, customerManager, uiOverlay);
 
@@ -107,7 +95,7 @@ public class GameScreen implements Screen {
   }
 
   /**
-   * @param tileUnitSize The ratio of world units over the pixel width of a single tile/station
+   * @param tileUnitSize The ratio of world units over the pixel width of a single tile/station.
    * @param objectLayer  The layer on the TMX tilemap which contains all the information about the
    *                     stations and station colliders including position, bounds and station
    *                     capabilities.
@@ -143,7 +131,7 @@ public class GameScreen implements Screen {
       StationActionUI.ActionAlignment alignment = StationActionUI.ActionAlignment.valueOf(
           tileObject.getProperties().get("actionAlignment", "TOP", String.class));
 
-      // Initialize specific station types
+      // Initialise specific station types
       switch (tileObject.getProperties().get("stationType", String.class)) {
         case "cookingStation":
           station = new CookingStation(id, tileObject.getTextureRegion(), stationUIController,
@@ -221,7 +209,7 @@ public class GameScreen implements Screen {
 
   @Override
   public void render(float delta) {
-    // Initialize screen
+    // Initialise screen
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     stage.getCamera().update();
     uiStage.getCamera().update();
@@ -239,7 +227,6 @@ public class GameScreen implements Screen {
 
     customerManager.updateCustomerOrders(delta);
 
-    // uiOverlay.updateMoney();
     if(chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked())){
       chefManager.addChefsToStage(stage);
     }
@@ -268,37 +255,35 @@ public class GameScreen implements Screen {
     return uiOverlay.getMoney();
   }
 
-
+  /**
+   * Save game as the file location %user%/.prefs.
+   * Game is only updated if the game has not been finished.
+   */
   public void saveGame(){
 
     if (uiOverlay.isGameFinished()) {
       return;
     }
 
-    // **************************************************\\
-    //                       SAVE                        \\
-    // **************************************************\\
-    // SAVE FILE LOCATION: %user%/.prefs
     System.out.println("Saved");
-    // Chef Information
+    // Save chef information
     for (int i = 0; i < chefManager.getChefs().size(); i++) {
       // Positions
       save_game.putFloat("Chef"+i+"_x", chefManager.getChefs().get(i).getX());
       save_game.putFloat("Chef"+i+"_y", chefManager.getChefs().get(i).getY());
       save_game.putFloat("Chef"+i+"_rotation", chefManager.getChefs().get(i).getRotation());
       
-      
-      // Ingredients 
+      // Ingredients held
       String ingredientStackAString = chefManager.getChefs().get(i).getStack().toString();
       save_game.putString("Chef"+i+"_ingredientStack", ingredientStackAString);      
     }
 
-    // Saves General Game Information
+    // Save general game information
     save_game.putInteger("Money", getMoney().getMoney());
     save_game.putInteger("Reputation", uiOverlay.getReputation());
     save_game.putFloat("Timer", uiOverlay.getTime());
     
-    // Customers
+    // Save customers
     save_game.putInteger("Remaining_customers", customerManager.getRemainingCustomers());
     ArrayList<Recipe> orders = customerManager.getCustomerOrders();
     for (Recipe recipe : orders){
@@ -310,20 +295,17 @@ public class GameScreen implements Screen {
   }
 
   public void loadGame(){
-    // **************************************************\\
-    //                       LOAD                        \\
-    // **************************************************\\
+
     System.out.println("Loaded");
 
-    // Chef Information
+    // Load chef information
     for (int i = 0; i < chefManager.getChefs().size(); i++) {
       // Positions
       chefManager.getChefs().get(i).setX(save_game.getFloat("Chef"+i+"_x"));
       chefManager.getChefs().get(i).setY(save_game.getFloat("Chef"+i+"_y"));
       chefManager.getChefs().get(i).setRotation(save_game.getFloat("Chef"+i+"_rotation"));
       
-      
-      // Ingredients
+      // Ingredients held
       chefManager.getChefs().get(i).getStack().clear();
       String stackAsString = save_game.getString("Chef"+i+"_ingredientStack");
       stackAsString = stackAsString.substring(1, stackAsString.length() - 1);
@@ -331,13 +313,13 @@ public class GameScreen implements Screen {
 
       for (int j = 0; j < elements.length; j++) {
         
-        // Need to remove underscore
+        // Remove underscores
         try {
           Ingredient.fromString(elements[j], foodTextureManager);
           System.out.println(elements[j]);
           int underscoreIndex = elements[j].indexOf("_");
           String element_before = elements[j].substring(0, underscoreIndex);
-          // Need to figure out if cooked / chopped ... or not
+          // Determine if cooked / chopped ... or not
           String element_after = elements[j].substring(underscoreIndex+1, elements[j].length());
           System.out.println("AFTER "+ element_after);
           if (element_before.equals("bun")){
@@ -365,13 +347,13 @@ public class GameScreen implements Screen {
         } 
         
       }
-      // Customers
+      // Customers ??
       
      
     }
 
 
-    // General Game Information
+    // Load general game information
     getMoney().addMoney(save_game.getInteger("Money"));
     int reputationPoints = save_game.getInteger("Reputation");
     uiOverlay.setCustomPoints(reputationPoints);

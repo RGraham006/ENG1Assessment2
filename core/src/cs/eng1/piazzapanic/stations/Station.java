@@ -58,7 +58,6 @@ public class Station extends Actor implements Observer<Chef> {
 
   /**
    * Take a food texture and render it on top of the station at a smaller size than the station.
-   *
    * @param batch       the sprite batch to draw rectangles to the screen.
    * @param foodTexture the texture to be drawn onto the screen.
    */
@@ -74,7 +73,6 @@ public class Station extends Actor implements Observer<Chef> {
    * Draw the outline of the shape of the station as a rectangle and draw a blue line from the
    * centre of this station (which is an Observer) to the centre of the stationCollider that it is
    * linked to (the Subject that this is registered to).
-   *
    * @param shapes The renderer to use to draw debugging information
    */
   @Override
@@ -109,7 +107,6 @@ public class Station extends Actor implements Observer<Chef> {
 
   /**
    * Take the chef sent from the Subject and decide what interactions are possible.
-   *
    * @param chef The chef that the station should interact with which is given from the Subject to
    *             this Observer.
    */
@@ -162,7 +159,7 @@ public class Station extends Actor implements Observer<Chef> {
   }
 
   /**
-   * @return the list of possible actions that this station based on the current state
+   * @return The list of possible actions that this station based on the current state
    */
   public List<StationAction.ActionType> getActionTypes() {
     return new LinkedList<>();
@@ -171,14 +168,13 @@ public class Station extends Actor implements Observer<Chef> {
   /**
    * Given an action, the station should attempt to do that action based on the chef that is nearby
    * or what ingredient(s) are currently on the station.
-   *
-   * @param action the action that needs to be done by this station if it can.
+   * @param action The action that needs to be done by this station if it can.
    */
   public void doStationAction(StationAction.ActionType action) {
   }
 
   /**
-   * @return the direction in which the action buttons should be displayed.
+   * @return The direction in which the action buttons should be displayed.
    */
   public StationActionUI.ActionAlignment getActionAlignment() {
     return actionAlignment;

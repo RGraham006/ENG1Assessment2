@@ -53,7 +53,7 @@ public class FoodTextureManager implements Disposable {
 
   /**
    * @param foodType The food string to get the corresponding texture from the hashmap.
-   * @return the texture for the specified food or an image to signify that the texture does not
+   * @return         The texture for the specified food or an image to signify that the texture does not
    * exist.
    */
   public Texture getTexture(String foodType) {

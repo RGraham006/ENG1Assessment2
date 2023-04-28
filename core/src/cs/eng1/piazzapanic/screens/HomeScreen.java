@@ -1,14 +1,11 @@
 package cs.eng1.piazzapanic.screens;
 
-import javax.xml.stream.events.EndElement;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -16,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.ui.ButtonManager;
 import cs.eng1.piazzapanic.ui.SettingsOverlay;
@@ -33,8 +29,8 @@ public class HomeScreen implements Screen {
 
 
   public HomeScreen(final PiazzaPanicGame game) {
-    // Initialize the root UI stage and table
-    ScreenViewport uiViewport = new ScreenViewport();
+
+    // Initialise the root UI stage and table
     uiStage = new Stage();
     Table table = new Table();
     table.setFillParent(true);
@@ -49,7 +45,7 @@ public class HomeScreen implements Screen {
     Label welcomeLabel = new Label("Welcome to Piazza Panic!",
         new Label.LabelStyle(game.getFontManager().getTitleFont(), null));
 
-    // Initialize buttons and callbacks
+    // Initialise buttons and callbacks
 
     Label newGameLabel = new Label("----- Start New Game -----",
         new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
@@ -85,7 +81,7 @@ public class HomeScreen implements Screen {
     Label loadGameLabel = new Label("-------- Load Game --------",
         new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));
 
-    // load game button will only be available to click if there is a save file
+    // Load button will only be available to click if there is a save file
     loadButton = game.getButtonManager()
         .createTextButton("Load Game", ButtonManager.ButtonColour.BLUE);
     loadButton.sizeBy(3f);
@@ -136,7 +132,7 @@ public class HomeScreen implements Screen {
       }
     });
 
-    // Box to select customer number in scenario mode, different colour so it is distinguishable from buttons
+    // Initialise customer number and difficult selection boxes, different colour to distinguish from buttons
     SelectBox.SelectBoxStyle style = new SelectBox.SelectBoxStyle();
     style.font = game.getFontManager().getLabelFont();
     style.fontColor = Color.BLACK;
@@ -201,7 +197,7 @@ public class HomeScreen implements Screen {
 
   @Override
   public void render(float delta) {
-    // Initialize screen
+    // Initialise screen
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     uiStage.getCamera().update();
 

@@ -15,6 +15,9 @@ public class Powerup extends Actor {
         this.powerupManager = powerupManager;
     }
 
+    /**
+     * Apply the powerup of a given type to the currently active chef.
+     */
     public void applyPowerup() {
         switch (type) {
             case "chef_speed_up":

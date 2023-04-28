@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The RecipeStation class is a station representing the place in the kitchen
- * where you combine ingredients to create food. The food can then be served to
- * the customer via the station.
+ * The RecipeStation class is a station representing the place in the kitchen where you combine ingredients 
+ * to create food. The food can then be served to the customer via the station.
  */
 public class RecipeStation extends Station {
   private final FoodTextureManager textureManager;
@@ -42,23 +41,17 @@ public class RecipeStation extends Station {
   private final UIOverlay uiOverlay;
   private final PiazzaPanicGame game;
 
-
-
-
-
-
   /**
-   * The constructor method for the class
-   *
-   * @param id                    The unique identifier of the station
-   * @param textureRegion         The rectangular area of the texture
+   * The constructor method for the class.
+   * @param id                    The unique identifier of the station.
+   * @param textureRegion         The rectangular area of the texture.
    * @param stationUIController   The controller from which we can get show and hide the action
-   *                              buttons belonging to the station
-   * @param alignment             Dictates where the action buttons are shown
+   *                              buttons belonging to the station.
+   * @param alignment             Dictates where the action buttons are shown.
    * @param textureManager        The controller from which we can get information on what texture
-   *                              each ingredient should have
+   *                              each ingredient should have.
    * @param customerManager       The controller from which we can get information on what food
-   *                              needs to be served
+   *                              needs to be served.
    */
   public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
       ActionAlignment alignment, FoodTextureManager textureManager,
@@ -91,8 +84,7 @@ public class RecipeStation extends Station {
 
   /**
    * Obtains the actions that can be currently performed depending on the states of the station
-   * itself and the selected chef
-   *
+   * itself and the selected chef.
    * @return actionTypes - the list of actions the station can currently perform.
    */
   @Override
@@ -103,7 +95,7 @@ public class RecipeStation extends Station {
         Ingredient checkItem = nearbyChef.getStack().peek();
         if (checkItem.getIsChopped() || checkItem.getIsCooked() || checkItem.getBaked() || Objects.equals(
             checkItem.getType(), "cheese")) {
-          //If a chef is nearby and is carrying at least one ingredient
+          // If a chef is nearby and is carrying at least one ingredient
           // and the top ingredient is cooked, chopped or a bun then display the action
           actionTypes.add(ActionType.PLACE_INGREDIENT);
         }
@@ -132,8 +124,7 @@ public class RecipeStation extends Station {
   /**
    * Given an action, the station should attempt to do that action based on the chef that is nearby
    * or what ingredient(s) are currently on the station.
-   *
-   * @param action the action that needs to be done by this station if it can.
+   * @param action The action that needs to be done by this station if it can.
    */
   @Override
   public void doStationAction(ActionType action) {
@@ -216,11 +207,10 @@ public class RecipeStation extends Station {
   }
 
   /**
-   * Displays ingredients that have been placed on the station
-   *
-   * @param batch       Used to display a 2D texture
-   * @param parentAlpha The parent alpha, to be multiplied with this actor's alpha, allowing the parent's alpha to affect all
-   *           children.
+   * Displays ingredients that have been placed on the station.
+   * @param batch       Used to display a 2D texture.
+   * @param parentAlpha The parent alpha, to be multiplied with this actor's alpha, allowing the parent's 
+   *                    alpha to affect all children.
    */
   @Override
   public void draw(Batch batch, float parentAlpha) {
@@ -252,7 +242,7 @@ public class RecipeStation extends Station {
   }
 
   /**
-   * Updates the current available actions based on the new customer's order
+   * Updates the current available actions based on the new customer's order.
    */
   public void updateOrderActions() {
     uiController.showActions(this, getActionTypes());

@@ -8,12 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import cs.eng1.piazzapanic.ui.ButtonManager;
-import cs.eng1.piazzapanic.chef.ChefManager;
-import cs.eng1.piazzapanic.ui.UIOverlay;
 
 public class ShopScreen implements Screen {
 
@@ -152,8 +149,13 @@ public class ShopScreen implements Screen {
         return !ovenUnlocked;
     }
 
-    public boolean getCuttingLocked(){return !cuttingUnlocked;}
-    public boolean getFryingLocked(){return !fryingUnlocked;}
+    public boolean getCuttingLocked(){
+        return !cuttingUnlocked;
+    }
+
+    public boolean getFryingLocked(){
+        return !fryingUnlocked;
+    }
 
     private void setPurchaseFailedLabel(String message) {
         purchaseFailedLabel.setText(message);
