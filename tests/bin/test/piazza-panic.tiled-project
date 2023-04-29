@@ -1,0 +1,85 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "propertyTypes": [
+        {
+            "id": 4,
+            "name": "ActionAlignment",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "LEFT",
+                "TOP",
+                "RIGHT",
+                "BOTTOM"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "id": 3,
+            "name": "Ingredient",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "lettuce",
+                "patty",
+                "bun",
+                "tomato"
+            ],
+            "valuesAsFlags": true
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 2,
+            "members": [
+                {
+                    "name": "actionAlignment",
+                    "propertyType": "ActionAlignment",
+                    "type": "string",
+                    "value": "TOP"
+                },
+                {
+                    "name": "collisionObjectIDs",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "ingredients",
+                    "propertyType": "Ingredient",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "stationType",
+                    "propertyType": "StationType",
+                    "type": "string",
+                    "value": "choppingStation"
+                }
+            ],
+            "name": "Station",
+            "type": "class",
+            "useAs": [
+                "property",
+                "object"
+            ]
+        },
+        {
+            "id": 1,
+            "name": "StationType",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+                "choppingStation",
+                "cookingStation",
+                "ingredientStation",
+                "recipeStation"
+            ],
+            "valuesAsFlags": false
+        }
+    ]
+}
