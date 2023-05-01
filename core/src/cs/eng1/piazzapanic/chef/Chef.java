@@ -332,6 +332,8 @@ public class Chef extends Actor implements Disposable {
     this.speed = 3f;
   }
 
+  public float getChefSpeed(){return this.speed;}
+
   public float getPrepSpeed() {
     return prepSpeed;
   }
