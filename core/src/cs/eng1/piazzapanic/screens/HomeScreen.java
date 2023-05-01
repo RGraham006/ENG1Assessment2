@@ -92,7 +92,7 @@ public class HomeScreen implements Screen {
         game.getGameScreen().loadGame();
       }
     });
-    loadButton.getStyle().disabled = new TextureRegionDrawable(new Texture("assets/Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_disabled.png"));
+    loadButton.getStyle().disabled = new TextureRegionDrawable(new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_disabled.png"));
 
     if (save_game.get().isEmpty()) {
       loadButton.setTouchable(Touchable.disabled);
