@@ -21,10 +21,18 @@ public class BakingStationTests {
         return new BakingStation(0, Mockito.mock(TextureRegion.class), Mockito.mock(StationUIController.class), Mockito.mock(StationActionUI.class).getActionAlignment(),ingredients, "false", Mockito.mock(PiazzaPanicGame.class));
     }
 
+
     @Test
     public void test(){
         BakingStation bakingStation = initialiseBakingStation();
         assertTrue(true);
     }
 
+    @Test
+    public void testCheckIfBurnt(){
+        BakingStation bakingStation = initialiseBakingStation();
+        
+        assertTrue(bakingStation.checkIfBurnt(2));
+        
+    }
 }
