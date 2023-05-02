@@ -63,15 +63,6 @@ public class ChefManager implements Disposable {
   }
 
   /**
-   * Reset each chef to their original position.
-   */
-  public void init() {
-    for (int i = 0; i < chefs.size(); i++) {
-      chefs.get(i).init(chefX[i], chefY[i]);
-    }
-  }
-
-  /**
    * Get the tile in the foreground collision layer at the specified point.
    * @param x The x coordinate of the tile.
    * @param y The y coordinate of the tile.

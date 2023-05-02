@@ -99,8 +99,6 @@ public class ChefTests {
         assertEquals(chef.getChefSpeed(), 3f, 0f);
     }
 
-    //Prepping and input
-
     @Test
     public void testSpeedupPrepping(){
         Chef chef = initialiseChef();
