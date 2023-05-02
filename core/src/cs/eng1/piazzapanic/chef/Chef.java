@@ -13,14 +13,17 @@ import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.stations.Station;
 
 /**
- * The Chef class is an actor representing a chef in the kitchen. It can pick up and put down
+ * The Chef class is an actor representing a chef in the kitchen. It can pick up
+ * and put down
  * ingredients and interact with stations.
  */
 public class Chef extends Actor implements Disposable {
 
   /**
-   * image, imageBounds and imageRotation are all used to display the chef to the user and show the
-   * user where the chef is and what direction it is moving without changing any collision details.
+   * image, imageBounds and imageRotation are all used to display the chef to the
+   * user and show the
+   * user where the chef is and what direction it is moving without changing any
+   * collision details.
    */
   private final Texture image;
   private final Vector2 imageBounds;
@@ -35,8 +38,10 @@ public class Chef extends Actor implements Disposable {
   private boolean isPowerupActive = false;
 
   /**
-   * A parameter which adds a small amount of distance between the chef's boundaries and any other
-   * objects it can collide with. This helps avoid boundary errors in collision calculations.
+   * A parameter which adds a small amount of distance between the chef's
+   * boundaries and any other
+   * objects it can collide with. This helps avoid boundary errors in collision
+   * calculations.
    */
   private final float collisionSkin = 0.01f;
   private boolean inputEnabled = true;
@@ -44,9 +49,11 @@ public class Chef extends Actor implements Disposable {
 
   /**
    * @param image       The texture to display to the user.
-   * @param imageBounds The bounds of the texture independent of the chef's own bounds to use for
+   * @param imageBounds The bounds of the texture independent of the chef's own
+   *                    bounds to use for
    *                    drawing the image to scale.
-   * @param chefManager The controller from which we can get information about all the chefs and
+   * @param chefManager The controller from which we can get information about all
+   *                    the chefs and
    *                    their surrounding environment.
    */
   public Chef(Texture image, Vector2 imageBounds, ChefManager chefManager) {
@@ -61,6 +68,10 @@ public class Chef extends Actor implements Disposable {
     setY(y);
     getStack().clear();
     imageRotation = 0;
+  }
+
+  public ChefManager getChefManager() {
+    return this.chefManager;
   }
 
   @Override
@@ -99,7 +110,7 @@ public class Chef extends Actor implements Disposable {
    * Set the input vector based on the input keys for movement.
    */
   private void getInput() {
-    
+
     inputVector.x = 0;
     inputVector.y = 0;
     if (!isInputEnabled() || isPaused()) {
@@ -126,9 +137,11 @@ public class Chef extends Actor implements Disposable {
   }
 
   /**
-   * Calculate how far the chef should move based on the input vector while avoiding collisions.
+   * Calculate how far the chef should move based on the input vector while
+   * avoiding collisions.
+   * 
    * @param delta The time that has passed since the last frame.
-   * @return      The vector representing how far the chef should move.
+   * @return The vector representing how far the chef should move.
    */
   private Vector2 calculateMovement(float delta) {
     Vector2 movement = new Vector2(inputVector.x * speed * delta, inputVector.y * speed * delta);
@@ -141,12 +154,15 @@ public class Chef extends Actor implements Disposable {
   }
 
   /**
-   * Check to see if a point lies within a tile in the collision layer, or if the point is in a chef
+   * Check to see if a point lies within a tile in the collision layer, or if the
+   * point is in a chef
    * or station.
+   * 
    * @param x The x-coordinate to check for a collision.
    * @param y The y-coordinate to check for a collision.
-   * @return  The bounding box of the object that the point lies within. It will be null if the point
-   * does not lie in any object.
+   * @return The bounding box of the object that the point lies within. It will be
+   *         null if the point
+   *         does not lie in any object.
    */
   private Rectangle getCollisionObjectBoundaries(float x, float y) {
     Actor actorHit = getStage().hit(x, y, false);
@@ -165,9 +181,11 @@ public class Chef extends Actor implements Disposable {
   }
 
   /**
-   * @param xMovement The amount to move the chef along the x-axis before collision.
-   * @return          The new change in the x-axis that ensures that the chef does not collide with any
-   * objects.
+   * @param xMovement The amount to move the chef along the x-axis before
+   *                  collision.
+   * @return The new change in the x-axis that ensures that the chef does not
+   *         collide with any
+   *         objects.
    */
   private float adjustHorizontalMovementForCollision(float xMovement) {
     if (xMovement > 0.0001f) {
@@ -213,9 +231,11 @@ public class Chef extends Actor implements Disposable {
   }
 
   /**
-   * @param yMovement The amount to move the chef along the y-axis before collision.
-   * @return          The new change in the y-axis that ensures that the chef does not collide with any
-   * objects.
+   * @param yMovement The amount to move the chef along the y-axis before
+   *                  collision.
+   * @return The new change in the y-axis that ensures that the chef does not
+   *         collide with any
+   *         objects.
    */
   private float adjustVerticalMovementForCollision(float yMovement) {
     if (yMovement > 0.0001f) {
@@ -274,6 +294,7 @@ public class Chef extends Actor implements Disposable {
 
   /**
    * Pops the top ingredient from the stack to place on the station.
+   * 
    * @return The ingredient that was popped from the stack.
    */
   public Ingredient placeIngredient() {
@@ -287,8 +308,10 @@ public class Chef extends Actor implements Disposable {
   }
 
   /**
-   * Sets the input vector based on x and y, but ensuring that the vector is never greater than a
+   * Sets the input vector based on x and y, but ensuring that the vector is never
+   * greater than a
    * length of 1.
+   * 
    * @param x The x input value.
    * @param y The y input value.
    */
@@ -320,15 +343,15 @@ public class Chef extends Actor implements Disposable {
     return image;
   }
 
-  public void doubleChefSpeed(){
+  public void doubleChefSpeed() {
     this.speed = 6f;
   }
 
-  public void resetChefSpeed(){
+  public void resetChefSpeed() {
     this.speed = 3f;
   }
 
-  public float getChefSpeed(){
+  public float getChefSpeed() {
     return this.speed;
   }
 
@@ -343,20 +366,23 @@ public class Chef extends Actor implements Disposable {
   public void resetPrepSpeed() {
     this.prepSpeed = 5f;
   }
-  
-  public float getRotation(){
+
+  public float getRotation() {
     return imageRotation;
   }
-  public void setRotation(float rotation){
+
+  public void setRotation(float rotation) {
     imageRotation = rotation;
   }
-  public void setIngredientStack(Ingredient ingredient){
+
+  public void setIngredientStack(Ingredient ingredient) {
     // System.out.println(ingredient);
     grabIngredient(ingredient);
   }
 
   /**
-   * Whenever the stack has items added or removed from it, notify the chef manager about the new
+   * Whenever the stack has items added or removed from it, notify the chef
+   * manager about the new
    * stack.
    */
   public void notifyAboutUpdatedStack() {

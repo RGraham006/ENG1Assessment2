@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Powerup extends Actor {
 
-    private final PowerupManager powerupManager;
+    private PowerupManager powerupManager;
 
     private String type;
     private boolean isActive = false;
@@ -73,6 +73,14 @@ public class Powerup extends Actor {
 
     public String getType() {
         return this.type;
+    }
+
+    public PowerupManager getPowerupManager() {
+        return this.powerupManager;
+    }
+
+    public void setPowerupManager(PowerupManager powerupManager) {
+        this.powerupManager = powerupManager;
     }
 
     @Override
