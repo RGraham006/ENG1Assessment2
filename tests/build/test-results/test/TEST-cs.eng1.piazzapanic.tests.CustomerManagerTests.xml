@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:04:41" hostname="ROBINS-GAMING-D" time="0.089">
+<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-05-02T23:31:05" hostname="ROBINS-GAMING-D" time="0.075">
   <properties/>
-  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.018"/>
-  <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="test" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="testCheckRecipe" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="testUpdateRemainingCustomers" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.002"/>
+  <testcase name="testRemoveCustomerOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.075">
+    <failure message="java.lang.AssertionError: expected:&lt;4.0&gt; but was:&lt;5.0&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;4.0&gt; but was:&lt;5.0&gt;
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:577)
+	at org.junit.Assert.assertEquals(Assert.java:701)
+	at cs.eng1.piazzapanic.tests.CustomerManagerTests.testRemoveCustomerOrder(CustomerManagerTests.java:86)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:577)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at cs.eng1.piazzapanic.tests.GdxTestRunner.render(GdxTestRunner.java:44)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:128)
+	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
+</failure>
+  </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

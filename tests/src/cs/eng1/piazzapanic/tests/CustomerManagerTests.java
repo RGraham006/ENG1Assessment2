@@ -28,12 +28,6 @@ public class CustomerManagerTests {
     }
 
     @Test
-    public void test(){
-        CustomerManager customerManager = initialiseCustomerManager();
-        assertTrue(true);
-    }
-
-    @Test
     public void testGenerateOrder() {
         CustomerManager customerManager = initialiseCustomerManager();
         ArrayList<Recipe> customerOrders = customerManager.getCustomerOrders();
@@ -81,10 +75,14 @@ public class CustomerManagerTests {
         assertEquals(initCustomerNum - 1, customerManager.getRemainingCustomers());
     }
 
-}
+    @Test
+    public void testRemoveCustomerOrder(){
+        CustomerManager customerManager = initialiseCustomerManager();
+        customerManager.updateCustomerOrders(0f);
+        ArrayList<Recipe> initOrders = customerManager.getCustomerOrders();
+        Recipe recipe = initOrders.get(0);
+        customerManager.removeCustomerOrder(recipe);
+        assertEquals(initOrders.size(), customerManager.getCustomerOrders().size(), 0);
+    }
 
-/*
- * Ones I haven't been able to test
- * > check game finished
- * > check n orders added once orders.size() == remaining
- */
+}
