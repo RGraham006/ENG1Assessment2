@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.PowerupManagerTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-02T14:04:16" hostname="DESKTOP-V83RQT2" time="0.008">
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupManagerTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-05-02T16:37:16" hostname="ROBINS-GAMING-D" time="0.035">
   <properties/>
-  <testcase name="test" classname="cs.eng1.piazzapanic.tests.PowerupManagerTests" time="0.008"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="testRemovePowerup" classname="cs.eng1.piazzapanic.tests.PowerupManagerTests" time="0.011"/>
+  <testcase name="testGeneratePowerups" classname="cs.eng1.piazzapanic.tests.PowerupManagerTests" time="0.002"/>
+  <testcase name="testGetowerups" classname="cs.eng1.piazzapanic.tests.PowerupManagerTests" time="0.001"/>
+  <system-out><![CDATA[add rep point
+double money
+reset wait time
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
