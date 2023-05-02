@@ -6,17 +6,28 @@ import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class IngredientTest {
 
     public Ingredient initialiseIngredient(){
-        Ingredient ingredient = new Ingredient(Mockito.mock(String.class), Mockito.mock(FoodTextureManager.class));
+        Ingredient ingredient = new Ingredient("patty", Mockito.mock(FoodTextureManager.class));;
         return ingredient;
     }
 
+    @Test
+    public void testGetTexture() {
+        Ingredient ingredient = initialiseIngredient();
+        assertNull(ingredient.getTexture());
+    }
+    @Test
+    public void testGetType() {
+        Ingredient ingredient = initialiseIngredient();
+      assertEquals("patty", ingredient.getType());
+    }
+    
     @Test
     public void testCanBeBurnt(){
         
@@ -55,8 +66,11 @@ public class IngredientTest {
         assertTrue(ingredient.getIsChopped());
     }
 
-
-
+    
+    public  void testToString(){
+        Ingredient ingredient = initialiseIngredient();
+        
+    }
 
   
 
