@@ -13,15 +13,51 @@ import static org.junit.Assert.assertTrue;
 public class IngredientTest {
 
     public Ingredient initialiseIngredient(){
-        Ingredient ingredient = new Ingredient(Mockito.mock(String.class), Mockito.mock(FoodTextureManager.class));;
+        Ingredient ingredient = new Ingredient(Mockito.mock(String.class), Mockito.mock(FoodTextureManager.class));
         return ingredient;
     }
 
     @Test
     public void testCanBeBurnt(){
+        
         Ingredient ingredient = initialiseIngredient();
         ingredient.setIsBurnt(true);
         assertTrue(ingredient.getIsBurnt());
     }
+
+    @Test
+    public void testCanBeBaked(){
+        Ingredient ingredient = initialiseIngredient();
+        ingredient.setBaked(true);
+        assertTrue(ingredient.getBaked());
+    }
+
+    @Test
+    public void testCanBeCooked(){
+        Ingredient ingredient = initialiseIngredient();
+        ingredient.setIsCooked(true);
+        assertTrue(ingredient.getIsCooked());
+    }
+
+    @Test
+    
+    public void testCanBeHalfCooked(){
+        Ingredient ingredient = initialiseIngredient();
+        ingredient.setHalfCooked();
+        assertTrue(ingredient.getIsHalfCooked());
+    }
+
+
+    @Test
+    public void testCanBeChopped(){
+        Ingredient ingredient = initialiseIngredient();
+        ingredient.setIsChopped(true);
+        assertTrue(ingredient.getIsChopped());
+    }
+
+
+
+
+  
 
 }
