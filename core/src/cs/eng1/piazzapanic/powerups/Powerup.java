@@ -3,7 +3,7 @@ package cs.eng1.piazzapanic.powerups;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Powerup extends Actor {
-    
+
     private final PowerupManager powerupManager;
 
     private String type;
@@ -28,7 +28,7 @@ public class Powerup extends Actor {
                     isActive = true;
                 }
                 break;
-            case "prep_speed_up":   
+            case "prep_speed_up":
                 if (powerupManager.getChefManager().getCurrentChef() != null) {
                     if (!powerupManager.getChefManager().getCurrentChef().isPaused()) {
                         System.out.println("speed up prep");
@@ -69,6 +69,10 @@ public class Powerup extends Actor {
 
         System.out.println("reset powerup");
         isActive = false;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     @Override
