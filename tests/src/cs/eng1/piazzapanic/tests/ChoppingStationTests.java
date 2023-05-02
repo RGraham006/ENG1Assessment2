@@ -22,8 +22,7 @@ import org.mockito.Mockito;
 
 import javax.naming.InsufficientResourcesException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class ChoppingStationTests {
@@ -75,6 +74,20 @@ public class ChoppingStationTests {
         choppingStation.doStationAction(StationAction.ActionType.GRAB_INGREDIENT);
         assertFalse(choppingStation.getInUse());
         assertTrue(chef.hasIngredient());
+    }
+
+    @Test
+    public void testReset(){
+        ChoppingStation choppingStation = initialiseChoppingStation();
+        Chef chef = initialiseChef();
+        chef.setIngredientStack(new Ingredient("tomato", Mockito.mock(FoodTextureManager.class)));
+        choppingStation.update(chef);
+        choppingStation.doStationAction(StationAction.ActionType.PLACE_INGREDIENT);
+        choppingStation.update(chef);
+        choppingStation.doStationAction(StationAction.ActionType.CHOP_ACTION);
+        choppingStation.reset();
+        assertFalse(choppingStation.hasIngredient());
+        assertEquals(choppingStation.getTimeChopped(), 0, 0);
     }
 
 }
