@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-05-02T16:37:13" hostname="ROBINS-GAMING-D" time="0.004">
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-05-02T16:39:39" hostname="ROBINS-GAMING-D" time="0.005">
   <properties/>
-  <testcase name="initializationError" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.004">
+  <testcase name="initializationError" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.005">
     <failure message="org.junit.runners.model.InvalidTestClassError: Invalid test class 'cs.eng1.piazzapanic.tests.PowerupTests':&#10;  1. No runnable methods" type="org.junit.runners.model.InvalidTestClassError">org.junit.runners.model.InvalidTestClassError: Invalid test class 'cs.eng1.piazzapanic.tests.PowerupTests':
   1. No runnable methods
 	at org.junit.runners.ParentRunner.validate(ParentRunner.java:525)

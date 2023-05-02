@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T16:37:16" hostname="ROBINS-GAMING-D" time="0.094">
+<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T16:39:42" hostname="ROBINS-GAMING-D" time="0.093">
   <properties/>
-  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.023"/>
-  <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.002"/>
-  <testcase name="test" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
+  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.022"/>
+  <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
+  <testcase name="test" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.002"/>
   <testcase name="testCheckRecipe" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
   <testcase name="testUpdateRemainingCustomers" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
