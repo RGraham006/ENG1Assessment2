@@ -7,11 +7,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertTrue;
+
 @RunWith(GdxTestRunner.class)
 public class CustomerManagerTests {
 
     public CustomerManager initialiseCustomerManager(){
         return new CustomerManager(Mockito.mock(UIOverlay.class), Mockito.mock(FoodTextureManager.class), 2, 5, 2);
+    }
+
+    @Test
+    public void test(){
+        CustomerManager customerManager = initialiseCustomerManager();
+        assertTrue(true);
     }
 
 }
