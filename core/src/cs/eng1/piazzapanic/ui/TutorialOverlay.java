@@ -1,9 +1,11 @@
 package cs.eng1.piazzapanic.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import cs.eng1.piazzapanic.PiazzaPanicGame;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+
+import static com.badlogic.gdx.utils.Scaling.fit;
 
 public class TutorialOverlay {
 
@@ -48,6 +52,9 @@ public class TutorialOverlay {
         labelStyle);
     recipeLabel.setWrap(true);
 
+    Texture recipe = new Texture(Gdx.files.internal("food/recipePage.png"));
+    Image recipePage = new Image(recipe);
+
     TextButton backButton = game.getButtonManager()
         .createTextButton("Done", ButtonManager.ButtonColour.GREY);
     backButton.addListener(new ClickListener() {
@@ -63,7 +70,7 @@ public class TutorialOverlay {
     table.row();
     table.add(stationUsage).fillX().expandX().pad(20f).padTop(0f);
     table.row();
-    table.add(recipeLabel).fillX().expandX().pad(20f).padTop(0f);
+    table.add(recipePage).height(200).width(300);
     table.row();
     table.add(backButton).padTop(20f);
   }
