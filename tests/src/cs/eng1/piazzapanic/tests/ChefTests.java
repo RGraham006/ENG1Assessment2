@@ -2,23 +2,16 @@ package cs.eng1.piazzapanic.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.chef.FixedStack;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
-import cs.eng1.piazzapanic.ui.UIOverlay;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.objenesis.strategy.SingleInstantiatorStrategy;
 
 import static org.junit.Assert.*;
 
@@ -57,6 +50,15 @@ public class ChefTests {
         assertEquals(ingredients.size(), someStack - 1);
 
     }
+
+    @Test
+    public void testHasIngredient(){
+        Chef chef = initialiseChef();
+        FixedStack<Ingredient> ingredients = chef.getStack();
+        chef.grabIngredient(Mockito.mock(Ingredient.class));
+        assertTrue(chef.hasIngredient());
+    }
+
     @Test
     public void testCantOverfillStack(){
         Chef chef = initialiseChef();
@@ -91,12 +93,49 @@ public class ChefTests {
     }
 
     @Test
-    public void testSpeedDownSpeed(){
+    public void testSpeedDownSpeed() {
         Chef chef = initialiseChef();
         chef.doubleChefSpeed();
         assertEquals(chef.getChefSpeed(), 6f, 0f);
         chef.resetChefSpeed();
         assertEquals(chef.getChefSpeed(), 3f, 0f);
+    }
+
+    @Test
+    public void testSpeedupPrepping(){
+        Chef chef = initialiseChef();
+        chef.doublePrepSpeed();
+        assertEquals(chef.getPrepSpeed(), 2.5f, 0f);
+    }
+
+    @Test
+    public void testSpeedDownPrepping(){
+        Chef chef = initialiseChef();
+        chef.doublePrepSpeed();
+        assertEquals(chef.getPrepSpeed(), 2.5f, 0f);
+        chef.resetPrepSpeed();
+        assertEquals(chef.getPrepSpeed(), 5f, 0f);
+    }
+
+    @Test
+    public void testInputEnabled(){
+        Chef chef = initialiseChef();
+        chef.setInputEnabled(true);
+        assertTrue(chef.isInputEnabled());
+    }
+
+    @Test
+    public void testInputDisabled(){
+        Chef chef = initialiseChef();
+        chef.setInputEnabled(true);
+        assertTrue(chef.isInputEnabled());
+        chef.setInputEnabled(false);
+        assertFalse(chef.isInputEnabled());
+    }
+
+    @Test
+    public void test(){
+
     }
 
 }

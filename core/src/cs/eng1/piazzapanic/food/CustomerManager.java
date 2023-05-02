@@ -170,23 +170,6 @@ public class CustomerManager {
     return false;
   }
 
-  /**
-   * Complete the current order and move on to the next one. Then update the UI. If all the recipes
-   * are completed, then show the winning UI.
-   */
-  public void nextRecipe() {
-    if (customerOrders.isEmpty()) {
-      currentOrder = null;
-    } else {
-      currentOrder = customerOrders.get(customerOrders.size() - 1);
-    }
-    notifyRecipeStations();
-    overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
-    if (currentOrder == null) {
-      overlay.finishGameUI(true);
-    }
-  }
-
   public void setRemainingCustomers() {
     remainingCustomers--;
   }
