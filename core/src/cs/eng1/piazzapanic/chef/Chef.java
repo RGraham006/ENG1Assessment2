@@ -107,10 +107,6 @@ public class Chef extends Actor implements Disposable {
     }
     float x = 0f;
     float y = 0f;
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1) && !isPowerupActive){
-      doubleChefSpeed();
-      isPowerupActive = true;
-    }
     if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
       y += 1f;
     }
@@ -332,10 +328,12 @@ public class Chef extends Actor implements Disposable {
     this.speed = 3f;
   }
 
-  public float getChefSpeed(){return this.speed;}
+  public float getChefSpeed(){
+    return this.speed;
+  }
 
   public float getPrepSpeed() {
-    return prepSpeed;
+    return this.prepSpeed;
   }
 
   public void doublePrepSpeed() {

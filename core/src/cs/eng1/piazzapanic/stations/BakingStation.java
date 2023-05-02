@@ -69,6 +69,7 @@ public class BakingStation extends Station{
                 progressVisible = false;
                 nearbyChef.resetPrepSpeed();
                 nearbyChef.setPaused(false);
+                inUse = false;
             }
         }
         super.act(delta);
@@ -133,8 +134,7 @@ public class BakingStation extends Station{
             //check to see if total number of seconds has passed to progress the state of the pizza base.
             if (currentIngredient.getBaked()) {
                 actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
-            }
-            if (!inUse) {
+            } else if (!inUse) {
                 actionTypes.add(StationAction.ActionType.BAKE_ACTION);
             }
         }

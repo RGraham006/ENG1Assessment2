@@ -85,7 +85,7 @@ public class CustomerManager {
    */
   public void updateCustomerOrders(float delta) {
     if (remainingCustomers == 0) {
-      overlay.finishGameUI("win");
+      overlay.finishGameUI(true);
     }
     if (customerOrders.size() < remainingCustomers) {
       if (nextOrder <= 0f) {
@@ -183,7 +183,7 @@ public class CustomerManager {
     notifyRecipeStations();
     overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);
     if (currentOrder == null) {
-      overlay.finishGameUI("win");
+      overlay.finishGameUI(true);
     }
   }
 

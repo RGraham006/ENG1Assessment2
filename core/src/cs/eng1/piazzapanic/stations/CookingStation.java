@@ -75,11 +75,12 @@ public class CookingStation extends Station {
         } else if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
           nearbyChef.resetPrepSpeed();
+          nearbyChef.setPaused(false);
+          inUse = false;
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
         uiController.showActions(this, getActionTypes());
-        nearbyChef.setPaused(false);
       }
     }
     super.act(delta);
@@ -143,8 +144,7 @@ public class CookingStation extends Station {
         actionTypes.add(StationAction.ActionType.FLIP_ACTION);
       } else if (currentIngredient.getIsCooked()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
-      }
-      if (!inUse) {
+      } else if (!inUse) {
         actionTypes.add(StationAction.ActionType.COOK_ACTION);
       }
     }

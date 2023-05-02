@@ -51,13 +51,9 @@ public class PowerupManager {
         return powerups;
     }
 
-    public void generatePowerup() {
-        appliedPowerup = powerups.get(0);   // CHEF SPEED
-        // appliedPowerup = powerups.get(1);   // PREP SPEED
-        // appliedPowerup = powerups.get(2);   // ADD REP POINT
-        // appliedPowerup = powerups.get(3);   // DOUBLE MONEY
-        // appliedPowerup = powerups.get(4);   // RESET WAIT TIME FOR FIRST CUSTOMER
-        appliedPowerup.applyPowerup();
+    public void generatePowerup(int number) {
+        appliedPowerup = powerups.get(number);
+        appliedPowerup.applyPowerup();  
     }
 
     public void removePowerup() {

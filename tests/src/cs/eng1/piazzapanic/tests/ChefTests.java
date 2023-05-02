@@ -87,16 +87,16 @@ public class ChefTests {
     public void testSpeedupSpeed(){
         Chef chef = initialiseChef();
         chef.doubleChefSpeed();
-        assertEquals(chef.getChefSpeed(), 6f);
+        assertEquals(chef.getChefSpeed(), 6f, 0f);
     }
 
     @Test
     public void testSpeedDownSpeed(){
         Chef chef = initialiseChef();
         chef.doubleChefSpeed();
-        assertEquals(chef.getChefSpeed(), 6f);
+        assertEquals(chef.getChefSpeed(), 6f, 0f);
         chef.resetChefSpeed();
-        assertEquals(chef.getChefSpeed(), 3f);
+        assertEquals(chef.getChefSpeed(), 3f, 0f);
     }
 
 }
