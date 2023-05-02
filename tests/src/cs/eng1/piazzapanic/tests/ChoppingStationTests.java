@@ -1,0 +1,31 @@
+package cs.eng1.piazzapanic.tests;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
+import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+import cs.eng1.piazzapanic.stations.ChoppingStation;
+import cs.eng1.piazzapanic.stations.StationAction;
+import cs.eng1.piazzapanic.ui.StationActionUI;
+import cs.eng1.piazzapanic.ui.StationUIController;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+
+import static org.junit.Assert.assertTrue;
+
+@RunWith(GdxTestRunner.class)
+public class ChoppingStationTests {
+
+    public ChoppingStation initialiseChoppingStation(){
+        Ingredient ingredient = Mockito.mock(Ingredient.class);
+        Ingredient[] ingredients = {ingredient};
+        return new ChoppingStation(0, Mockito.mock(TextureRegion.class), Mockito.mock(StationUIController.class), Mockito.mock(StationActionUI.class).getActionAlignment(), ingredients, "false", Mockito.mock(PiazzaPanicGame.class));
+    }
+
+    @Test
+    public void test(){
+        ChoppingStation choppingStation = initialiseChoppingStation();
+        assertTrue(true);
+    }
+
+}
