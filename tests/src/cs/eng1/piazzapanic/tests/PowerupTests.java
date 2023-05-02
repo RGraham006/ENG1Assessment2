@@ -4,6 +4,7 @@ import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
+import cs.eng1.piazzapanic.food.FoodTextureManager;
 import cs.eng1.piazzapanic.powerups.Powerup;
 import cs.eng1.piazzapanic.powerups.PowerupManager;
 import cs.eng1.piazzapanic.ui.Money;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.IntIntMap;
 
 import org.junit.Test;
@@ -38,7 +40,7 @@ public class PowerupTests {
         ChefManager chefManager = initialiseChefManager();
         chefManager.setCurrentChef(chef);
 
-        PowerupManager powerupManager = new PowerupManager(chefManager, Mockito.mock(CustomerManager.class),
+        PowerupManager powerupManager = new PowerupManager(chefManager, initialiseCustomerManager(),
                 Mockito.mock(UIOverlay.class));
 
         return new Powerup(type, powerupManager);
@@ -70,6 +72,10 @@ public class PowerupTests {
         PiazzaPanicGame game = new PiazzaPanicGame();
         Stage stage = Mockito.mock(Stage.class);
         return new UIOverlay(stage, game);
+    }
+
+    public CustomerManager initialiseCustomerManager() {
+        return new CustomerManager(Mockito.mock(UIOverlay.class), Mockito.mock(FoodTextureManager.class), 0, 1, 2);
     }
 
     @Test
@@ -131,4 +137,18 @@ public class PowerupTests {
         assertEquals(money_after, money_before, 0.01f);
     }
 
+    @Test
+    public void testResetCustomerWait() {
+        Powerup powerup = initialisePowerup("reset_customer_wait");
+
+        ProgressBar progressBar_before = powerup.getPowerupManager().getCustomerManager().getFirstProgressBar();
+
+        powerup.getPowerupManager().getCustomerManager().updateCustomerOrders(0f);
+
+        powerup.applyPowerup();
+
+        ProgressBar progressBar_after = powerup.getPowerupManager().getCustomerManager().getFirstProgressBar();
+
+        assertEquals(progressBar_before.getValue(), progressBar_after.getValue(), 0.01f);
+    }
 }
