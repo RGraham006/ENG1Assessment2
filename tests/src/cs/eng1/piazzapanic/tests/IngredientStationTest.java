@@ -1,26 +1,19 @@
 package cs.eng1.piazzapanic.tests;
 
-<<<<<<< HEAD
-import com.badlogic.gdx.graphics.g2d.Batch;
-=======
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
->>>>>>> 2c588a118cfaab6431e6d9ef3f6176df66ebd703
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.FoodTextureManager;
 import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.stations.IngredientStation;
-<<<<<<< HEAD
 import cs.eng1.piazzapanic.stations.Station;
-=======
-import cs.eng1.piazzapanic.stations.RecipeStation;
 import cs.eng1.piazzapanic.stations.StationAction;
->>>>>>> 2c588a118cfaab6431e6d9ef3f6176df66ebd703
 import cs.eng1.piazzapanic.ui.StationActionUI;
 import cs.eng1.piazzapanic.ui.StationUIController;
 import cs.eng1.piazzapanic.chef.Chef;

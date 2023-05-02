@@ -140,7 +140,7 @@ public class PowerupTests {
     @Test
     public void testResetCustomerWait() {
         Powerup powerup = initialisePowerup("reset_customer_wait");
-
+        powerup.getPowerupManager().getCustomerManager().updateCustomerOrders(0f);
         ProgressBar progressBar_before = powerup.getPowerupManager().getCustomerManager().getFirstProgressBar();
 
         powerup.getPowerupManager().getCustomerManager().updateCustomerOrders(0f);
