@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="4" skipped="0" failures="4" errors="0" timestamp="2023-05-02T22:38:23" hostname="ROBINS-GAMING-D" time="0.199">
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="4" skipped="0" failures="4" errors="0" timestamp="2023-05-02T23:04:42" hostname="ROBINS-GAMING-D" time="0.209">
   <properties/>
-  <testcase name="testAddRepPoint" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.037">
+  <testcase name="testAddRepPoint" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.038">
     <failure message="java.lang.AssertionError: expected:&lt;0.0&gt; but was:&lt;1.0&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;0.0&gt; but was:&lt;1.0&gt;
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
@@ -23,7 +23,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
 </failure>
   </testcase>
-  <testcase name="testPrepSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.039">
+  <testcase name="testPrepSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.037">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.chef.Chef.getPrepSpeed()&quot; because &quot;chef_before&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.chef.Chef.getPrepSpeed()&quot; because &quot;chef_before&quot; is null
 	at cs.eng1.piazzapanic.tests.PowerupTests.testPrepSpeedupPowerup(PowerupTests.java:80)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
@@ -41,7 +41,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
 </failure>
   </testcase>
-  <testcase name="testDoubleMoney" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.036">
+  <testcase name="testDoubleMoney" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.039">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.ui.Money.getMoney()&quot; because the return value of &quot;cs.eng1.piazzapanic.ui.UIOverlay.getMoney()&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.ui.Money.getMoney()&quot; because the return value of &quot;cs.eng1.piazzapanic.ui.UIOverlay.getMoney()&quot; is null
 	at cs.eng1.piazzapanic.tests.PowerupTests.testDoubleMoney(PowerupTests.java:111)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
@@ -59,7 +59,7 @@
 	at com.badlogic.gdx.backends.headless.HeadlessApplication$1.run(HeadlessApplication.java:93)
 </failure>
   </testcase>
-  <testcase name="testChefSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.033">
+  <testcase name="testChefSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.04">
     <failure message="java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.chef.Chef.getChefSpeed()&quot; because &quot;chef_before&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;cs.eng1.piazzapanic.chef.Chef.getChefSpeed()&quot; because &quot;chef_before&quot; is null
 	at cs.eng1.piazzapanic.tests.PowerupTests.testChefSpeedupPowerup(PowerupTests.java:63)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)

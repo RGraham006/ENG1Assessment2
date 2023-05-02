@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.TimerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T22:38:24" hostname="ROBINS-GAMING-D" time="0.068">
+<testsuite name="cs.eng1.piazzapanic.tests.TimerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:04:42" hostname="ROBINS-GAMING-D" time="0.069">
   <properties/>
   <testcase name="testTimerStarts" classname="cs.eng1.piazzapanic.tests.TimerTests" time="0.002"/>
   <testcase name="testTimerInit" classname="cs.eng1.piazzapanic.tests.TimerTests" time="0.003"/>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.ReputationPointsTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-05-02T22:38:23" hostname="ROBINS-GAMING-D" time="0.102">
+<testsuite name="cs.eng1.piazzapanic.tests.ReputationPointsTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:04:42" hostname="ROBINS-GAMING-D" time="0.104">
   <properties/>
-  <testcase name="testCannotAddPoint" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
-  <testcase name="testSetCustomPoints" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.003"/>
+  <testcase name="testCannotAddPoint" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.003"/>
+  <testcase name="testSetCustomPoints" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
   <testcase name="testInitPointsAtThree" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
   <testcase name="testGameOver" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
-  <testcase name="testPointAdd" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.003"/>
+  <testcase name="testPointAdd" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
   <testcase name="testPointSub" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
   <testcase name="testCannotSubPoint" classname="cs.eng1.piazzapanic.tests.ReputationPointsTests" time="0.002"/>
   <system-out><![CDATA[]]></system-out>

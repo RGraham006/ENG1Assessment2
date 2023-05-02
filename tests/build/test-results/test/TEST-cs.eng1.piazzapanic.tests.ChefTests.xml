@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.ChefTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2023-05-02T22:38:22" hostname="ROBINS-GAMING-D" time="0.65">
+<testsuite name="cs.eng1.piazzapanic.tests.ChefTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:04:40" hostname="ROBINS-GAMING-D" time="0.646">
   <properties/>
-  <testcase name="testCantOverfillStack" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.039"/>
-  <testcase name="testInputDisabled" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.039"/>
-  <testcase name="testSpeedupPrepping" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.038"/>
+  <testcase name="testCantOverfillStack" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.041"/>
+  <testcase name="testInputDisabled" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.04"/>
+  <testcase name="testSpeedupPrepping" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.042"/>
   <testcase name="testSpeedDownPrepping" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.036"/>
-  <testcase name="testInit" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.04"/>
+  <testcase name="testInit" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.038"/>
   <testcase name="testCanBePaused" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
   <testcase name="testCanBeUnpaused" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
   <testcase name="testPlaceIngredient" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
-  <testcase name="testInputEnabled" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
-  <testcase name="testGrabIngredient" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
-  <testcase name="testSpeedupSpeed" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.036"/>
-  <testcase name="testSpeedDownSpeed" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.037"/>
+  <testcase name="testInputEnabled" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.035"/>
+  <testcase name="testGrabIngredient" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.035"/>
+  <testcase name="testSpeedupSpeed" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.035"/>
+  <testcase name="testSpeedDownSpeed" classname="cs.eng1.piazzapanic.tests.ChefTests" time="0.036"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
