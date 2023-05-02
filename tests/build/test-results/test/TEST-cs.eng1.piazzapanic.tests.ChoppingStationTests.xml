@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.ChoppingStationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-02T17:10:06" hostname="ROBINS-GAMING-D" time="0.001">
+<testsuite name="cs.eng1.piazzapanic.tests.ChoppingStationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-05-02T22:38:23" hostname="ROBINS-GAMING-D" time="0.145">
   <properties/>
-  <testcase name="test" classname="cs.eng1.piazzapanic.tests.ChoppingStationTests" time="0.001"/>
+  <testcase name="testDoStationActionPlace" classname="cs.eng1.piazzapanic.tests.ChoppingStationTests" time="0.041"/>
+  <testcase name="testDoStationActionChop" classname="cs.eng1.piazzapanic.tests.ChoppingStationTests" time="0.036"/>
+  <testcase name="testDoStationActionGrab" classname="cs.eng1.piazzapanic.tests.ChoppingStationTests" time="0.033"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

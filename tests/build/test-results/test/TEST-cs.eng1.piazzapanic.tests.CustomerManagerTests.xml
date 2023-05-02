@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T17:10:06" hostname="ROBINS-GAMING-D" time="0.095">
+<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-02T22:38:23" hostname="ROBINS-GAMING-D" time="0.089">
   <properties/>
-  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.023"/>
+  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.018"/>
   <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.004"/>
   <testcase name="test" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
   <testcase name="testCheckRecipe" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>

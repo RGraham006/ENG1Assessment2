@@ -151,6 +151,10 @@ public class ChoppingStation extends Station {
     }
   }
 
+  public boolean getInUse(){
+    return inUse;
+  }
+
   @Override
   public void reset() {
     currentIngredient = null;
