@@ -194,7 +194,7 @@ public class BakingStation extends Station{
         progressVisible = false;
         super.reset();
     }
-
+    
     /**
      * Displays ingredients that have been placed on the station.
      * @param batch       Used to display a 2D texture.
