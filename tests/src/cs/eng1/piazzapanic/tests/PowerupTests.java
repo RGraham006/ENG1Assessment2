@@ -118,9 +118,4 @@ public class PowerupTests {
         assertEquals(money_after, money_before, 0.01f);
     }
 
-    @Test
-    public void testResetCustomerWait() {
-        Powerup powerup = initialisePowerup("reset_customer_wait");
-
-    }
 }
