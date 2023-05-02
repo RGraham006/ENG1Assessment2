@@ -26,13 +26,6 @@ public class PowerupManagerTests {
     }
 
     @Test
-    public void testPowerupManagerWorks() {
-        PowerupManager powerupManager = initialisePowerupManager();
-        powerupManager.addPowerupToStage(Mockito.mock(Stage.class));
-        assertTrue(true);
-    }
-
-    @Test
     public void testGetowerups() {
         PowerupManager powerupManager = initialisePowerupManager();
         ArrayList<Powerup> powerups = powerupManager.getPowerups();

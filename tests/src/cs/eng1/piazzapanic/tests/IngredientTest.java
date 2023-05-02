@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class IngredientTest {
 
     public Ingredient initialiseIngredient(){
-        Ingredient ingredient = new Ingredient(Mockito.mock(String.class), Mockito.mock(FoodTextureManager.class));;
+        Ingredient ingredient = new Ingredient("patty", Mockito.mock(FoodTextureManager.class));;
         return ingredient;
     }
 
