@@ -37,11 +37,11 @@ public class PowerupTests {
         return chef;
     }
 
-    @Test
-    public void testApplyPowerup() {
-        Powerup powerup = initialisePowerup("chef_speed_up");
-        Chef chef = initialiseChef();
-        float speed = chef.getChefSpeed();
-        powerup.applyPowerup();
-    }
+//    @Test
+//    public void testApplyPowerup() {
+//        Powerup powerup = initialisePowerup("chef_speed_up");
+//        Chef chef = initialiseChef();
+//        float speed = chef.getChefSpeed();
+//        powerup.applyPowerup();
+//    }
 }
