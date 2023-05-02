@@ -66,12 +66,20 @@ public class IngredientTest {
         assertTrue(ingredient.getIsChopped());
     }
 
-    
+    @Test
     public  void testToString(){
         Ingredient ingredient = initialiseIngredient();
-        
+        ingredient.setIsChopped(true);
+        assertEquals("patty_chopped", ingredient.toString());
+        ingredient.setIsChopped(false);
+        ingredient.setIsBurnt(true);
+        assertEquals("burnt", ingredient.toString());
+        ingredient.setIsBurnt(false);
+        ingredient.setIsCooked(true);
+        assertEquals("patty_cooked", ingredient.toString());
+        ingredient.setIsCooked(false);
+        assertEquals("patty_raw", ingredient.toString());
     }
-
-  
+    
 
 }
