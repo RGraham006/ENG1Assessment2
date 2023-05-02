@@ -1,5 +1,6 @@
 package cs.eng1.piazzapanic.tests;
 
+import cs.eng1.piazzapanic.PiazzaPanicGame;
 import cs.eng1.piazzapanic.chef.Chef;
 import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
@@ -18,8 +19,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.IntIntMap;
 
@@ -32,13 +35,21 @@ public class PowerupTests {
     public Powerup initialisePowerup(String type) {
 
         Chef chef = initialiseChef();
-        ChefManager chefManager = Mockito.mock(ChefManager.class);
+        ChefManager chefManager = initialiseChefManager();
         chefManager.setCurrentChef(chef);
 
         PowerupManager powerupManager = new PowerupManager(chefManager, Mockito.mock(CustomerManager.class),
                 Mockito.mock(UIOverlay.class));
 
         return new Powerup(type, powerupManager);
+    }
+
+    public ChefManager initialiseChefManager() {
+        TiledMap map = new TmxMapLoader().load("main-game-map.tmx");
+        float tileUnitSize = 1 / (float) map.getProperties().get("tilewidth", Integer.class);
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) map.getLayers().get("Foreground");
+        ChefManager chefManager = new ChefManager(tileUnitSize * 2.5f, collisionLayer, Mockito.mock(UIOverlay.class));
+        return chefManager;
     }
 
     public Chef initialiseChef() {
@@ -55,17 +66,21 @@ public class PowerupTests {
         return chef;
     }
 
+    public UIOverlay initialiseUIOverlay() {
+        PiazzaPanicGame game = new PiazzaPanicGame();
+        Stage stage = Mockito.mock(Stage.class);
+        return new UIOverlay(stage, game);
+    }
+
     @Test
     public void testChefSpeedupPowerup() {
         Powerup powerup = initialisePowerup("chef_speed_up");
 
-        Chef chef_before = powerup.getPowerupManager().getChefManager().getCurrentChef();
-        float speed_before = chef_before.getChefSpeed();
+        float speed_before = powerup.getPowerupManager().getChefManager().getCurrentChef().getChefSpeed();
 
         powerup.applyPowerup();
 
-        Chef cehf_after = powerup.getPowerupManager().getChefManager().getCurrentChef();
-        float speed_after = cehf_after.getChefSpeed();
+        float speed_after = powerup.getPowerupManager().getChefManager().getCurrentChef().getChefSpeed();
 
         speed_before *= 2;
 
@@ -76,15 +91,13 @@ public class PowerupTests {
     public void testPrepSpeedupPowerup() {
         Powerup powerup = initialisePowerup("prep_speed_up");
 
-        Chef chef_before = powerup.getPowerupManager().getChefManager().getCurrentChef();
-        float speed_before = chef_before.getPrepSpeed();
+        float speed_before = powerup.getPowerupManager().getChefManager().getCurrentChef().getPrepSpeed();
 
         powerup.applyPowerup();
 
-        Chef chef_after = powerup.getPowerupManager().getChefManager().getCurrentChef();
-        float speed_after = chef_after.getPrepSpeed();
+        float speed_after = powerup.getPowerupManager().getChefManager().getCurrentChef().getPrepSpeed();
 
-        speed_before *= 2;
+        speed_after *= 2;
 
         assertEquals(speed_after, speed_before, 0.01f);
     }
