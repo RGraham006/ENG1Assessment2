@@ -151,6 +151,16 @@ public class ChoppingStation extends Station {
     }
   }
 
+  public boolean hasIngredient(){
+    if(currentIngredient != null){
+      return true;
+    }
+    return false;
+  }
+
+  public float getTimeChopped(){
+    return timeChopped;
+  }
 
 
   @Override

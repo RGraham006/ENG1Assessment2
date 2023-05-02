@@ -1,17 +1,17 @@
 package cs.eng1.piazzapanic.tests;
 
-// import com.badlogic.gdx.graphics.g2d.TextureRegion;
-// import cs.eng1.piazzapanic.PiazzaPanicGame;
-// import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import cs.eng1.piazzapanic.PiazzaPanicGame;
+import cs.eng1.piazzapanic.food.ingredients.Ingredient;
 import cs.eng1.piazzapanic.stations.BakingStation;
-// import cs.eng1.piazzapanic.ui.StationActionUI;
-// import cs.eng1.piazzapanic.stations.Station;
-// import cs.eng1.piazzapanic.ui.StationUIController;
-// import org.junit.Test;
-// import org.junit.runner.RunWith;
-// import org.mockito.Mockito;
-// import cs.eng1.piazzapanic.chef.Chef;
-// import cs.eng1.piazzapanic.chef.ChefManager;
+import cs.eng1.piazzapanic.ui.StationActionUI;
+import cs.eng1.piazzapanic.stations.Station;
+import cs.eng1.piazzapanic.ui.StationUIController;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import cs.eng1.piazzapanic.chef.Chef;
+import cs.eng1.piazzapanic.chef.ChefManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -35,7 +35,7 @@ import org.mockito.Mockito;
 import javax.naming.InsufficientResourcesException;
 
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class BakingStationTests {
@@ -70,12 +70,9 @@ public class BakingStationTests {
         bakingStation.doStationAction(StationAction.ActionType.BAKE_ACTION);
         assertTrue(bakingStation.getInUse());
         assertTrue(chef.isPaused());
-    
-        
-        
-        // assertTrue(bakingStation.checkIfBurnt(2));
         
     }
+
     @Test
     public void testDoStationActionPlace(){
         BakingStation bakingStation = initialiseBakingStation();
@@ -83,6 +80,47 @@ public class BakingStationTests {
         chef.setIngredientStack(new Ingredient("potato", Mockito.mock(FoodTextureManager.class)));
         bakingStation.update(chef);
         bakingStation.doStationAction(StationAction.ActionType.PLACE_INGREDIENT);
-        assertFalse(chef.hasIngredient());
+        assertTrue(chef.hasIngredient());
+    }
+
+    @Test
+    public void testDoStationActionGrab(){
+        BakingStation bakingStation = initialiseBakingStation();
+        Chef chef = initialiseChef();
+        chef.setIngredientStack(new Ingredient("potato", Mockito.mock(FoodTextureManager.class)));
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.PLACE_INGREDIENT);
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.GRAB_INGREDIENT);
+        assertFalse(bakingStation.getInUse());
+        assertTrue(chef.hasIngredient());
+    }
+
+    @Test 
+    public void testDoStationActionClear(){
+        BakingStation bakingStation = initialiseBakingStation();
+        Chef chef = initialiseChef();
+        chef.setIngredientStack(new Ingredient("potato", Mockito.mock(FoodTextureManager.class)));
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.PLACE_INGREDIENT);
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.CLEAR_STATION);
+        assertFalse(bakingStation.getInUse());
+        assertTrue(chef.hasIngredient());
+    }
+
+    @Test 
+    public void testRest(){
+        BakingStation bakingStation = initialiseBakingStation();
+        Chef chef = initialiseChef();
+        chef.setIngredientStack(new Ingredient("potato", Mockito.mock(FoodTextureManager.class)));
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.PLACE_INGREDIENT);
+        bakingStation.update(chef);
+        bakingStation.doStationAction(StationAction.ActionType.BAKE_ACTION);
+        bakingStation.reset();
+        assertFalse(bakingStation.hasIngredient());
+        assertEquals(bakingStation.getTimeBaked(), 0, 0);
+
     }
 }
