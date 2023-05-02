@@ -64,10 +64,17 @@ Here is the latest [desktop-1.0.jar](desktop/build/libs/desktop-1.0.jar) on the 
 The classes that are core to development are explained below. Not all classes are documented here,
 but further documentation is available in the JavaDocs.
 
-- `PiazzaPanicGame` - the base class that manages all the screens and the asset managers.
+- `PiazzaPanicGame` - this is the base class that manages all the screens and the asset managers.
 - `GameScreen` - this is the base logic for when the game is running. It deals with rendering and
   instantiating the level. It reads the tilemap TMX file, displays the background, and instantiates
   the Stations and StationColliders from the "Station" layer.
+- `HomeScreen` - this is the first screen shown when the game is executed. It provides the user
+  with a way to access the settings and tutorial, load their save file (if it exists) and start a new 
+  game in scenario or endless mode.
+- `ShopScreen` - this is the screen for the user to buy additional components using money that they
+  earn when submitting orders.
+- `WinLossScreen` - this is the screen shown when the user finishes the game, displaying either a win
+  or loss message, along with the time the played for.
 
 #### UI
 
@@ -81,8 +88,10 @@ but further documentation is available in the JavaDocs.
   the currently requested order, the currently selected chef, and the stack of ingredients that the
   chef has.
 - `StationUIController` - the intermediary class that lies between stations and their corresponding
-  UI
-  for interaction.
+  UI for interaction.
+- `ReputationPoint` - the label for the player's reputation points. If this becomes 0, the game ends.
+- `Money` - the label for the player's money. This increases with every submitted order.
+- `Timer` - the label displaying the duration of the game.
 
 #### Stations
 
@@ -93,12 +102,12 @@ but further documentation is available in the JavaDocs.
   `doStationAction(StationAction action)` methods and the constructor to define the specifics of the
   new station.
 - `StationCollider` - this is also an actor which has bounds so that whenever the chef walks over
-  it,
-  it notifies the subscribed Stations through the Observer pattern which chef is nearby so that the
+  it, it notifies the subscribed Stations through the Observer pattern which chef is nearby so that the
   station can show its actions.
 - `RecipeStation` - this takes a bunch of ingredients, decides what recipe can be made, creates it
-  and
-  submits it to fulfill an order.
+  and submits it to fulfill an order.
+- `ChoppingStation`, `CookingStation`, `BakingStation` - the stations that the chef interacts with.
+  Each takes different ingredients based on their funtions.
 
 #### Observable
 
@@ -115,6 +124,12 @@ but further documentation is available in the JavaDocs.
 - `CustomerManager` - it creates the scenario of what recipe orders are requested by customers. It
   interacts with RecipeStations to know when recipes are completed.
 - `FoodTextureManager` - this shares textures between ingredients and recipes of the same type.
+
+#### Powerups
+
+- `Powerup` - this applies several different powerups to the chef, including chef speed up, prep 
+  speed up, doubled money, additional reputation point and reset customer wait time.
+- `PowerupManager` - this creates all the powerups and is the method to interact with each powerup.
 
 #### Chef
 
