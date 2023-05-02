@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:44:27" hostname="ROBINS-GAMING-D" time="0.178">
+  <properties/>
+  <testcase name="testResetCustomerWait" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.178"/>
+  <system-out><![CDATA[reset wait time
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
