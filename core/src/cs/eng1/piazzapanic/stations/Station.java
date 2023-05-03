@@ -181,6 +181,10 @@ public class Station extends Actor implements Observer<Chef> {
     return actionAlignment;
   }
 
+    public boolean getInUse(){
+      return inUse;
+    }
+  
   public int getId() {
     return id;
   }

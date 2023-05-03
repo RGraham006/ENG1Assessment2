@@ -59,17 +59,18 @@ public class PowerupManager {
         appliedPowerup = null;
     }
 
-    public ChefManager getChefManager() {
-        return chefManager;
+    public ChefManager getChefManager(){
+        return this.chefManager;
     }
 
-    public UIOverlay getOverlay() {
-        return overlay;
+    public UIOverlay getOverlay(){
+        return this.overlay;
     }
 
-    public CustomerManager getCustomerManager() {
-        return customerManager;
+    public CustomerManager getCustomerManager(){
+        return this.customerManager;
     }
+
 
     public Powerup getAppliedPowerup() {
         return this.appliedPowerup;

@@ -64,6 +64,7 @@ public class IngredientTest {
         Ingredient ingredient = initialiseIngredient();
         ingredient.setIsChopped(true);
         assertTrue(ingredient.getIsChopped());
+        
     }
 
     @Test
