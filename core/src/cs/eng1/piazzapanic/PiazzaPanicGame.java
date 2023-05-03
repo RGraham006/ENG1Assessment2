@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import cs.eng1.piazzapanic.screens.GameScreen;
 import cs.eng1.piazzapanic.screens.HomeScreen;
 import cs.eng1.piazzapanic.screens.ShopScreen;
+import cs.eng1.piazzapanic.screens.WinLossScreen;
 import cs.eng1.piazzapanic.ui.*;
 
 public class PiazzaPanicGame extends Game {
@@ -14,6 +15,7 @@ public class PiazzaPanicGame extends Game {
   private GameScreen gameScreen;
   private HomeScreen homeScreen;
   public ShopScreen shopScreen;
+  private WinLossScreen winLossScreen;
   private TutorialOverlay tutorialOverlay;
   private SettingsOverlay settingsOverlay;
   public Money money;
@@ -26,6 +28,7 @@ public class PiazzaPanicGame extends Game {
     settingsOverlay = new SettingsOverlay(this);
     shopScreen = new ShopScreen(this);
     homeScreen = new HomeScreen(this);
+    winLossScreen = new WinLossScreen(this);
     money = new Money(new Label.LabelStyle(getFontManager().getHeaderFont(), null));
     loadHomeScreen();
   }
@@ -40,6 +43,9 @@ public class PiazzaPanicGame extends Game {
     }
     if (shopScreen != null) {
       shopScreen.dispose();
+    }
+    if (winLossScreen != null) {
+      winLossScreen.dispose();
     }
     fontManager.dispose();
     buttonManager.dispose();
@@ -107,6 +113,11 @@ public class PiazzaPanicGame extends Game {
 
   public void loadShopScreen() {
     setScreen(shopScreen);
+  }
+
+  public void loadWinLossScreen(boolean win, Timer timer) {
+    winLossScreen.finishGame(win, timer);
+    setScreen(winLossScreen);
   }
 
   public Money getMoney() {

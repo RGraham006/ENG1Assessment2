@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs.eng1.piazzapanic.tests.CookingStationTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:51:30" hostname="ROBINS-GAMING-D" time="0.332">
+  <properties/>
+  <testcase name="testRest" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.038"/>
+  <testcase name="testDoStationActionClear" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.037"/>
+  <testcase name="testDoStationActionPlace" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.037"/>
+  <testcase name="testDoStationActionCook" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.037"/>
+  <testcase name="testDoStationActionFlip" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.036"/>
+  <testcase name="testDoStationActionGrab" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.036"/>
+  <testcase name="test" classname="cs.eng1.piazzapanic.tests.CookingStationTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

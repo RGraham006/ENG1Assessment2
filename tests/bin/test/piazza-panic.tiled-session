@@ -1,0 +1,36 @@
+{
+    "activeFile": "main-game-map.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/Tilesheet/Topdown Shooter Full 2.xml": {
+            "scaleInDock": 1
+        },
+        "big-map.tmx": {
+            "scale": 0.23255208333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 956.7749160134379,
+                "y": 640.7166853303472
+            }
+        },
+        "main-game-map.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 519,
+                "y": 794
+            }
+        }
+    },
+    "openFiles": [
+        "main-game-map.tmx",
+        "big-map.tmx"
+    ],
+    "project": "piazza-panic.tiled-project",
+    "recentFiles": [
+        "big-map.tmx",
+        "main-game-map.tmx"
+    ]
+}

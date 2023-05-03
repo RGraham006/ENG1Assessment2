@@ -92,7 +92,7 @@ public class HomeScreen implements Screen {
         game.getGameScreen().loadGame();
       }
     });
-    loadButton.getStyle().disabled = new TextureRegionDrawable(new Texture("assets/Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_disabled.png"));
+    loadButton.getStyle().disabled = new TextureRegionDrawable(new Texture("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_flat_disabled.png"));
 
     if (save_game.get().isEmpty()) {
       loadButton.setTouchable(Touchable.disabled);
@@ -142,9 +142,12 @@ public class HomeScreen implements Screen {
     List.ListStyle listStyle = new List.ListStyle();
     listStyle.font = game.getFontManager().getLabelFont();
     listStyle.fontColorSelected = Color.BLACK;
-    listStyle.fontColorUnselected = Color.WHITE;
+    listStyle.fontColorUnselected = Color.BLACK;
+    listStyle.background = new TextureRegionDrawable(
+            new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/green_button_flat_down.png")));
     listStyle.selection = new TextureRegionDrawable(
       new Texture(Gdx.files.internal("Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/grey_button_flat_up.png")));
+
     style.listStyle = listStyle;
 
     customerNum = new SelectBox<String>(style);

@@ -1,0 +1,536 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GameScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.screens</a>
+</div>
+
+<h1>Coverage Summary for Class: GameScreen (cs.eng1.piazzapanic.screens)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/205)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.screens;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Input;
+&nbsp;import com.badlogic.gdx.InputMultiplexer;
+&nbsp;import com.badlogic.gdx.Preferences;
+&nbsp;import com.badlogic.gdx.Screen;
+&nbsp;import com.badlogic.gdx.graphics.GL20;
+&nbsp;import com.badlogic.gdx.graphics.OrthographicCamera;
+&nbsp;import com.badlogic.gdx.maps.MapLayer;
+&nbsp;import com.badlogic.gdx.maps.objects.RectangleMapObject;
+&nbsp;import com.badlogic.gdx.maps.tiled.TiledMap;
+&nbsp;import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+&nbsp;import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+&nbsp;import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+&nbsp;import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+&nbsp;import com.badlogic.gdx.math.Rectangle;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.utils.Array;
+&nbsp;import com.badlogic.gdx.utils.viewport.ScreenViewport;
+&nbsp;import com.badlogic.gdx.utils.viewport.StretchViewport;
+&nbsp;import cs.eng1.piazzapanic.PiazzaPanicGame;
+&nbsp;import cs.eng1.piazzapanic.chef.ChefManager;
+&nbsp;import cs.eng1.piazzapanic.food.CustomerManager;
+&nbsp;import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+&nbsp;import cs.eng1.piazzapanic.powerups.PowerupManager;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Recipe;
+&nbsp;import cs.eng1.piazzapanic.food.FoodTextureManager;
+&nbsp;import cs.eng1.piazzapanic.stations.*;
+&nbsp;import cs.eng1.piazzapanic.ui.Money;
+&nbsp;import cs.eng1.piazzapanic.ui.StationActionUI;
+&nbsp;import cs.eng1.piazzapanic.ui.StationUIController;
+&nbsp;import cs.eng1.piazzapanic.ui.UIOverlay;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.HashMap;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * The screen which can be used to load the tilemap and keep track of everything happening in the
+&nbsp; * game. It does all the initialization and then lets each actor do its actions based on the current
+&nbsp; * frame.
+&nbsp; */
+&nbsp;public class GameScreen implements Screen {
+&nbsp;
+&nbsp;  private final Stage stage;
+&nbsp;  private final Stage uiStage;
+&nbsp;  private final ChefManager chefManager;
+&nbsp;  private final OrthogonalTiledMapRenderer tileMapRenderer;
+&nbsp;  private final StationUIController stationUIController;
+&nbsp;  private final UIOverlay uiOverlay;
+&nbsp;  private final FoodTextureManager foodTextureManager;
+&nbsp;  private final CustomerManager customerManager;
+&nbsp;  private final PowerupManager powerupManager;
+<b class="nc">&nbsp;  private Preferences save_game = Gdx.app.getPreferences(&quot;Saved Game State&quot;);</b>
+<b class="nc">&nbsp;  private boolean isFirstFrame = true;</b>
+&nbsp;  private final int mode;
+&nbsp;  private final PiazzaPanicGame game;
+&nbsp;  private final float tileUnitSize;
+<b class="nc">&nbsp;  private boolean isOnCooldown = false;</b>
+<b class="nc">&nbsp;  private float cooldownTimer = 0f;</b>
+&nbsp;
+<b class="nc">&nbsp;  public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum, final int difficulty) {</b>
+&nbsp;
+<b class="nc">&nbsp;    this.game = game;</b>
+<b class="nc">&nbsp;    this.mode = mode;</b>
+&nbsp;
+<b class="nc">&nbsp;    TiledMap map = new TmxMapLoader().load(&quot;main-game-map.tmx&quot;);</b>
+<b class="nc">&nbsp;    int sizeX = map.getProperties().get(&quot;width&quot;, Integer.class);</b>
+<b class="nc">&nbsp;    int sizeY = map.getProperties().get(&quot;height&quot;, Integer.class);</b>
+<b class="nc">&nbsp;    this.tileUnitSize = 1 / (float) map.getProperties().get(&quot;tilewidth&quot;, Integer.class);</b>
+&nbsp;
+&nbsp;    // Initialise stage and camera
+<b class="nc">&nbsp;    OrthographicCamera camera = new OrthographicCamera();</b>
+<b class="nc">&nbsp;    StretchViewport viewport = new StretchViewport(sizeX, sizeY, camera); // Number of tiles</b>
+<b class="nc">&nbsp;    this.stage = new Stage(viewport);</b>
+&nbsp;
+<b class="nc">&nbsp;    ScreenViewport uiViewport = new ScreenViewport();</b>
+<b class="nc">&nbsp;    this.uiStage = new Stage(uiViewport);</b>
+<b class="nc">&nbsp;    this.stationUIController = new StationUIController(uiStage, game);</b>
+<b class="nc">&nbsp;    uiOverlay = new UIOverlay(uiStage, game);</b>
+&nbsp;
+&nbsp;    // Initialise tilemap
+<b class="nc">&nbsp;    this.tileMapRenderer = new OrthogonalTiledMapRenderer(map, tileUnitSize);</b>
+<b class="nc">&nbsp;    MapLayer objectLayer = map.getLayers().get(&quot;Stations&quot;);</b>
+<b class="nc">&nbsp;    TiledMapTileLayer collisionLayer = (TiledMapTileLayer) map.getLayers().get(&quot;Foreground&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;    foodTextureManager = new FoodTextureManager();</b>
+<b class="nc">&nbsp;    chefManager = new ChefManager(tileUnitSize * 2.5f, collisionLayer, uiOverlay);</b>
+<b class="nc">&nbsp;    customerManager = new CustomerManager(uiOverlay, foodTextureManager, mode , customerNum, difficulty);</b>
+<b class="nc">&nbsp;    powerupManager = new PowerupManager(chefManager, customerManager, uiOverlay);</b>
+&nbsp;
+&nbsp;    // Add tile objects
+<b class="nc">&nbsp;    initialiseStations(tileUnitSize, objectLayer);</b>
+<b class="nc">&nbsp;    chefManager.addChefsToStage(stage);</b>
+<b class="nc">&nbsp;    powerupManager.addPowerupToStage(stage);</b>
+&nbsp;
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * @param tileUnitSize The ratio of world units over the pixel width of a single tile/station.
+&nbsp;   * @param objectLayer  The layer on the TMX tilemap which contains all the information about the
+&nbsp;   *                     stations and station colliders including position, bounds and station
+&nbsp;   *                     capabilities.
+&nbsp;   */
+&nbsp;  private void initialiseStations(float tileUnitSize, MapLayer objectLayer) {
+<b class="nc">&nbsp;    Array&lt;TiledMapTileMapObject&gt; tileObjects = objectLayer.getObjects()</b>
+<b class="nc">&nbsp;        .getByType(TiledMapTileMapObject.class);</b>
+<b class="nc">&nbsp;    Array&lt;RectangleMapObject&gt; colliderObjects = objectLayer.getObjects()</b>
+<b class="nc">&nbsp;        .getByType(RectangleMapObject.class);</b>
+<b class="nc">&nbsp;    HashMap&lt;Integer, StationCollider&gt; colliders = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;    for (RectangleMapObject colliderObject : new Array.ArrayIterator&lt;&gt;(colliderObjects)) {</b>
+<b class="nc">&nbsp;      Integer id = colliderObject.getProperties().get(&quot;id&quot;, Integer.class);</b>
+<b class="nc">&nbsp;      StationCollider collider = new StationCollider(chefManager);</b>
+<b class="nc">&nbsp;      Rectangle bounds = colliderObject.getRectangle();</b>
+<b class="nc">&nbsp;      collider.setBounds(bounds.getX() * tileUnitSize, bounds.getY() * tileUnitSize,</b>
+<b class="nc">&nbsp;          bounds.getWidth() * tileUnitSize, bounds.getHeight() * tileUnitSize);</b>
+<b class="nc">&nbsp;      stage.addActor(collider);</b>
+<b class="nc">&nbsp;      colliders.put(id, collider);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    for (TiledMapTileMapObject tileObject : new Array.ArrayIterator&lt;&gt;(tileObjects)) {</b>
+&nbsp;      // Check if it is actually a station
+<b class="nc">&nbsp;      if (!tileObject.getProperties().containsKey(&quot;stationType&quot;)) {</b>
+<b class="nc">&nbsp;        continue;</b>
+&nbsp;      }
+&nbsp;
+&nbsp;      // Get basic station properties
+&nbsp;      Station station;
+&nbsp;      
+<b class="nc">&nbsp;      int id = tileObject.getProperties().get(&quot;id&quot;, Integer.class);</b>
+<b class="nc">&nbsp;      String ingredients = tileObject.getProperties().get(&quot;ingredients&quot;, String.class);</b>
+<b class="nc">&nbsp;      StationActionUI.ActionAlignment alignment = StationActionUI.ActionAlignment.valueOf(</b>
+<b class="nc">&nbsp;          tileObject.getProperties().get(&quot;actionAlignment&quot;, &quot;TOP&quot;, String.class));</b>
+&nbsp;
+&nbsp;      // Initialise specific station types
+<b class="nc">&nbsp;      switch (tileObject.getProperties().get(&quot;stationType&quot;, String.class)) {</b>
+&nbsp;        case &quot;cookingStation&quot;:
+<b class="nc">&nbsp;          station = new CookingStation(id, tileObject.getTextureRegion(), stationUIController,</b>
+<b class="nc">&nbsp;              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get(&quot;stationLocked&quot;, String.class), game);</b>
+<b class="nc">&nbsp;          break;</b>
+&nbsp;        case &quot;ingredientStation&quot;:
+<b class="nc">&nbsp;          station = new IngredientStation(id, tileObject.getTextureRegion(), stationUIController,</b>
+<b class="nc">&nbsp;              alignment, Ingredient.fromString(ingredients, foodTextureManager));</b>
+<b class="nc">&nbsp;          break;</b>
+&nbsp;        case &quot;choppingStation&quot;:
+<b class="nc">&nbsp;          station = new ChoppingStation(id, tileObject.getTextureRegion(), stationUIController,</b>
+<b class="nc">&nbsp;              alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get(&quot;stationLocked&quot;, String.class), game);</b>
+<b class="nc">&nbsp;          break;</b>
+&nbsp;        case &quot;recipeStation&quot;:
+<b class="nc">&nbsp;          station = new RecipeStation(id, tileObject.getTextureRegion(), stationUIController,</b>
+&nbsp;
+&nbsp;            alignment, foodTextureManager, customerManager, uiOverlay, mode, game);
+&nbsp;
+<b class="nc">&nbsp;          customerManager.addRecipeStation((RecipeStation) station);</b>
+<b class="nc">&nbsp;          break;</b>
+&nbsp;        case &quot;bakingStation&quot;:
+<b class="nc">&nbsp;          station = new BakingStation(id, tileObject.getTextureRegion(), stationUIController,</b>
+<b class="nc">&nbsp;                  alignment, Ingredient.arrayFromString(ingredients, foodTextureManager), tileObject.getProperties().get(&quot;stationLocked&quot;, String.class), game);</b>
+<b class="nc">&nbsp;          break;</b>
+&nbsp;        default:
+<b class="nc">&nbsp;          station = new Station(id, tileObject.getTextureRegion(), stationUIController, alignment);</b>
+&nbsp;      }
+<b class="nc">&nbsp;      float tileX = tileObject.getX() * tileUnitSize;</b>
+<b class="nc">&nbsp;      float tileY = tileObject.getY() * tileUnitSize;</b>
+<b class="nc">&nbsp;      float rotation = tileObject.getRotation();</b>
+&nbsp;
+&nbsp;      // Adjust x and y positions based on Tiled quirks with rotation changing the position of the tile
+<b class="nc">&nbsp;      if (rotation == 90) {</b>
+<b class="nc">&nbsp;        tileY -= 1;</b>
+<b class="nc">&nbsp;      } else if (rotation == 180) {</b>
+<b class="nc">&nbsp;        tileX -= 1;</b>
+<b class="nc">&nbsp;        tileY -= 1;</b>
+<b class="nc">&nbsp;      } else if (rotation == -90 || rotation == 270) {</b>
+<b class="nc">&nbsp;        tileX -= 1;</b>
+&nbsp;      }
+&nbsp;
+<b class="nc">&nbsp;      station.setBounds(tileX, tileY, 1, 1);</b>
+<b class="nc">&nbsp;      station.setImageRotation(-tileObject.getRotation());</b>
+<b class="nc">&nbsp;      stage.addActor(station);</b>
+&nbsp;
+<b class="nc">&nbsp;      String colliderIDs = tileObject.getProperties().get(&quot;collisionObjectIDs&quot;, String.class);</b>
+<b class="nc">&nbsp;      for (String idString : colliderIDs.split(&quot;,&quot;)) {</b>
+&nbsp;        try {
+<b class="nc">&nbsp;          Integer colliderID = Integer.parseInt(idString);</b>
+<b class="nc">&nbsp;          StationCollider collider = colliders.get(colliderID);</b>
+<b class="nc">&nbsp;          if (collider != null) {</b>
+<b class="nc">&nbsp;            collider.register(station);</b>
+&nbsp;          }
+<b class="nc">&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;          System.out.println(&quot;Error parsing collider ID: &quot; + e.getMessage());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;      }
+<b class="nc">&nbsp;    }</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public PowerupManager getPowerupManager() {
+<b class="nc">&nbsp;    return powerupManager;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void show() {
+<b class="nc">&nbsp;    InputMultiplexer multiplexer = new InputMultiplexer();</b>
+<b class="nc">&nbsp;    multiplexer.addProcessor(uiStage);</b>
+<b class="nc">&nbsp;    multiplexer.addProcessor(stage);</b>
+<b class="nc">&nbsp;    Gdx.input.setInputProcessor(multiplexer);</b>
+<b class="nc">&nbsp;    uiOverlay.init();</b>
+<b class="nc">&nbsp;    isFirstFrame = true;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void render(float delta) {
+&nbsp;    // Initialise screen
+<b class="nc">&nbsp;    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</b>
+<b class="nc">&nbsp;    stage.getCamera().update();</b>
+<b class="nc">&nbsp;    uiStage.getCamera().update();</b>
+&nbsp;
+&nbsp;    // Render background
+<b class="nc">&nbsp;    tileMapRenderer.setView((OrthographicCamera) stage.getCamera());</b>
+<b class="nc">&nbsp;    tileMapRenderer.render();</b>
+&nbsp;
+&nbsp;    // Render stage
+<b class="nc">&nbsp;    stage.act(delta);</b>
+<b class="nc">&nbsp;    uiStage.act(delta);</b>
+&nbsp;
+<b class="nc">&nbsp;    stage.draw();</b>
+<b class="nc">&nbsp;    uiStage.draw();</b>
+&nbsp;
+<b class="nc">&nbsp;    customerManager.updateCustomerOrders(delta);</b>
+&nbsp;
+<b class="nc">&nbsp;    if(chefManager.addThirdChef(tileUnitSize, this.game.shopScreen.getChefUnlocked())){</b>
+<b class="nc">&nbsp;      chefManager.addChefsToStage(stage);</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    if (isFirstFrame) {</b>
+<b class="nc">&nbsp;      isFirstFrame = false;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    if (isOnCooldown){</b>
+<b class="nc">&nbsp;      cooldownTimer -= delta;</b>
+<b class="nc">&nbsp;      if (cooldownTimer &lt;= 0f){</b>
+<b class="nc">&nbsp;          isOnCooldown = false;</b>
+<b class="nc">&nbsp;          System.out.println(&quot;Cooldown Timer Ends&quot;);</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){</b>
+<b class="nc">&nbsp;      getMoney().addMoney(10000);</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)){</b>
+<b class="nc">&nbsp;      uiOverlay.addPoint();</b>
+&nbsp;    }
+&nbsp;    // Save game state
+<b class="nc">&nbsp;    if(Gdx.input.isKeyJustPressed(Input.Keys.C)){</b>
+<b class="nc">&nbsp;      saveGame();</b>
+&nbsp;    }
+&nbsp;    // Load from save file
+<b class="nc">&nbsp;    if(Gdx.input.isKeyJustPressed(Input.Keys.V)){</b>
+<b class="nc">&nbsp;      loadGame();</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    if (!isOnCooldown){</b>
+<b class="nc">&nbsp;      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)){</b>
+<b class="nc">&nbsp;        powerupManager.generatePowerup(0);</b>
+<b class="nc">&nbsp;        startTimer();</b>
+&nbsp;      }
+<b class="nc">&nbsp;      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)){</b>
+<b class="nc">&nbsp;        powerupManager.generatePowerup(1);</b>
+<b class="nc">&nbsp;        startTimer();</b>
+&nbsp;      }
+<b class="nc">&nbsp;      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)){</b>
+<b class="nc">&nbsp;        powerupManager.generatePowerup(2);</b>
+<b class="nc">&nbsp;        startTimer();</b>
+&nbsp;      }
+<b class="nc">&nbsp;      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){</b>
+<b class="nc">&nbsp;        powerupManager.generatePowerup(3);</b>
+<b class="nc">&nbsp;        startTimer();</b>
+&nbsp;      }
+<b class="nc">&nbsp;      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)){</b>
+<b class="nc">&nbsp;        powerupManager.generatePowerup(4);</b>
+<b class="nc">&nbsp;        startTimer();</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public Money getMoney() {
+<b class="nc">&nbsp;    return uiOverlay.getMoney();</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private void startTimer() {
+<b class="nc">&nbsp;    System.out.println(&quot;Cooldown Timer Started&quot;);</b>
+<b class="nc">&nbsp;    isOnCooldown = true;</b>
+<b class="nc">&nbsp;    cooldownTimer = 30f;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Save game as the file location %user%/.prefs.
+&nbsp;   * Game is only updated if the game has not been finished.
+&nbsp;   */
+&nbsp;  public void saveGame(){
+&nbsp;
+<b class="nc">&nbsp;    if (uiOverlay.isGameFinished()) {</b>
+&nbsp;      return;
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    System.out.println(&quot;Saved&quot;);</b>
+&nbsp;    // Save chef information
+<b class="nc">&nbsp;    for (int i = 0; i &lt; chefManager.getChefs().size(); i++) {</b>
+&nbsp;      // Positions
+<b class="nc">&nbsp;      save_game.putFloat(&quot;Chef&quot;+i+&quot;_x&quot;, chefManager.getChefs().get(i).getX());</b>
+<b class="nc">&nbsp;      save_game.putFloat(&quot;Chef&quot;+i+&quot;_y&quot;, chefManager.getChefs().get(i).getY());</b>
+<b class="nc">&nbsp;      save_game.putFloat(&quot;Chef&quot;+i+&quot;_rotation&quot;, chefManager.getChefs().get(i).getRotation());</b>
+&nbsp;      
+&nbsp;      // Ingredients held
+<b class="nc">&nbsp;      String ingredientStackAString = chefManager.getChefs().get(i).getStack().toString();</b>
+<b class="nc">&nbsp;      save_game.putString(&quot;Chef&quot;+i+&quot;_ingredientStack&quot;, ingredientStackAString);      </b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Save general game information
+<b class="nc">&nbsp;    save_game.putInteger(&quot;Money&quot;, getMoney().getMoney());</b>
+<b class="nc">&nbsp;    save_game.putInteger(&quot;Reputation&quot;, uiOverlay.getReputation());</b>
+<b class="nc">&nbsp;    save_game.putFloat(&quot;Timer&quot;, uiOverlay.getTime());</b>
+&nbsp;    
+&nbsp;    // Save customers
+<b class="nc">&nbsp;    save_game.putInteger(&quot;Remaining_customers&quot;, customerManager.getRemainingCustomers());</b>
+<b class="nc">&nbsp;    ArrayList&lt;Recipe&gt; orders = customerManager.getCustomerOrders();</b>
+<b class="nc">&nbsp;    for (Recipe recipe : orders){</b>
+<b class="nc">&nbsp;      save_game.putString(&quot;Customer_order&quot;, recipe.getType());</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;    
+&nbsp;    // Push changes onto file
+<b class="nc">&nbsp;    save_game.flush();</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void loadGame(){
+&nbsp;
+<b class="nc">&nbsp;    System.out.println(&quot;Loaded&quot;);</b>
+&nbsp;
+&nbsp;    // Load chef information
+<b class="nc">&nbsp;    for (int i = 0; i &lt; chefManager.getChefs().size(); i++) {</b>
+&nbsp;      // Positions
+<b class="nc">&nbsp;      chefManager.getChefs().get(i).setX(save_game.getFloat(&quot;Chef&quot;+i+&quot;_x&quot;));</b>
+<b class="nc">&nbsp;      chefManager.getChefs().get(i).setY(save_game.getFloat(&quot;Chef&quot;+i+&quot;_y&quot;));</b>
+<b class="nc">&nbsp;      chefManager.getChefs().get(i).setRotation(save_game.getFloat(&quot;Chef&quot;+i+&quot;_rotation&quot;));</b>
+&nbsp;      
+&nbsp;      // Ingredients held
+<b class="nc">&nbsp;      chefManager.getChefs().get(i).getStack().clear();</b>
+<b class="nc">&nbsp;      String stackAsString = save_game.getString(&quot;Chef&quot;+i+&quot;_ingredientStack&quot;);</b>
+<b class="nc">&nbsp;      stackAsString = stackAsString.substring(1, stackAsString.length() - 1);</b>
+<b class="nc">&nbsp;      String[] elements = stackAsString.split(&quot;, &quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;      for (int j = 0; j &lt; elements.length; j++) {</b>
+&nbsp;        
+&nbsp;        // Remove underscores
+&nbsp;        try {
+<b class="nc">&nbsp;          Ingredient.fromString(elements[j], foodTextureManager);</b>
+<b class="nc">&nbsp;          System.out.println(elements[j]);</b>
+<b class="nc">&nbsp;          int underscoreIndex = elements[j].indexOf(&quot;_&quot;);</b>
+<b class="nc">&nbsp;          String element_before = elements[j].substring(0, underscoreIndex);</b>
+&nbsp;          // Determine if cooked / chopped ... or not
+<b class="nc">&nbsp;          String element_after = elements[j].substring(underscoreIndex+1, elements[j].length());</b>
+<b class="nc">&nbsp;          System.out.println(&quot;AFTER &quot;+ element_after);</b>
+<b class="nc">&nbsp;          if (element_before.equals(&quot;bun&quot;)){</b>
+<b class="nc">&nbsp;            element_before = &quot;dough&quot;;</b>
+&nbsp;           }
+<b class="nc">&nbsp;          Ingredient ing = Ingredient.fromString(element_before, foodTextureManager);</b>
+<b class="nc">&nbsp;          if (element_after.equals(&quot;cooked&quot;)){</b>
+&nbsp;            
+<b class="nc">&nbsp;            ing.setIsCooked(true);</b>
+<b class="nc">&nbsp;            chefManager.getChefs().get(i).setIngredientStack(ing);</b>
+&nbsp;          }
+<b class="nc">&nbsp;          else if (element_after.equals(&quot;chopped&quot;)){</b>
+<b class="nc">&nbsp;            ing.setIsChopped(true);</b>
+<b class="nc">&nbsp;            chefManager.getChefs().get(i).setIngredientStack(ing);</b>
+&nbsp;          }
+<b class="nc">&nbsp;          else if (element_after.equals(&quot;baked&quot;)){</b>
+<b class="nc">&nbsp;            ing.setBaked(true);</b>
+<b class="nc">&nbsp;            chefManager.getChefs().get(i).setIngredientStack(ing);</b>
+&nbsp;          }
+&nbsp;          else{
+<b class="nc">&nbsp;            chefManager.getChefs().get(i).setIngredientStack(ing);</b>
+&nbsp;          }
+<b class="nc">&nbsp;        } catch (java.lang.StringIndexOutOfBoundsException e) {</b>
+&nbsp;          // Then stack was empty 
+<b class="nc">&nbsp;        } </b>
+&nbsp;        
+&nbsp;      }
+&nbsp;      // Customers ??
+&nbsp;      
+&nbsp;     
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // Load general game information
+<b class="nc">&nbsp;    getMoney().addMoney(save_game.getInteger(&quot;Money&quot;));</b>
+<b class="nc">&nbsp;    int reputationPoints = save_game.getInteger(&quot;Reputation&quot;);</b>
+<b class="nc">&nbsp;    uiOverlay.setCustomPoints(reputationPoints);</b>
+<b class="nc">&nbsp;    uiOverlay.setTime(save_game.getFloat(&quot;Timer&quot;));</b>
+&nbsp;
+&nbsp;  }
+&nbsp;
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void resize(int width, int height) {
+<b class="nc">&nbsp;    this.stage.getViewport().update(width, height, true);</b>
+<b class="nc">&nbsp;    this.uiStage.getViewport().update(width, height, true);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void pause() {
+&nbsp;
+<b class="nc">&nbsp;  }</b>
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void resume() {
+&nbsp;
+<b class="nc">&nbsp;  }</b>
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void hide() {
+&nbsp;
+<b class="nc">&nbsp;  }</b>
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void dispose() {
+<b class="nc">&nbsp;    stage.dispose();</b>
+<b class="nc">&nbsp;    uiStage.dispose();</b>
+<b class="nc">&nbsp;    tileMapRenderer.dispose();</b>
+<b class="nc">&nbsp;    foodTextureManager.dispose();</b>
+<b class="nc">&nbsp;    chefManager.dispose();</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

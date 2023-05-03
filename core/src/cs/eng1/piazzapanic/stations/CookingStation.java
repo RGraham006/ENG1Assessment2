@@ -75,11 +75,12 @@ public class CookingStation extends Station {
         } else if (currentIngredient.getIsHalfCooked() && !currentIngredient.getIsCooked()) {
           currentIngredient.setIsCooked(true);
           nearbyChef.resetPrepSpeed();
+          nearbyChef.setPaused(false);
+          inUse = false;
         }
         uiController.hideProgressBar(this);
         progressVisible = false;
         uiController.showActions(this, getActionTypes());
-        nearbyChef.setPaused(false);
       }
     }
     super.act(delta);
@@ -143,8 +144,7 @@ public class CookingStation extends Station {
         actionTypes.add(StationAction.ActionType.FLIP_ACTION);
       } else if (currentIngredient.getIsCooked()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
-      }
-      if (!inUse) {
+      } else if (!inUse) {
         actionTypes.add(StationAction.ActionType.COOK_ACTION);
       }
     }
@@ -189,7 +189,8 @@ public class CookingStation extends Station {
         break;
 
       case GRAB_INGREDIENT:
-        if (nearbyChef.canGrabIngredient()) {
+        if (this.nearbyChef != null && nearbyChef.canGrabIngredient()
+        && currentIngredient != null) {
           nearbyChef.grabIngredient(currentIngredient);
           currentIngredient = null;
           inUse = false;
@@ -204,7 +205,15 @@ public class CookingStation extends Station {
         uiController.showActions(this, getActionTypes());
     }
   }
-
+  public boolean hasIngredient(){
+    if(currentIngredient != null){
+      return true;
+    }
+    return false;
+  }
+  public float getTimeCooked(){
+    return timeCooked;
+  }
   /**
    * Displays ingredients that have been placed on the station.
    * @param batch       Used to display a 2D texture.

@@ -40,8 +40,6 @@ public class UIOverlay {
   private final Table recipeImages;
   private final Timer timer;
   private final Label orderLabel;
-  private final Label resultLabel;
-  private final Timer resultTimer;
   private final PiazzaPanicGame game;
   private final Money money;
   private final ReputationPoint points;
@@ -124,7 +122,7 @@ public class UIOverlay {
     powerupButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        game.getGameScreen().getPowerupManager().generatePowerup();;
+        game.getGameScreen().getPowerupManager().generatePowerup(0);;
       }
     });
 
@@ -152,11 +150,6 @@ public class UIOverlay {
     LabelStyle orderStyle = new LabelStyle(game.getFontManager().getSubHeaderFont(), Color.BLACK);
     orderLabel = new Label("Orders", orderStyle);
 
-    // Initialise winning label
-    LabelStyle labelStyle = new Label.LabelStyle(game.getFontManager().getHeaderFont(), Color.BLACK);
-    resultLabel = new Label(null, labelStyle);
-    resultTimer = new Timer(labelStyle);
-
     // Add everything
     table.add(powerupButton).left().width(Value.percentWidth(.08f, table))
         .height(Value.percentHeight(.05f, table));
@@ -171,10 +164,10 @@ public class UIOverlay {
         .height(Value.percentHeight(.05f, table));
     table.row().padTop(10f).expand();
     table.add(ingredientStackDisplay).left().top().width(Value.percentWidth(.08f, table));
-    table.add(resultLabel).bottom().padTop(10f);
+    table.add().expandX();
     table.add(recipeImages).right().top().width(Value.percentWidth(.08f, table));
     table.row();
-    table.add(resultTimer).top().padTop(10f).expand().colspan(3);
+    table.add().expand().colspan(3);
     table.row();
     table.add(money).bottom().width(Value.percentWidth(.3f, table))
         .height(Value.percentHeight(.06f, table));
@@ -189,8 +182,6 @@ public class UIOverlay {
    */
   public void init() {
     timer.start();
-    resultLabel.setVisible(false);
-    resultTimer.setVisible(false);
     isGameFinished = false;
     updateChefUI(null);
   }
@@ -233,7 +224,7 @@ public class UIOverlay {
   public void subPoint() {
     points.subRepPoint();
     if (points.getPoints() <= 0) {
-      finishGameUI("lose");
+      finishGameUI(false);
     }
   }
 
@@ -293,30 +284,10 @@ public class UIOverlay {
    * Everything on the UI is cleared but the home button.
    * @param outcome The result of the game, either "win" or "lose".
    */
-  public void finishGameUI(String outcome) {
-
-    // Remove all elements but the home button
-    table.removeActor(recipeImages);
-    table.removeActor(chefDisplay);
-    table.removeActor(powerupButton);
-    table.removeActor(shopButton);
-    table.removeActor(ingredientImages);
-    table.removeActor(money);
-    table.removeActor(timer);
-    table.removeActor(points);
-
-    if (outcome == "win") {
-      resultLabel.setText("Congratulations!\nYour final time was:");
-      resultTimer.setTime(timer.getTime());
-      resultTimer.setVisible(true);
-    } else {
-      resultLabel.setText("Out of reputation points!\nGame is over.");
-    }
+  public void finishGameUI(boolean win) {
     timer.stop();
-
-    resultLabel.setVisible(true);
- 
     isGameFinished = true;
+    game.loadWinLossScreen(win, timer);
 
   }
 

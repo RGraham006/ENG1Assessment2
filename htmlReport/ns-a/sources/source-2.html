@@ -1,0 +1,104 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Subject</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.observable</a>
+</div>
+
+<h1>Coverage Summary for Class: Subject (cs.eng1.piazzapanic.observable)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Subject</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.observable;
+&nbsp;
+&nbsp;/**
+&nbsp; * A Subject contains a list of registered observers which all receive the same value of type T
+&nbsp; * whenever it is updated.
+&nbsp; *
+&nbsp; * @param &lt;T&gt; The type that is stored within the subject that is sent to all the registered
+&nbsp; *            observers whenever it is updated.
+&nbsp; */
+&nbsp;public interface Subject&lt;T&gt; {
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Add an observer which will be notified with every new T
+&nbsp;   *
+&nbsp;   * @param observer the observer to register to this subject
+&nbsp;   */
+&nbsp;  void register(Observer&lt;T&gt; observer);
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Stop an observer from receiving future updates from this subject
+&nbsp;   *
+&nbsp;   * @param observer the observer to deregister from this subject
+&nbsp;   */
+&nbsp;  void deregister(Observer&lt;T&gt; observer);
+&nbsp;
+&nbsp;  void clearAllObservers();
+&nbsp;
+&nbsp;  /**
+&nbsp;   * @param update The new T to send to every registered observer
+&nbsp;   */
+&nbsp;  void notifyObservers(T update);
+&nbsp;
+&nbsp;  /**
+&nbsp;   * @return the most recent value that was sent to the observers.
+&nbsp;   */
+&nbsp;  T getLastNotification();
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

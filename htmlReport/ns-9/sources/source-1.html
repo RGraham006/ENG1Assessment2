@@ -1,0 +1,264 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ButtonManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: ButtonManager (cs.eng1.piazzapanic.ui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ButtonManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ButtonManager$ButtonColour</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/49)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.ui;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.*;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import com.badlogic.gdx.utils.Disposable;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;
+&nbsp;/**
+&nbsp; * A utility which generates UI buttons with the correct background images given specific text,
+&nbsp; * images and colours.
+&nbsp; */
+&nbsp;public class ButtonManager implements Disposable {
+&nbsp;
+<b class="nc">&nbsp;  public enum ButtonColour {</b>
+<b class="nc">&nbsp;    BLUE, GREEN, GREY, RED, YELLOW</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  private final HashMap&lt;ButtonColour, TextButton.TextButtonStyle&gt; textButtonStyles;
+&nbsp;  private final HashMap&lt;ButtonColour, Button.ButtonStyle&gt; imageButtonBaseStyles;
+&nbsp;  private final HashMap&lt;ButtonColour, CheckBox.CheckBoxStyle&gt; checkBoxStyles;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  private final Texture checkboxUnchecked;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * @param fontManager The fontManager from which this class can get the right fonts required.
+&nbsp;   */
+<b class="nc">&nbsp;  public ButtonManager(FontManager fontManager) {</b>
+<b class="nc">&nbsp;    textButtonStyles = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;    imageButtonBaseStyles = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;    checkBoxStyles = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;    String basePath = &quot;Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/&quot;;</b>
+<b class="nc">&nbsp;    checkboxUnchecked = new Texture(</b>
+<b class="nc">&nbsp;        Gdx.files.internal(basePath + &quot;grey_box.png&quot;));</b>
+&nbsp;
+<b class="nc">&nbsp;    for (ButtonColour buttonColour : ButtonColour.values()) {</b>
+&nbsp;
+&nbsp;      // Generate all the different base colour styles from images and store them in a HashMap
+<b class="nc">&nbsp;      TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(</b>
+<b class="nc">&nbsp;          new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+<b class="nc">&nbsp;              basePath + buttonColour.name().toLowerCase() + &quot;_button_flat_up.png&quot;))),</b>
+<b class="nc">&nbsp;          new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+<b class="nc">&nbsp;              basePath + buttonColour.name().toLowerCase() + &quot;_button_flat_down.png&quot;))),</b>
+&nbsp;          null,
+<b class="nc">&nbsp;          fontManager.getLabelFont());</b>
+<b class="nc">&nbsp;      if (buttonColour == ButtonColour.GREY || buttonColour == ButtonColour.YELLOW) {</b>
+<b class="nc">&nbsp;        textButtonStyle.fontColor = Color.BLACK;</b>
+&nbsp;      }
+<b class="nc">&nbsp;      textButtonStyles.put(buttonColour, textButtonStyle);</b>
+&nbsp;
+&nbsp;      // Generate all the base image button colour styles
+<b class="nc">&nbsp;      Button.ButtonStyle imageButtonBaseStyle = new Button.ButtonStyle(</b>
+<b class="nc">&nbsp;          new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+<b class="nc">&nbsp;              basePath + buttonColour.name().toLowerCase() + &quot;_button_square_flat_up.png&quot;))),</b>
+<b class="nc">&nbsp;          new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+<b class="nc">&nbsp;              basePath + buttonColour.name().toLowerCase() + &quot;_button_square_flat_down.png&quot;))),</b>
+&nbsp;          null);
+<b class="nc">&nbsp;      imageButtonBaseStyles.put(buttonColour, imageButtonBaseStyle);</b>
+&nbsp;
+&nbsp;      // Generate all the base checkbox colour styles
+<b class="nc">&nbsp;      CheckBoxStyle checkBoxStyle = new CheckBoxStyle(</b>
+&nbsp;          new TextureRegionDrawable(checkboxUnchecked),
+<b class="nc">&nbsp;          new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+<b class="nc">&nbsp;              basePath + buttonColour.name().toLowerCase() + &quot;_boxCheckmark.png&quot;))),</b>
+<b class="nc">&nbsp;          fontManager.getLabelFont(),</b>
+&nbsp;          Color.BLACK
+&nbsp;      );
+<b class="nc">&nbsp;      checkBoxStyles.put(buttonColour, checkBoxStyle);</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Create a text button with certain parameters.
+&nbsp;   * @param text   The string to display on the button.
+&nbsp;   * @param colour The colour of the base button.
+&nbsp;   * @return       The text button constructed based on the input.
+&nbsp;   */
+&nbsp;  public TextButton createTextButton(String text, ButtonColour colour) {
+<b class="nc">&nbsp;    return new TextButton(text, textButtonStyles.get(colour));</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Create an image button with certain parameters.
+&nbsp;   * @param image          The image to display on top of the button. It can have transparency.
+&nbsp;   * @param colour         The colour of the base button.
+&nbsp;   * @param yPressedOffset The amount to move the top image when the button has been pressed.
+&nbsp;   * @return               The image button constructed based on the input with a default of 0 padding.
+&nbsp;   */
+&nbsp;  public ImageButton createImageButton(Drawable image, ButtonColour colour, float yPressedOffset) {
+<b class="nc">&nbsp;    ImageButton.ImageButtonStyle btnStyle = new ImageButton.ImageButtonStyle(</b>
+<b class="nc">&nbsp;        imageButtonBaseStyles.get(colour));</b>
+<b class="nc">&nbsp;    btnStyle.imageUp = image;</b>
+<b class="nc">&nbsp;    btnStyle.pressedOffsetY = yPressedOffset;</b>
+<b class="nc">&nbsp;    return new ImageButton(btnStyle);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Create a text button with certain parameters.
+&nbsp;   * @param text   The string to display on the button.
+&nbsp;   * @param colour The colour of the base button.
+&nbsp;   * @return       The text button constructed based on the input.
+&nbsp;   */
+&nbsp;  public CheckBox createCheckbox(String text, ButtonColour colour) {
+<b class="nc">&nbsp;    return new CheckBox(text, checkBoxStyles.get(colour));</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Properly dispose of loaded textures from memory.
+&nbsp;   */
+&nbsp;  @Override
+&nbsp;  public void dispose() {
+<b class="nc">&nbsp;    for (TextButton.TextButtonStyle style : textButtonStyles.values()) {</b>
+<b class="nc">&nbsp;      ((TextureRegionDrawable) style.up).getRegion().getTexture().dispose();</b>
+<b class="nc">&nbsp;      ((TextureRegionDrawable) style.down).getRegion().getTexture().dispose();</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    for (Button.ButtonStyle style : imageButtonBaseStyles.values()) {</b>
+<b class="nc">&nbsp;      ((TextureRegionDrawable) style.up).getRegion().getTexture().dispose();</b>
+<b class="nc">&nbsp;      ((TextureRegionDrawable) style.down).getRegion().getTexture().dispose();</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+<b class="nc">&nbsp;    checkboxUnchecked.dispose();</b>
+<b class="nc">&nbsp;    for (CheckBoxStyle style : checkBoxStyles.values()) {</b>
+<b class="nc">&nbsp;      ((TextureRegionDrawable) style.checkboxOn).getRegion().getTexture().dispose();</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CustomerManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.food</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerManager (cs.eng1.piazzapanic.food)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomerManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.1%
+  </span>
+  <span class="absValue">
+    (54/70)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$1xCn74HY</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$2UwlEem0</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$7hHOlviV</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$COVGy2G2</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$F260DcI8</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$F91zG8Gb</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$lEFCaOK1</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$mT7PbCX5</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$Nyy4t2yk</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$oNcxUlH5</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$PfoqFPV9</td>
+  </tr>
+  <tr>
+    <td class="name">CustomerManager$MockitoMock$407993451$auxiliary$rRDCilGT</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.1%
+  </span>
+  <span class="absValue">
+    (54/70)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.food;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Burger;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.JacketPotato;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Pizza;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Recipe;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Salad;
+&nbsp;import cs.eng1.piazzapanic.stations.RecipeStation;
+&nbsp;import cs.eng1.piazzapanic.ui.UIOverlay;
+&nbsp;import java.util.Random;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.LinkedList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class CustomerManager {
+&nbsp;
+&nbsp;  private int remainingCustomers;
+&nbsp;  private float waitTime;
+&nbsp;  private ArrayList&lt;Recipe&gt; customerOrders;
+&nbsp;  private ArrayList&lt;Float&gt; customerWaitTimes;
+&nbsp;  private ArrayList&lt;ProgressBar&gt; customerWaitProgressBars;
+&nbsp;  private final ProgressBarStyle progressBarStyle;
+&nbsp;
+&nbsp;  private Recipe currentOrder;
+&nbsp;  private final List&lt;RecipeStation&gt; recipeStations;
+&nbsp;  private final UIOverlay overlay;
+&nbsp;  private final Recipe[] possibleRecipes;
+<b class="fc">&nbsp;  private float nextOrder = 0f;</b>
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Handles all orders from the customers, including recipes and wait times.
+&nbsp;   * 
+&nbsp;   * @param overlay        The overlay for UI elements.
+&nbsp;   * @param textureManager The manager for any food textures.
+&nbsp;   * @param mode           The game mode, either scenario or endless (0 or 1).
+&nbsp;   * @param customerNum    The number of orders placed in scenario mode.
+&nbsp;   * @param difficulty     The game difficulty.
+&nbsp;   */
+&nbsp;  public CustomerManager(UIOverlay overlay, FoodTextureManager textureManager, final int mode, final int customerNum,
+<b class="fc">&nbsp;      int difficulty) {</b>
+<b class="fc">&nbsp;    this.overlay = overlay;</b>
+<b class="fc">&nbsp;    this.recipeStations = new LinkedList&lt;&gt;();</b>
+<b class="fc">&nbsp;    switch (difficulty) {</b>
+&nbsp;      case 3:
+<b class="nc">&nbsp;        waitTime = 75f;</b>
+<b class="nc">&nbsp;        break;</b>
+&nbsp;      case 1:
+<b class="nc">&nbsp;        waitTime = 125f;</b>
+<b class="nc">&nbsp;        break;</b>
+&nbsp;      default:
+<b class="fc">&nbsp;        waitTime = 100f;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    if (mode == 0) {</b>
+<b class="fc">&nbsp;      remainingCustomers = customerNum;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if (mode == 1) {</b>
+<b class="nc">&nbsp;      remainingCustomers = 1;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    possibleRecipes = new Recipe[] { new Burger(textureManager), new Salad(textureManager), new Pizza(textureManager),</b>
+&nbsp;        new JacketPotato(textureManager) };
+&nbsp;
+<b class="fc">&nbsp;    customerOrders = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;    customerWaitTimes = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;    customerWaitProgressBars = new ArrayList&lt;&gt;();</b>
+&nbsp;
+&nbsp;    // Progress bar styling
+<b class="fc">&nbsp;    progressBarStyle = new ProgressBarStyle(new TextureRegionDrawable(new Texture(</b>
+<b class="fc">&nbsp;        Gdx.files.internal(</b>
+&nbsp;            &quot;Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_outline_up.png&quot;))),
+&nbsp;        null);
+<b class="fc">&nbsp;    progressBarStyle.knobBefore = new TextureRegionDrawable(new Texture(Gdx.files.internal(</b>
+&nbsp;        &quot;Kenney-Game-Assets-1/2D assets/UI Base Pack/PNG/blue_button_gradient_up.png&quot;)));
+&nbsp;
+<b class="fc">&nbsp;    progressBarStyle.background.setMinHeight(12f);</b>
+<b class="fc">&nbsp;    progressBarStyle.knobBefore.setMinHeight(12f);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Updates info relating to customer orders. Generates a new one if enough time
+&nbsp;   * has passed and their is space.
+&nbsp;   * Sets progress bars to new values according to remaining wait time.
+&nbsp;   * 
+&nbsp;   * @param delta The time passed since last call.
+&nbsp;   */
+&nbsp;  public void updateCustomerOrders(float delta) {
+<b class="fc">&nbsp;    if (remainingCustomers == 0) {</b>
+<b class="nc">&nbsp;      overlay.finishGameUI(true);</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if (customerOrders.size() &lt; remainingCustomers) {</b>
+<b class="fc">&nbsp;      if (nextOrder &lt;= 0f) {</b>
+<b class="fc">&nbsp;        Recipe nextRecipe = possibleRecipes[new Random().nextInt(possibleRecipes.length)];</b>
+&nbsp;
+&nbsp;        // Update order arrays
+<b class="fc">&nbsp;        customerOrders.add(nextRecipe);</b>
+<b class="fc">&nbsp;        customerWaitTimes.add(waitTime);</b>
+<b class="fc">&nbsp;        ProgressBar progress = new ProgressBar(0, waitTime, 0.1f, false, progressBarStyle);</b>
+&nbsp;
+<b class="fc">&nbsp;        progress.setValue(0);</b>
+<b class="fc">&nbsp;        progress.setVisible(true);</b>
+<b class="fc">&nbsp;        customerWaitProgressBars.add(progress);</b>
+&nbsp;
+<b class="fc">&nbsp;        nextOrder = new Random().nextFloat();</b>
+&nbsp;      }
+<b class="fc">&nbsp;      nextOrder -= delta;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    for (int i = 0; i &lt; customerWaitTimes.size(); i++) {</b>
+<b class="fc">&nbsp;      float wait = customerWaitTimes.get(i);</b>
+<b class="fc">&nbsp;      wait -= delta;</b>
+<b class="fc">&nbsp;      ProgressBar progress = customerWaitProgressBars.get(i);</b>
+&nbsp;
+<b class="fc">&nbsp;      progress.setValue(wait);</b>
+<b class="fc">&nbsp;      if (wait &lt;= 0) {</b>
+<b class="nc">&nbsp;        removeCustomerOrder(i);</b>
+<b class="nc">&nbsp;        overlay.subPoint();</b>
+&nbsp;      } else {
+<b class="fc">&nbsp;        customerWaitTimes.set(i, wait);</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    overlay.updateRecipeUI(customerOrders, customerWaitProgressBars);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Clears customer order arrays when a recipe is removed, including the order,
+&nbsp;   * wait times and progress.
+&nbsp;   * 
+&nbsp;   * @param index The recipe location to be removed.
+&nbsp;   */
+&nbsp;  public void removeCustomerOrder(int index) {
+<b class="fc">&nbsp;    customerOrders.remove(index);</b>
+<b class="fc">&nbsp;    customerWaitTimes.remove(index);</b>
+<b class="fc">&nbsp;    customerWaitProgressBars.remove(index);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Alternative method for removeCustomerOrder(int index) should the index not be
+&nbsp;   * known.
+&nbsp;   * Searches the orders array for the first instance of the given recipe.
+&nbsp;   * 
+&nbsp;   * @param recipe The recipe to be removed.
+&nbsp;   */
+&nbsp;  public void removeCustomerOrder(Recipe recipe) {
+<b class="fc">&nbsp;    for (int i = 0; i &lt; customerOrders.size(); i++) {</b>
+<b class="fc">&nbsp;      Recipe order = customerOrders.get(i);</b>
+<b class="fc">&nbsp;      if (order.getType() == recipe.getType()) {</b>
+<b class="fc">&nbsp;        removeCustomerOrder(i);</b>
+&nbsp;      }
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public void resetCustomerWait() {
+<b class="nc">&nbsp;    ProgressBar progress = customerWaitProgressBars.get(0);</b>
+<b class="nc">&nbsp;    progress.setValue(0);</b>
+<b class="nc">&nbsp;    customerWaitProgressBars.set(0, progress);</b>
+<b class="nc">&nbsp;    customerWaitTimes.set(0, waitTime);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Check to see if the recipe matches the currently requested order.
+&nbsp;   * 
+&nbsp;   * @param recipe The recipe to check against the current order.
+&nbsp;   * @return A boolean signifying if the recipe is correct.
+&nbsp;   */
+&nbsp;  public boolean checkRecipe(Recipe recipe) {
+<b class="fc">&nbsp;    for (int i = 0; i &lt; customerOrders.size(); i++) {</b>
+<b class="fc">&nbsp;      Recipe order = customerOrders.get(i);</b>
+<b class="fc">&nbsp;      if (order.getType() == recipe.getType()) {</b>
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;    return false;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void setRemainingCustomers() {
+<b class="fc">&nbsp;    remainingCustomers--;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * If one recipe station has been updated, let all the other ones know that
+&nbsp;   * there is a new recipe
+&nbsp;   * to be built.
+&nbsp;   */
+&nbsp;  private void notifyRecipeStations() {
+<b class="nc">&nbsp;    for (RecipeStation recipeStation : recipeStations) {</b>
+<b class="nc">&nbsp;      recipeStation.updateOrderActions();</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void addRecipeStation(RecipeStation station) {
+<b class="nc">&nbsp;    recipeStations.add(station);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public int getRemainingCustomers() {
+<b class="fc">&nbsp;    return remainingCustomers;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public ArrayList&lt;Recipe&gt; getCustomerOrders() {
+<b class="fc">&nbsp;    return customerOrders;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public ProgressBar getFirstProgressBar() {
+<b class="fc">&nbsp;    return this.customerWaitProgressBars.get(0);</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

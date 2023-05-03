@@ -8,25 +8,24 @@ import cs.eng1.piazzapanic.chef.ChefManager;
 import cs.eng1.piazzapanic.food.CustomerManager;
 import cs.eng1.piazzapanic.ui.UIOverlay;
 
-
 /**
- * The controller that gives initialises all powerups and handles any powerup applications.
+ * The controller that gives initialises all powerups and handles any powerup
+ * applications.
  */
 public class PowerupManager {
 
     private final String[] powerupTypes = new String[] {
-        "chef_speed_up",
-        "prep_speed_up",
-        "add_rep_point",
-        "double_money",
-        "reset_customer_wait"
+            "chef_speed_up",
+            "prep_speed_up",
+            "add_rep_point",
+            "double_money",
+            "reset_customer_wait"
     };
     private final ArrayList<Powerup> powerups;
     private final UIOverlay overlay;
     private Powerup appliedPowerup = null;
     private final ChefManager chefManager;
     private final CustomerManager customerManager;
-    
 
     public PowerupManager(ChefManager chefManager, CustomerManager customerManager, UIOverlay overlay) {
         // Initialise powerups using given types
@@ -51,12 +50,8 @@ public class PowerupManager {
         return powerups;
     }
 
-    public void generatePowerup() {
-        appliedPowerup = powerups.get(0);   // CHEF SPEED
-        // appliedPowerup = powerups.get(1);   // PREP SPEED
-        // appliedPowerup = powerups.get(2);   // ADD REP POINT
-        // appliedPowerup = powerups.get(3);   // DOUBLE MONEY
-        // appliedPowerup = powerups.get(4);   // RESET WAIT TIME FOR FIRST CUSTOMER
+    public void generatePowerup(int number) {
+        appliedPowerup = powerups.get(number);
         appliedPowerup.applyPowerup();
     }
 
@@ -64,16 +59,21 @@ public class PowerupManager {
         appliedPowerup = null;
     }
 
-    public ChefManager getChefManager() {
-        return chefManager;
+    public ChefManager getChefManager(){
+        return this.chefManager;
     }
 
-    public UIOverlay getOverlay() {
-        return overlay;
+    public UIOverlay getOverlay(){
+        return this.overlay;
     }
 
-    public CustomerManager getCustomerManager() {
-        return customerManager;
+    public CustomerManager getCustomerManager(){
+        return this.customerManager;
     }
-    
+
+
+    public Powerup getAppliedPowerup() {
+        return this.appliedPowerup;
+    }
+
 }

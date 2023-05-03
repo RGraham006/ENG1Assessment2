@@ -30,33 +30,33 @@ public class TutorialOverlay {
     bgPixmap.setColor(Color.LIGHT_GRAY);
     bgPixmap.fill();
     TextureRegionDrawable textureRegionDrawableBg = new TextureRegionDrawable(
-        new Texture(bgPixmap));
+            new Texture(bgPixmap));
     table.setBackground(textureRegionDrawableBg);
 
     // Initialise movement instructions label
     LabelStyle labelStyle = new LabelStyle(game.getFontManager().getHeaderFont(), Color.BLACK);
     Label chefMovement = new Label(
-        "Left click on a chef to select them. Then use WASD or the arrow keys to move around.",
-        labelStyle);
+            "Left click on a chef to select them. Then use WASD or the arrow keys to move around.",
+            labelStyle);
     chefMovement.setWrap(true);
 
     // Initialise station usage label
     Label stationUsage = new Label(
-        "Move towards a station to get possible actions to appear as buttons including placing ingredients, picking up ingredients, and dealing with the ingredients.",
-        labelStyle);
+            "Move towards a station to get possible actions to appear as buttons including placing ingredients, picking up ingredients, and dealing with the ingredients.",
+            labelStyle);
     stationUsage.setWrap(true);
 
     // Initialise recipe creation label
     Label recipeLabel = new Label(
-        "Take the ingredients and process them as required for the recipe shown on the right. Then take them to the counter (table with the orange tablecloth) to build the recipe and complete the order.",
-        labelStyle);
+            "Take the ingredients and process them as required for the recipe shown on the right. Then take them to the counter (table with the orange tablecloth) to build the recipe and complete the order.",
+            labelStyle);
     recipeLabel.setWrap(true);
 
     Texture recipe = new Texture(Gdx.files.internal("food/recipePage.png"));
     Image recipePage = new Image(recipe);
 
     TextButton backButton = game.getButtonManager()
-        .createTextButton("Done", ButtonManager.ButtonColour.GREY);
+            .createTextButton("Done", ButtonManager.ButtonColour.GREY);
     backButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {

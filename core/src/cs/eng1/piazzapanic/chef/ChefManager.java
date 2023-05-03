@@ -29,10 +29,10 @@ public class ChefManager implements Disposable {
       "Kenney-Game-Assets-2/2D assets/Topdown Shooter (620 assets)/PNG/Woman Green/womanGreen_hold.png"
   };
   final float[] chefX = new float[]{
-      5f, 10f, 11f
+      5f, 10f, 7.5f
   };
   final float[] chefY = new float[]{
-      3f, 3f, 6f
+      3f, 3f, 3f
   };
 
   /**
@@ -59,15 +59,6 @@ public class ChefManager implements Disposable {
           chefTexture.getHeight() * chefScale);
       chef.setInputEnabled(false);
       chefs.add(chef);
-    }
-  }
-
-  /**
-   * Reset each chef to their original position.
-   */
-  public void init() {
-    for (int i = 0; i < chefs.size(); i++) {
-      chefs.get(i).init(chefX[i], chefY[i]);
     }
   }
 

@@ -17,6 +17,10 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
 
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << '-Xlint:-options'
+    }
+
     version = '1.0'
     ext {
         appName = "Piazza Panic"
@@ -60,5 +64,31 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 
+    }
+}
+
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["src/"]
+    sourceSets.test.resources.srcDirs = ["../assets"]
+    project.ext.assetsDir = new File("../assets")
+
+    dependencies {
+
+        implementation project(":core")
+
+        implementation "junit:junit:4.+"
+        implementation "org.mockito:mockito-core:3.+"
+
+        implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        testImplementation 'junit:junit:4.+'
+        testImplementation "org.mockito:mockito-core:3.+"
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }

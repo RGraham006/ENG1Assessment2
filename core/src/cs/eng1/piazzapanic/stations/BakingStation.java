@@ -69,6 +69,7 @@ public class BakingStation extends Station{
                 progressVisible = false;
                 nearbyChef.resetPrepSpeed();
                 nearbyChef.setPaused(false);
+                inUse = false;
             }
         }
         super.act(delta);
@@ -133,8 +134,7 @@ public class BakingStation extends Station{
             //check to see if total number of seconds has passed to progress the state of the pizza base.
             if (currentIngredient.getBaked()) {
                 actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
-            }
-            if (!inUse) {
+            } else if (!inUse) {
                 actionTypes.add(StationAction.ActionType.BAKE_ACTION);
             }
         }
@@ -171,7 +171,8 @@ public class BakingStation extends Station{
                 break;
 
             case GRAB_INGREDIENT:
-                if (nearbyChef.canGrabIngredient()) {
+                if (this.nearbyChef != null && nearbyChef.canGrabIngredient()
+                && currentIngredient != null) {
                     nearbyChef.grabIngredient(currentIngredient);
                     currentIngredient = null;
                     inUse = false;
@@ -194,7 +195,15 @@ public class BakingStation extends Station{
         progressVisible = false;
         super.reset();
     }
-
+    public boolean hasIngredient(){
+        if(currentIngredient != null){
+          return true;
+        }
+        return false;
+      }
+      public float getTimeBaked(){
+        return timeBaked;
+      }
     /**
      * Displays ingredients that have been placed on the station.
      * @param batch       Used to display a 2D texture.

@@ -61,6 +61,7 @@ public class ChoppingStation extends Station {
         progressVisible = false;
         nearbyChef.resetPrepSpeed();
         nearbyChef.setPaused(false);
+        inUse = false;
       }
     }
     super.act(delta);
@@ -105,8 +106,7 @@ public class ChoppingStation extends Station {
     } else {
       if (currentIngredient.getIsChopped()) {
         actionTypes.add(StationAction.ActionType.GRAB_INGREDIENT);
-      }
-      if (!inUse) {
+      } else if (!inUse) {
         actionTypes.add(StationAction.ActionType.CHOP_ACTION);
       }
     }
@@ -150,6 +150,18 @@ public class ChoppingStation extends Station {
         break;
     }
   }
+
+  public boolean hasIngredient(){
+    if(currentIngredient != null){
+      return true;
+    }
+    return false;
+  }
+
+  public float getTimeChopped(){
+    return timeChopped;
+  }
+
 
   @Override
   public void reset() {

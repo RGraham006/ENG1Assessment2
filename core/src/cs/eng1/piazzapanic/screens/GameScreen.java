@@ -56,6 +56,8 @@ public class GameScreen implements Screen {
   private final int mode;
   private final PiazzaPanicGame game;
   private final float tileUnitSize;
+  private boolean isOnCooldown = false;
+  private float cooldownTimer = 0f;
 
   public GameScreen(final PiazzaPanicGame game, final int mode, final int customerNum, final int difficulty) {
 
@@ -235,6 +237,14 @@ public class GameScreen implements Screen {
       isFirstFrame = false;
     }
 
+    if (isOnCooldown){
+      cooldownTimer -= delta;
+      if (cooldownTimer <= 0f){
+          isOnCooldown = false;
+          System.out.println("Cooldown Timer Ends");
+      }
+    }
+
     if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)){
       getMoney().addMoney(10000);
     }
@@ -249,10 +259,39 @@ public class GameScreen implements Screen {
     if(Gdx.input.isKeyJustPressed(Input.Keys.V)){
       loadGame();
     }
+
+    if (!isOnCooldown){
+      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)){
+        powerupManager.generatePowerup(0);
+        startTimer();
+      }
+      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)){
+        powerupManager.generatePowerup(1);
+        startTimer();
+      }
+      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)){
+        powerupManager.generatePowerup(2);
+        startTimer();
+      }
+      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
+        powerupManager.generatePowerup(3);
+        startTimer();
+      }
+      if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)){
+        powerupManager.generatePowerup(4);
+        startTimer();
+      }
+    }
   }
 
   public Money getMoney() {
     return uiOverlay.getMoney();
+  }
+
+  private void startTimer() {
+    System.out.println("Cooldown Timer Started");
+    isOnCooldown = true;
+    cooldownTimer = 30f;
   }
 
   /**

@@ -1,0 +1,244 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > StationUIController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: StationUIController (cs.eng1.piazzapanic.ui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StationUIController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$4QxxyGJi</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$8Fd92HZF</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$d6HdbX1F</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$q55YZy8y</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$uOZ8jgLB</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$uxc4rzx2</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$yLmusUun</td>
+  </tr>
+  <tr>
+    <td class="name">StationUIController$MockitoMock$1156622146$auxiliary$ZuN9Jr0d</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.ui;
+&nbsp;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import cs.eng1.piazzapanic.PiazzaPanicGame;
+&nbsp;import cs.eng1.piazzapanic.stations.Station;
+&nbsp;import cs.eng1.piazzapanic.stations.StationAction;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * The controller of all UI relating to all stations. It enables showing and hiding action buttons
+&nbsp; * and displaying progress bars.
+&nbsp; */
+&nbsp;public class StationUIController {
+&nbsp;
+&nbsp;  private final Stage uiStage;
+&nbsp;  private final PiazzaPanicGame game;
+&nbsp;  private final HashMap&lt;Integer, StationActionUI&gt; stationActionUI;
+&nbsp;
+<b class="nc">&nbsp;  public StationUIController(Stage uiStage, PiazzaPanicGame game) {</b>
+<b class="nc">&nbsp;    this.uiStage = uiStage;</b>
+<b class="nc">&nbsp;    this.game = game;</b>
+<b class="nc">&nbsp;    stationActionUI = new HashMap&lt;&gt;();</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Keep track of another station and initialize UI for that station.
+&nbsp;   * @param station The station to keep track of.
+&nbsp;   */
+&nbsp;  public void addStation(Station station) {
+<b class="nc">&nbsp;    StationActionUI buttons = new StationActionUI(station, game);</b>
+<b class="nc">&nbsp;    buttons.setActionAlignment(station.getActionAlignment());</b>
+<b class="nc">&nbsp;    uiStage.addActor(buttons);</b>
+<b class="nc">&nbsp;    stationActionUI.put(station.getId(), buttons);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Display a set of actions for a given station. If the station is not one that this class knows,
+&nbsp;   * then it will initialize the UI for it and then show the actions.
+&nbsp;   * @param station The station for which the UI should be displayed.
+&nbsp;   * @param actions The list of actions to show.
+&nbsp;   */
+&nbsp;  public void showActions(Station station, List&lt;StationAction.ActionType&gt; actions) {
+<b class="nc">&nbsp;    StationActionUI buttons = stationActionUI.get(station.getId());</b>
+<b class="nc">&nbsp;    if (buttons == null) {</b>
+<b class="nc">&nbsp;      addStation(station);</b>
+<b class="nc">&nbsp;      buttons = stationActionUI.get(station.getId());</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    buttons.showActions(actions);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Hide any actions that may be visible for a given station.
+&nbsp;   * @param station The station for which action should be hidden.
+&nbsp;   */
+&nbsp;  public void hideActions(Station station) {
+<b class="nc">&nbsp;    StationActionUI buttons = stationActionUI.get(station.getId());</b>
+<b class="nc">&nbsp;    if (buttons != null) {</b>
+<b class="nc">&nbsp;      buttons.hideActions();</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Display a progress bar for a station. If the station is not one that this class knows, then it
+&nbsp;   * will initialize the UI for it and then show the actions.
+&nbsp;   * @param station The station for which the UI should be displayed.
+&nbsp;   */
+&nbsp;  public void showProgressBar(Station station) {
+<b class="nc">&nbsp;    StationActionUI buttons = stationActionUI.get(station.getId());</b>
+<b class="nc">&nbsp;    if (buttons == null) {</b>
+<b class="nc">&nbsp;      addStation(station);</b>
+<b class="nc">&nbsp;      buttons = stationActionUI.get(station.getId());</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    buttons.showProgressBar();</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Update progress bar for a station. If the station is not one that this class knows, then it
+&nbsp;   * will initialize the UI for it and then show the actions.
+&nbsp;   * @param station The station for which the progress should be updated.
+&nbsp;   * @param value   The value to be shown on the progress bar.
+&nbsp;   */
+&nbsp;  public void updateProgressValue(Station station, float value) {
+<b class="nc">&nbsp;    StationActionUI buttons = stationActionUI.get(station.getId());</b>
+<b class="nc">&nbsp;    if (buttons == null) {</b>
+<b class="nc">&nbsp;      addStation(station);</b>
+<b class="nc">&nbsp;      buttons = stationActionUI.get(station.getId());</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    buttons.updateProgress(value);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Hide any actions that may be visible for a given station.
+&nbsp;   * @param station The station for which action should be hidden.
+&nbsp;   */
+&nbsp;  public void hideProgressBar(Station station) {
+<b class="nc">&nbsp;    StationActionUI buttons = stationActionUI.get(station.getId());</b>
+<b class="nc">&nbsp;    if (buttons != null) {</b>
+<b class="nc">&nbsp;      buttons.hideProgressBar();</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

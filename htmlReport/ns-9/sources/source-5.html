@@ -1,0 +1,223 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SettingsOverlay</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: SettingsOverlay (cs.eng1.piazzapanic.ui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsOverlay</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SettingsOverlay$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SettingsOverlay$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.ui;
+&nbsp;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.Pixmap;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import cs.eng1.piazzapanic.PiazzaPanicGame;
+&nbsp;import cs.eng1.piazzapanic.ui.ButtonManager.ButtonColour;
+&nbsp;
+&nbsp;public class SettingsOverlay {
+&nbsp;
+&nbsp;  private final Table table;
+&nbsp;  PiazzaPanicGame game;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;  public SettingsOverlay(final PiazzaPanicGame game) {</b>
+<b class="nc">&nbsp;    this.game = game;</b>
+<b class="nc">&nbsp;    table = new Table();</b>
+<b class="nc">&nbsp;    table.setFillParent(true);</b>
+<b class="nc">&nbsp;    table.setVisible(false);</b>
+<b class="nc">&nbsp;    table.center();</b>
+<b class="nc">&nbsp;    Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);</b>
+<b class="nc">&nbsp;    bgPixmap.setColor(Color.LIGHT_GRAY);</b>
+<b class="nc">&nbsp;    bgPixmap.fill();</b>
+<b class="nc">&nbsp;    TextureRegionDrawable textureRegionDrawableBg = new TextureRegionDrawable(</b>
+&nbsp;        new Texture(bgPixmap));
+<b class="nc">&nbsp;    table.setBackground(textureRegionDrawableBg);</b>
+&nbsp;
+<b class="nc">&nbsp;    TextButton backButton = game.getButtonManager()</b>
+<b class="nc">&nbsp;        .createTextButton(&quot;Back&quot;, ButtonManager.ButtonColour.GREY);</b>
+<b class="nc">&nbsp;    backButton.addListener(new ClickListener() {</b>
+&nbsp;      @Override
+&nbsp;      public void clicked(InputEvent event, float x, float y) {
+<b class="nc">&nbsp;        hide();</b>
+&nbsp;      }
+&nbsp;    });
+&nbsp;
+<b class="nc">&nbsp;    final CheckBox fullscreenCheckbox = game.getButtonManager()</b>
+<b class="nc">&nbsp;        .createCheckbox(&quot;Fullscreen&quot;, ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;    fullscreenCheckbox.addListener(new ClickListener() {</b>
+&nbsp;      @Override
+&nbsp;      public void clicked(InputEvent event, float x, float y) {
+<b class="nc">&nbsp;        if (fullscreenCheckbox.isChecked()) {</b>
+<b class="nc">&nbsp;          Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;          Gdx.graphics.setWindowedMode(1920 / 2, 1080 / 2);</b>
+&nbsp;        }
+&nbsp;      }
+&nbsp;    });
+<b class="nc">&nbsp;    table.add(fullscreenCheckbox);</b>
+<b class="nc">&nbsp;    table.row();</b>
+<b class="nc">&nbsp;    table.add(backButton).padTop(20f);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;
+&nbsp;  public void addToStage(Stage uiStage) {
+<b class="nc">&nbsp;    uiStage.addActor(table);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void show() {
+<b class="nc">&nbsp;    table.setVisible(true);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public void hide() {
+<b class="nc">&nbsp;    table.setVisible(false);</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

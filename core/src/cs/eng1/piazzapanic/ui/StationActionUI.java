@@ -127,6 +127,10 @@ public class StationActionUI extends Table {
     }
   }
 
+  public ActionAlignment getActionAlignment(){
+    return actionAlignment;
+  }
+
   @Override
   public void draw(Batch batch, float parentAlpha) {
     calculatePositionFromAlignment();

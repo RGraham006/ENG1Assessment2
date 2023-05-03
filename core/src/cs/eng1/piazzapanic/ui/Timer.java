@@ -67,4 +67,8 @@ public class Timer extends Label {
       }
     }
   }
+
+  public boolean getIsRunning() {
+    return isRunning;
+  }
 }

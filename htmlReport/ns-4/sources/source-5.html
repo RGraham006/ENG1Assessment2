@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Patty</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.food.ingredients</a>
+</div>
+
+<h1>Coverage Summary for Class: Patty (cs.eng1.piazzapanic.food.ingredients)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Patty</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.food.ingredients;
+&nbsp;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import cs.eng1.piazzapanic.food.FoodTextureManager;
+&nbsp;
+&nbsp;public class Patty extends Ingredient {
+&nbsp;
+&nbsp;  public Patty(FoodTextureManager textureManager) {
+<b class="nc">&nbsp;    super(&quot;patty&quot;, textureManager);</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Get the texture based on whether the patty has been cooked.
+&nbsp;   * @return The texture to display.
+&nbsp;   */
+&nbsp;  @Override
+&nbsp;  public Texture getTexture() {
+<b class="nc">&nbsp;    String name = getType() + &quot;_&quot;;</b>
+<b class="nc">&nbsp;    if (isCooked &amp;&amp; !isBurnt) {</b>
+<b class="nc">&nbsp;      return textureManager.getTexture(name += &quot;cooked&quot;);</b>
+<b class="nc">&nbsp;    } else if (isBurnt){</b>
+<b class="nc">&nbsp;      return textureManager.getTexture(&quot;burnt&quot;);</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;      return textureManager.getTexture(name += &quot;raw&quot;);</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

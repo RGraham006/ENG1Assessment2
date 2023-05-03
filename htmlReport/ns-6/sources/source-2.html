@@ -1,0 +1,182 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PowerupManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.powerups</a>
+</div>
+
+<h1>Coverage Summary for Class: PowerupManager (cs.eng1.piazzapanic.powerups)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PowerupManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (8/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85%
+  </span>
+  <span class="absValue">
+    (17/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.powerups;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;
+&nbsp;import cs.eng1.piazzapanic.chef.ChefManager;
+&nbsp;import cs.eng1.piazzapanic.food.CustomerManager;
+&nbsp;import cs.eng1.piazzapanic.ui.UIOverlay;
+&nbsp;
+&nbsp;/**
+&nbsp; * The controller that gives initialises all powerups and handles any powerup
+&nbsp; * applications.
+&nbsp; */
+&nbsp;public class PowerupManager {
+&nbsp;
+<b class="fc">&nbsp;    private final String[] powerupTypes = new String[] {</b>
+&nbsp;            &quot;chef_speed_up&quot;,
+&nbsp;            &quot;prep_speed_up&quot;,
+&nbsp;            &quot;add_rep_point&quot;,
+&nbsp;            &quot;double_money&quot;,
+&nbsp;            &quot;reset_customer_wait&quot;
+&nbsp;    };
+&nbsp;    private final ArrayList&lt;Powerup&gt; powerups;
+&nbsp;    private final UIOverlay overlay;
+<b class="fc">&nbsp;    private Powerup appliedPowerup = null;</b>
+&nbsp;    private final ChefManager chefManager;
+&nbsp;    private final CustomerManager customerManager;
+&nbsp;
+<b class="fc">&nbsp;    public PowerupManager(ChefManager chefManager, CustomerManager customerManager, UIOverlay overlay) {</b>
+&nbsp;        // Initialise powerups using given types
+<b class="fc">&nbsp;        powerups = new ArrayList&lt;&gt;(powerupTypes.length);</b>
+<b class="fc">&nbsp;        for (String type : powerupTypes) {</b>
+<b class="fc">&nbsp;            powerups.add(new Powerup(type, this));</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Links to appropriate classes
+<b class="fc">&nbsp;        this.chefManager = chefManager;</b>
+<b class="fc">&nbsp;        this.overlay = overlay;</b>
+<b class="fc">&nbsp;        this.customerManager = customerManager;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addPowerupToStage(final Stage stage) {
+<b class="nc">&nbsp;        for (Powerup powerup : powerups) {</b>
+<b class="nc">&nbsp;            stage.addActor(powerup);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Powerup&gt; getPowerups() {
+<b class="fc">&nbsp;        return powerups;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void generatePowerup(int number) {
+<b class="fc">&nbsp;        appliedPowerup = powerups.get(number);</b>
+<b class="fc">&nbsp;        appliedPowerup.applyPowerup();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void removePowerup() {
+<b class="fc">&nbsp;        appliedPowerup = null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ChefManager getChefManager(){
+<b class="fc">&nbsp;        return this.chefManager;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UIOverlay getOverlay(){
+<b class="fc">&nbsp;        return this.overlay;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public CustomerManager getCustomerManager(){
+<b class="fc">&nbsp;        return this.customerManager;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Powerup getAppliedPowerup() {
+<b class="fc">&nbsp;        return this.appliedPowerup;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>
