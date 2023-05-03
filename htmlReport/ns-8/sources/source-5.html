@@ -1,0 +1,410 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RecipeStation</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.stations</a>
+</div>
+
+<h1>Coverage Summary for Class: RecipeStation (cs.eng1.piazzapanic.stations)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RecipeStation</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (5/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    55.1%
+  </span>
+  <span class="absValue">
+    (70/127)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RecipeStation$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (6/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    55.5%
+  </span>
+  <span class="absValue">
+    (71/128)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.stations;
+&nbsp;
+&nbsp;import com.badlogic.gdx.graphics.g2d.Batch;
+&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+&nbsp;import cs.eng1.piazzapanic.PiazzaPanicGame;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Burger;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.JacketPotato;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Pizza;
+&nbsp;import cs.eng1.piazzapanic.food.CustomerManager;
+&nbsp;import cs.eng1.piazzapanic.food.ingredients.Ingredient;
+&nbsp;import cs.eng1.piazzapanic.food.FoodTextureManager;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Recipe;
+&nbsp;import cs.eng1.piazzapanic.food.recipes.Salad;
+&nbsp;import cs.eng1.piazzapanic.stations.StationAction.ActionType;
+&nbsp;import cs.eng1.piazzapanic.ui.StationActionUI.ActionAlignment;
+&nbsp;import cs.eng1.piazzapanic.ui.StationUIController;
+&nbsp;import cs.eng1.piazzapanic.ui.UIOverlay;
+&nbsp;import java.util.LinkedList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;/**
+&nbsp; * The RecipeStation class is a station representing the place in the kitchen where you combine ingredients 
+&nbsp; * to create food. The food can then be served to the customer via the station.
+&nbsp; */
+&nbsp;public class RecipeStation extends Station {
+&nbsp;  private final FoodTextureManager textureManager;
+&nbsp;  private final CustomerManager customerManager;
+&nbsp;
+<b class="fc">&nbsp;  protected int bunCount = 0;</b>
+<b class="fc">&nbsp;  protected int pattyCount = 0;</b>
+<b class="fc">&nbsp;  protected int lettuceCount = 0;</b>
+<b class="fc">&nbsp;  protected int tomatoCount = 0;</b>
+<b class="fc">&nbsp;  protected int pizzaBaseCount = 0;</b>
+<b class="fc">&nbsp;  protected int potatoCount = 0;</b>
+<b class="fc">&nbsp;  protected int cheeseCount = 0;</b>
+&nbsp;
+&nbsp;  private final int mode;
+<b class="fc">&nbsp;  private Recipe completedRecipe = null;</b>
+&nbsp;
+&nbsp;  private final UIOverlay uiOverlay;
+&nbsp;  private final PiazzaPanicGame game;
+&nbsp;
+&nbsp;  /**
+&nbsp;   * The constructor method for the class.
+&nbsp;   * @param id                    The unique identifier of the station.
+&nbsp;   * @param textureRegion         The rectangular area of the texture.
+&nbsp;   * @param stationUIController   The controller from which we can get show and hide the action
+&nbsp;   *                              buttons belonging to the station.
+&nbsp;   * @param alignment             Dictates where the action buttons are shown.
+&nbsp;   * @param textureManager        The controller from which we can get information on what texture
+&nbsp;   *                              each ingredient should have.
+&nbsp;   * @param customerManager       The controller from which we can get information on what food
+&nbsp;   *                              needs to be served.
+&nbsp;   */
+&nbsp;  public RecipeStation(int id, TextureRegion textureRegion, StationUIController stationUIController,
+&nbsp;      ActionAlignment alignment, FoodTextureManager textureManager,
+&nbsp;      CustomerManager customerManager, UIOverlay uiOverlay, int mode, PiazzaPanicGame game) {
+&nbsp;
+<b class="fc">&nbsp;    super(id, textureRegion, stationUIController, alignment);</b>
+<b class="fc">&nbsp;    this.textureManager = textureManager;</b>
+<b class="fc">&nbsp;    this.customerManager = customerManager;</b>
+<b class="fc">&nbsp;    this.uiOverlay = uiOverlay;</b>
+&nbsp;
+<b class="fc">&nbsp;    this.game = game;</b>
+<b class="fc">&nbsp;    this.mode = mode;</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void reset() {
+<b class="nc">&nbsp;    bunCount = 0;</b>
+<b class="nc">&nbsp;    pattyCount = 0;</b>
+<b class="nc">&nbsp;    lettuceCount = 0;</b>
+<b class="nc">&nbsp;    tomatoCount = 0;</b>
+<b class="nc">&nbsp;    pizzaBaseCount = 0;</b>
+<b class="nc">&nbsp;    potatoCount = 0;</b>
+<b class="nc">&nbsp;    cheeseCount = 0;</b>
+<b class="nc">&nbsp;    completedRecipe = null;</b>
+<b class="nc">&nbsp;    super.reset();</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Obtains the actions that can be currently performed depending on the states of the station
+&nbsp;   * itself and the selected chef.
+&nbsp;   * @return actionTypes - the list of actions the station can currently perform.
+&nbsp;   */
+&nbsp;  @Override
+&nbsp;  public List&lt;ActionType&gt; getActionTypes() {
+<b class="fc">&nbsp;    LinkedList&lt;ActionType&gt; actionTypes = new LinkedList&lt;&gt;();</b>
+<b class="fc">&nbsp;    if (nearbyChef != null) {</b>
+<b class="fc">&nbsp;      if (!nearbyChef.getStack().isEmpty()) {</b>
+<b class="fc">&nbsp;        Ingredient checkItem = nearbyChef.getStack().peek();</b>
+<b class="fc">&nbsp;        if (checkItem.getIsChopped() || checkItem.getIsCooked() || checkItem.getBaked() || Objects.equals(</b>
+<b class="fc">&nbsp;            checkItem.getType(), &quot;cheese&quot;)) {</b>
+&nbsp;          // If a chef is nearby and is carrying at least one ingredient
+&nbsp;          // and the top ingredient is cooked, chopped or a bun then display the action
+<b class="fc">&nbsp;          actionTypes.add(ActionType.PLACE_INGREDIENT);</b>
+&nbsp;        }
+&nbsp;      }
+<b class="fc">&nbsp;      System.out.println(completedRecipe);</b>
+<b class="fc">&nbsp;      if (completedRecipe == null) {</b>
+<b class="fc">&nbsp;        if (pattyCount &gt;= 1 &amp;&amp; bunCount &gt;= 1 &amp;&amp; nearbyChef.getStack().hasSpace()) {</b>
+<b class="nc">&nbsp;          actionTypes.add(ActionType.MAKE_BURGER);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (tomatoCount &gt;= 1 &amp;&amp; lettuceCount &gt;= 1 &amp;&amp; nearbyChef.getStack().hasSpace()) {</b>
+<b class="nc">&nbsp;          actionTypes.add(ActionType.MAKE_SALAD);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (tomatoCount &gt;= 1 &amp;&amp; pizzaBaseCount &gt;= 1 &amp;&amp; cheeseCount &gt;= 1 &amp;&amp; nearbyChef.getStack().hasSpace()) {</b>
+<b class="nc">&nbsp;          actionTypes.add(ActionType.MAKE_PIZZA);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (potatoCount &gt;= 1 &amp;&amp; cheeseCount &gt;=1 &amp;&amp; nearbyChef.getStack().hasSpace()) {</b>
+<b class="nc">&nbsp;          actionTypes.add(ActionType.MAKE_JACKET_POTATO);</b>
+&nbsp;        }
+<b class="fc">&nbsp;      } else if (customerManager.checkRecipe(completedRecipe)) {</b>
+<b class="nc">&nbsp;        actionTypes.add(ActionType.SUBMIT_ORDER);</b>
+&nbsp;      }
+&nbsp;    }
+<b class="fc">&nbsp;    return actionTypes;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Given an action, the station should attempt to do that action based on the chef that is nearby
+&nbsp;   * or what ingredient(s) are currently on the station.
+&nbsp;   * @param action The action that needs to be done by this station if it can.
+&nbsp;   */
+&nbsp;  @Override
+&nbsp;  public void doStationAction(ActionType action) {
+<b class="fc">&nbsp;    switch (action) {</b>
+&nbsp;      case PLACE_INGREDIENT:
+<b class="fc">&nbsp;        Ingredient topItem = nearbyChef.getStack().peek();</b>
+<b class="fc">&nbsp;        switch (topItem.getType()) {</b>
+&nbsp;          case &quot;patty&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            pattyCount += 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;          case &quot;tomato&quot;:
+<b class="fc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="fc">&nbsp;            tomatoCount += 1;</b>
+<b class="fc">&nbsp;            break;</b>
+&nbsp;          case &quot;lettuce&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            lettuceCount += 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;          case &quot;bun&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            bunCount += 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;          case &quot;pizza_base&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            pizzaBaseCount += 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;          case &quot;potato&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            potatoCount += 1;</b>
+<b class="nc">&nbsp;            break;</b>
+&nbsp;          case &quot;cheese&quot;:
+<b class="nc">&nbsp;            nearbyChef.placeIngredient();</b>
+<b class="nc">&nbsp;            cheeseCount += 1;</b>
+&nbsp;            break;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        break;</b>
+&nbsp;      case MAKE_BURGER:
+<b class="fc">&nbsp;        completedRecipe = new Burger(textureManager);</b>
+<b class="fc">&nbsp;        pattyCount -= 1;</b>
+<b class="fc">&nbsp;        bunCount -= 1;</b>
+<b class="fc">&nbsp;        break;</b>
+&nbsp;
+&nbsp;      case MAKE_SALAD:
+<b class="fc">&nbsp;        completedRecipe = new Salad(textureManager);</b>
+<b class="fc">&nbsp;        tomatoCount -= 1;</b>
+<b class="fc">&nbsp;        lettuceCount -= 1;</b>
+<b class="fc">&nbsp;        break;</b>
+&nbsp;
+&nbsp;      case MAKE_PIZZA:
+<b class="fc">&nbsp;        completedRecipe = new Pizza(textureManager);</b>
+<b class="fc">&nbsp;        tomatoCount -= 1;</b>
+<b class="fc">&nbsp;        pizzaBaseCount -= 1;</b>
+<b class="fc">&nbsp;        cheeseCount -= 1;</b>
+<b class="fc">&nbsp;        break;</b>
+&nbsp;
+&nbsp;      case MAKE_JACKET_POTATO:
+<b class="fc">&nbsp;        completedRecipe = new JacketPotato(textureManager);</b>
+<b class="fc">&nbsp;        potatoCount -= 1;</b>
+<b class="fc">&nbsp;        cheeseCount -= 1;</b>
+<b class="fc">&nbsp;        break;</b>
+&nbsp;
+&nbsp;      case SUBMIT_ORDER:
+<b class="fc">&nbsp;        if (completedRecipe != null) {</b>
+<b class="nc">&nbsp;          if (customerManager.checkRecipe(completedRecipe)) {</b>
+<b class="nc">&nbsp;            customerManager.removeCustomerOrder(completedRecipe);</b>
+<b class="nc">&nbsp;            if (mode == 0){</b>
+<b class="nc">&nbsp;              customerManager.setRemainingCustomers();</b>
+&nbsp;            }
+<b class="nc">&nbsp;            game.money.addMoney(100);</b>
+<b class="nc">&nbsp;            uiOverlay.updateMoney();</b>
+&nbsp;
+<b class="nc">&nbsp;            completedRecipe = null;</b>
+&nbsp;          }
+&nbsp;        }
+&nbsp;        break;
+&nbsp;    }
+<b class="fc">&nbsp;    uiController.showActions(this, getActionTypes());</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Displays ingredients that have been placed on the station.
+&nbsp;   * @param batch       Used to display a 2D texture.
+&nbsp;   * @param parentAlpha The parent alpha, to be multiplied with this actor&#39;s alpha, allowing the parent&#39;s 
+&nbsp;   *                    alpha to affect all children.
+&nbsp;   */
+&nbsp;  @Override
+&nbsp;  public void draw(Batch batch, float parentAlpha) {
+<b class="nc">&nbsp;    super.draw(batch, parentAlpha);</b>
+<b class="nc">&nbsp;    if (bunCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;bun&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (pattyCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;patty_cooked&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (lettuceCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;lettuce_chopped&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (tomatoCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;tomato_chopped&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (pizzaBaseCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;pizza_base&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (potatoCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;potato_baked&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (cheeseCount &gt; 0) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, textureManager.getTexture(&quot;cheese&quot;));</b>
+&nbsp;    }
+<b class="nc">&nbsp;    if (completedRecipe != null) {</b>
+<b class="nc">&nbsp;      drawFoodTexture(batch, completedRecipe.getTexture());</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  public Recipe returnCRecipe(){
+<b class="fc">&nbsp;    return completedRecipe;</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  public int returnCount(String name){
+<b class="fc">&nbsp;    if(name == &quot;bun&quot;){</b>
+<b class="fc">&nbsp;      return bunCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;patty&quot;){</b>
+<b class="fc">&nbsp;      return pattyCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;lettuce&quot;){</b>
+<b class="fc">&nbsp;      return lettuceCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;tomato&quot;){</b>
+<b class="fc">&nbsp;      return tomatoCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;pizza&quot;){</b>
+<b class="fc">&nbsp;      return pizzaBaseCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;potato&quot;){</b>
+<b class="fc">&nbsp;      return potatoCount;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    if(name == &quot;cheese&quot;){</b>
+<b class="fc">&nbsp;      return cheeseCount;</b>
+&nbsp;    }
+&nbsp;    else{
+<b class="nc">&nbsp;      return 0;</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * Updates the current available actions based on the new customer&#39;s order.
+&nbsp;   */
+&nbsp;  public void updateOrderActions() {
+<b class="nc">&nbsp;    uiController.showActions(this, getActionTypes());</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

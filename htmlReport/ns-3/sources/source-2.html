@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > FoodTextureManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.food</a>
+</div>
+
+<h1>Coverage Summary for Class: FoodTextureManager (cs.eng1.piazzapanic.food)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FoodTextureManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FoodTextureManager$MockitoMock$350066408</td>
+  </tr>
+  <tr>
+    <td class="name">FoodTextureManager$MockitoMock$350066408$auxiliary$3tLdTIr0</td>
+  </tr>
+  <tr>
+    <td class="name">FoodTextureManager$MockitoMock$350066408$auxiliary$4rh5Hhy4</td>
+  </tr>
+  <tr>
+    <td class="name">FoodTextureManager$MockitoMock$350066408$auxiliary$iP1K6jlA</td>
+  </tr>
+  <tr>
+    <td class="name">FoodTextureManager$MockitoMock$350066408$auxiliary$PegCJ2ld</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.food;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.utils.Disposable;
+&nbsp;import java.util.HashMap;
+&nbsp;
+&nbsp;public class FoodTextureManager implements Disposable {
+&nbsp;
+&nbsp;  private final HashMap&lt;String, Texture&gt; foodTextures;
+&nbsp;  private final Texture notFoundImage;
+&nbsp;
+<b class="nc">&nbsp;  public FoodTextureManager() {</b>
+<b class="nc">&nbsp;    this.foodTextures = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;patty_cooked&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/original/cooked_patty.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;patty_raw&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/original/uncooked_patty.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;lettuce_raw&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/vegetable/lettuce.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;lettuce_chopped&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/original/lettuce_chopped.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;tomato_raw&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/fruit/tomato.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;tomato_chopped&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/original/tomato_chopped.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;bun&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/bun.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;burger&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/sandwich_burger_04.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;salad&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/salad.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;dough&quot;,</b>
+<b class="nc">&nbsp;            new Texture(Gdx.files.internal(&quot;food/glitch/misc/corn_fritter.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;dough_cooked&quot;,</b>
+<b class="nc">&nbsp;            new Texture(Gdx.files.internal(&quot;food/glitch/misc/cornbread.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;pizza_base&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/dessert/pie.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;pizza&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/pizza_01.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;potato_raw&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/vegetable/potato.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;potato_baked&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/potato_patty.png&quot;))); // REPLACE WITH BAKED POTATO</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;jacket_potato&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/misc/fry_up.png&quot;)));  // REPLACE WITH JACKET POTATO</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;cheese&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/dairy/cheese_01.png&quot;)));</b>
+<b class="nc">&nbsp;    this.foodTextures.put(&quot;burnt&quot;,</b>
+<b class="nc">&nbsp;        new Texture(Gdx.files.internal(&quot;food/glitch/spice/black_pepper.png&quot;)));</b>
+<b class="nc">&nbsp;    notFoundImage = new Texture(Gdx.files.internal(&quot;badlogic.jpg&quot;));</b>
+&nbsp;  }
+&nbsp;
+&nbsp;  /**
+&nbsp;   * @param foodType The food string to get the corresponding texture from the hashmap.
+&nbsp;   * @return         The texture for the specified food or an image to signify that the texture does not
+&nbsp;   * exist.
+&nbsp;   */
+&nbsp;  public Texture getTexture(String foodType) {
+<b class="nc">&nbsp;    Texture texture = foodTextures.get(foodType);</b>
+<b class="nc">&nbsp;    if (texture != null) {</b>
+<b class="nc">&nbsp;      return texture;</b>
+&nbsp;    } else {
+<b class="nc">&nbsp;      return notFoundImage;</b>
+&nbsp;    }
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public void dispose() {
+<b class="nc">&nbsp;    for (Texture texture : foodTextures.values()) {</b>
+<b class="nc">&nbsp;      texture.dispose();</b>
+<b class="nc">&nbsp;    }</b>
+<b class="nc">&nbsp;    notFoundImage.dispose();</b>
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

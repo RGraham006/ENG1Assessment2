@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs.eng1.piazzapanic.tests.MoneyTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:18:11" hostname="ROBINS-GAMING-D" time="0.054">
+  <properties/>
+  <testcase name="subtractMoneyTest" classname="cs.eng1.piazzapanic.tests.MoneyTests" time="0.018"/>
+  <testcase name="addMoneyTest" classname="cs.eng1.piazzapanic.tests.MoneyTests" time="0.003"/>
+  <testcase name="getMoneyTest" classname="cs.eng1.piazzapanic.tests.MoneyTests" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

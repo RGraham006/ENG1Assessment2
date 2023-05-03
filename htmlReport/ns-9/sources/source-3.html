@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Money</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Money (cs.eng1.piazzapanic.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Money</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.ui;
+&nbsp;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;
+&nbsp;public class Money extends Label {
+&nbsp;
+<b class="fc">&nbsp;    private int money = 0;</b>
+&nbsp;
+&nbsp;    public Money(Label.LabelStyle labelStyle) {
+<b class="fc">&nbsp;        super(&quot;Money: 0&quot;, labelStyle);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMoney(){
+<b class="fc">&nbsp;        return money;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addMoney(int i){
+<b class="fc">&nbsp;        money += i;</b>
+<b class="fc">&nbsp;        setMoney();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void subtractMoney(int i){
+<b class="fc">&nbsp;        money -= i;</b>
+<b class="fc">&nbsp;        setMoney();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMoney() {
+<b class="fc">&nbsp;        this.setText(&quot;Money: &quot; + money);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>

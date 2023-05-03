@@ -1,0 +1,408 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ShopScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">cs.eng1.piazzapanic.screens</a>
+</div>
+
+<h1>Coverage Summary for Class: ShopScreen (cs.eng1.piazzapanic.screens)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShopScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/60)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ShopScreen$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ShopScreen$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ShopScreen$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ShopScreen$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ShopScreen$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/98)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package cs.eng1.piazzapanic.screens;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Screen;
+&nbsp;import com.badlogic.gdx.graphics.GL20;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+&nbsp;import cs.eng1.piazzapanic.PiazzaPanicGame;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import cs.eng1.piazzapanic.ui.ButtonManager;
+&nbsp;
+<b class="nc">&nbsp;public class ShopScreen implements Screen {</b>
+&nbsp;
+&nbsp;    private final Stage uiStage;
+<b class="nc">&nbsp;    private boolean chefUnlocked = false;</b>
+<b class="nc">&nbsp;    private boolean ovenUnlocked = false;</b>
+<b class="nc">&nbsp;    private boolean cuttingUnlocked = false;</b>
+<b class="nc">&nbsp;    private boolean fryingUnlocked = false;</b>
+&nbsp;
+&nbsp;    private final Label purchaseFailedLabel;
+&nbsp;
+<b class="nc">&nbsp;    public ShopScreen(final PiazzaPanicGame game){</b>
+<b class="nc">&nbsp;        uiStage = new Stage();</b>
+<b class="nc">&nbsp;        Table table = new Table();</b>
+<b class="nc">&nbsp;        table.setFillParent(true);</b>
+<b class="nc">&nbsp;        uiStage.addActor(table);</b>
+&nbsp;
+<b class="nc">&nbsp;        TextButton exitButton = game.getButtonManager().createTextButton(&quot;Back to Game&quot;, ButtonManager.ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;        exitButton.sizeBy(2f);</b>
+<b class="nc">&nbsp;        exitButton.addListener(new ClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void clicked(InputEvent event, float x, float y) {
+<b class="nc">&nbsp;                purchaseFailedLabel.setVisible(false);</b>
+<b class="nc">&nbsp;                game.loadGameScreen();</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        Label shopLabel = new Label(&quot;Game Shop&quot;,</b>
+<b class="nc">&nbsp;                new Label.LabelStyle(game.getFontManager().getHeaderFont(), null));</b>
+&nbsp;
+<b class="nc">&nbsp;        TextButton chefButton = game.getButtonManager().createTextButton(&quot;3rd Chef 200C&quot;, ButtonManager.ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;        chefButton.sizeBy(3f);</b>
+<b class="nc">&nbsp;        chefButton.addListener(new ClickListener() {</b>
+&nbsp;            @Override
+&nbsp;            public void clicked(InputEvent event, float x, float y) {
+<b class="nc">&nbsp;                purchaseFailedLabel.setVisible(false);</b>
+<b class="nc">&nbsp;                if(game.getMoney().getMoney() &gt;= 200) {</b>
+<b class="nc">&nbsp;                    if (!chefUnlocked) {</b>
+<b class="nc">&nbsp;                        game.getMoney().addMoney((-200));</b>
+<b class="nc">&nbsp;                        chefUnlocked = true;</b>
+<b class="nc">&nbsp;                        game.loadGameScreen();</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        setPurchaseFailedLabel(&quot;Chef has already been purchased&quot;);</b>
+&nbsp;                    }
+&nbsp;                } else {
+<b class="nc">&nbsp;                    setPurchaseFailedLabel(&quot;Insufficient Funds&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TextButton cuttingButton = game.getButtonManager().createTextButton(&quot;New Cutting Board 400C&quot;, ButtonManager.ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;        cuttingButton.sizeBy(3f);</b>
+<b class="nc">&nbsp;        cuttingButton.addListener(new ClickListener(){</b>
+&nbsp;            @Override
+&nbsp;            public void clicked(InputEvent event, float x, float y){
+<b class="nc">&nbsp;                if(game.getMoney().getMoney() &gt;= 400){</b>
+<b class="nc">&nbsp;                    if (!cuttingUnlocked) {</b>
+<b class="nc">&nbsp;                        game.getMoney().addMoney((-400));</b>
+<b class="nc">&nbsp;                        cuttingUnlocked = true;</b>
+<b class="nc">&nbsp;                        game.loadGameScreen();</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        setPurchaseFailedLabel(&quot;Cutting board has already been purchased&quot;);</b>
+&nbsp;                    }
+&nbsp;                } else {
+<b class="nc">&nbsp;                    setPurchaseFailedLabel(&quot;Insufficient Funds&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TextButton ovenButton = game.getButtonManager().createTextButton(&quot;New Baking Oven 400C&quot;, ButtonManager.ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;        ovenButton.sizeBy(3f);</b>
+<b class="nc">&nbsp;        ovenButton.addListener(new ClickListener(){</b>
+&nbsp;            @Override
+&nbsp;            public void clicked(InputEvent event, float x, float y) {
+<b class="nc">&nbsp;                purchaseFailedLabel.setVisible(false);</b>
+<b class="nc">&nbsp;                if(game.getMoney().getMoney() &gt;= 400){</b>
+<b class="nc">&nbsp;                    if (!ovenUnlocked) {</b>
+<b class="nc">&nbsp;                        game.getMoney().addMoney((-400));</b>
+<b class="nc">&nbsp;                        ovenUnlocked = true;</b>
+<b class="nc">&nbsp;                        game.loadGameScreen();</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        setPurchaseFailedLabel(&quot;Oven has already been purchased&quot;);</b>
+&nbsp;                    }
+&nbsp;                } else {
+<b class="nc">&nbsp;                    setPurchaseFailedLabel(&quot;Insufficient Funds&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        TextButton fryingButton = game.getButtonManager().createTextButton(&quot;New Frying Pan 400C&quot;, ButtonManager.ButtonColour.BLUE);</b>
+<b class="nc">&nbsp;        fryingButton.sizeBy(3f);</b>
+<b class="nc">&nbsp;        fryingButton.addListener(new ClickListener(){</b>
+&nbsp;            @Override
+&nbsp;            public void clicked(InputEvent event, float x, float y){
+<b class="nc">&nbsp;                purchaseFailedLabel.setVisible(false);</b>
+<b class="nc">&nbsp;                if(game.getMoney().getMoney() &gt;= 400){</b>
+<b class="nc">&nbsp;                    if (!fryingUnlocked) {</b>
+<b class="nc">&nbsp;                        game.getMoney().addMoney((-400));</b>
+<b class="nc">&nbsp;                        fryingUnlocked = true;</b>
+<b class="nc">&nbsp;                        game.loadGameScreen();</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        setPurchaseFailedLabel(&quot;Frying pan has already been purchased&quot;);</b>
+&nbsp;                    }
+&nbsp;                } else {
+<b class="nc">&nbsp;                    setPurchaseFailedLabel(&quot;Insufficient Funds&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Labels for if the item they are trying to buy has already been unlocked or insufficient funds
+<b class="nc">&nbsp;        purchaseFailedLabel = new Label(null, </b>
+<b class="nc">&nbsp;            new Label.LabelStyle(game.getFontManager().getSubHeaderFont(), null));</b>
+<b class="nc">&nbsp;        purchaseFailedLabel.setVisible(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        table.add(shopLabel).padBottom(50f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(chefButton).padBottom(20f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(ovenButton).padBottom(20f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(cuttingButton).padBottom(20f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(fryingButton).padBottom(20f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(exitButton).padBottom(20f);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(purchaseFailedLabel);</b>
+<b class="nc">&nbsp;        table.row();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getChefUnlocked(){
+<b class="nc">&nbsp;        return chefUnlocked;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getOvenLocked(){
+<b class="nc">&nbsp;        return !ovenUnlocked;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getCuttingLocked(){
+<b class="nc">&nbsp;        return !cuttingUnlocked;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getFryingLocked(){
+<b class="nc">&nbsp;        return !fryingUnlocked;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setPurchaseFailedLabel(String message) {
+<b class="nc">&nbsp;        purchaseFailedLabel.setText(message);</b>
+<b class="nc">&nbsp;        purchaseFailedLabel.setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void show() {
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(uiStage);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void render(float delta) {
+<b class="nc">&nbsp;        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);</b>
+<b class="nc">&nbsp;        uiStage.getCamera().update();</b>
+&nbsp;
+<b class="nc">&nbsp;        uiStage.act(delta);</b>
+<b class="nc">&nbsp;        uiStage.draw();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void resize(int width, int height) {
+<b class="nc">&nbsp;        this.uiStage.getViewport().update(width, height, true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void pause() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void resume() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void hide() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void dispose() {
+<b class="nc">&nbsp;        uiStage.dispose();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-05-03 01:28</div>
+</div>
+</body>
+</html>
