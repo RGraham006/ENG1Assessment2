@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.BakingStationTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:51:29" hostname="ROBINS-GAMING-D" time="0.571">
+<testsuite name="cs.eng1.piazzapanic.tests.BakingStationTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-05-03T01:08:50" hostname="ROBINS-GAMING-D" time="0.794">
   <properties/>
-  <testcase name="testRest" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.325"/>
-  <testcase name="testDoStationActionClear" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.041"/>
-  <testcase name="testDoStationActionPlace" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.036"/>
-  <testcase name="testDoStationActionBake" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.04"/>
-  <testcase name="testDoStationActionGrab" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.037"/>
-  <testcase name="test" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.0"/>
+  <testcase name="testRest" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.467"/>
+  <testcase name="testDoStationActionClear" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.058"/>
+  <testcase name="testDoStationActionPlace" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.049"/>
+  <testcase name="testDoStationActionBake" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.055"/>
+  <testcase name="testDoStationActionGrab" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.068"/>
+  <testcase name="test" classname="cs.eng1.piazzapanic.tests.BakingStationTests" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

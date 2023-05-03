@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:51:31" hostname="ROBINS-GAMING-D" time="0.243">
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-05-03T01:08:53" hostname="ROBINS-GAMING-D" time="0.29">
   <properties/>
-  <testcase name="testPrepSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.082"/>
-  <testcase name="testResetCustomerWait" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.042"/>
-  <testcase name="testChefSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.083"/>
+  <testcase name="testPrepSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.105"/>
+  <testcase name="testResetCustomerWait" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.05"/>
+  <testcase name="testChefSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.097"/>
   <system-out><![CDATA[5.0
 speed up prep
 2.5
