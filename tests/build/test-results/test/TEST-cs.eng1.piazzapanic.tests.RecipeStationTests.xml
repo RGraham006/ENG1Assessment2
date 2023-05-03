@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cs.eng1.piazzapanic.tests.RecipeStationTests" tests="9" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:10:03" hostname="SUS" time="1.12">
+  <properties/>
+  <testcase name="doStationActionMakeBurgerTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.651"/>
+  <testcase name="getActionTypesTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.052"/>
+  <testcase name="doStationActionMakeSaladTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.056"/>
+  <testcase name="doStationActionSubmitOrderTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.059"/>
+  <testcase name="test" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.001"/>
+  <testcase name="doStationActionPlaceTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.053"/>
+  <testcase name="doStationActionMakePizzaTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.056"/>
+  <testcase name="doStationActionMakeJacketPotatoTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.045"/>
+  <testcase name="resetTest" classname="cs.eng1.piazzapanic.tests.RecipeStationTests" time="0.001"/>
+  <system-out><![CDATA[null
+cs.eng1.piazzapanic.food.recipes.Burger@4d6dcbc5
+null
+null
+null
+cs.eng1.piazzapanic.food.recipes.Salad@1608b806
+null
+null
+null
+null
+null
+cs.eng1.piazzapanic.food.recipes.Pizza@18d1168c
+null
+cs.eng1.piazzapanic.food.recipes.JacketPotato@4f51146
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

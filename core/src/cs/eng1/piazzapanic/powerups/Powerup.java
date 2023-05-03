@@ -1,6 +1,7 @@
 package cs.eng1.piazzapanic.powerups;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import cs.eng1.piazzapanic.chef.ChefManager;
 
 public class Powerup extends Actor {
 
@@ -73,14 +74,6 @@ public class Powerup extends Actor {
 
     public String getType() {
         return this.type;
-    }
-
-    public PowerupManager getPowerupManager() {
-        return this.powerupManager;
-    }
-
-    public void setPowerupManager(PowerupManager powerupManager) {
-        this.powerupManager = powerupManager;
     }
 
     @Override

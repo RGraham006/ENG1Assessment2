@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-02T23:44:27" hostname="ROBINS-GAMING-D" time="0.178">
+<testsuite name="cs.eng1.piazzapanic.tests.PowerupTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:09:52" hostname="ROBINS-GAMING-D" time="0.176">
   <properties/>
-  <testcase name="testResetCustomerWait" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.178"/>
-  <system-out><![CDATA[reset wait time
+  <testcase name="testPrepSpeedupPowerup" classname="cs.eng1.piazzapanic.tests.PowerupTests" time="0.176"/>
+  <system-out><![CDATA[5.0
+speed up prep
+2.5
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
