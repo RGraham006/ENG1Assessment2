@@ -241,6 +241,37 @@ public class RecipeStation extends Station {
     }
   }
 
+  public Recipe returnCRecipe(){
+    return completedRecipe;
+  }
+
+  public int returnCount(String name){
+    if(name == "bun"){
+      return bunCount;
+    }
+    if(name == "patty"){
+      return pattyCount;
+    }
+    if(name == "lettuce"){
+      return lettuceCount;
+    }
+    if(name == "tomato"){
+      return tomatoCount;
+    }
+    if(name == "pizza"){
+      return pizzaBaseCount;
+    }
+    if(name == "potato"){
+      return potatoCount;
+    }
+    if(name == "cheese"){
+      return cheeseCount;
+    }
+    else{
+      return 0;
+    }
+  }
+
   /**
    * Updates the current available actions based on the new customer's order.
    */
