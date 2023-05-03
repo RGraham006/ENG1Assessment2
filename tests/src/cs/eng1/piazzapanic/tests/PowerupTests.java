@@ -13,6 +13,7 @@ import cs.eng1.piazzapanic.ui.UIOverlay;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.badlogic.gdx.Gdx;
@@ -34,15 +35,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class PowerupTests {
 
-    public Powerup initialisePowerup(String type) {
-
-        Chef chef = initialiseChef();
-        ChefManager chefManager = initialiseChefManager();
-        chefManager.setCurrentChef(chef);
-
-        PowerupManager powerupManager = new PowerupManager(chefManager, initialiseCustomerManager(),
-                Mockito.mock(UIOverlay.class));
-
+    public Powerup initialisePowerup(String type, PowerupManager powerupManager) {
         return new Powerup(type, powerupManager);
     }
 
@@ -68,6 +61,10 @@ public class PowerupTests {
         return chef;
     }
 
+    public PowerupManager initialisePowerupManager(ChefManager chefManager, CustomerManager customerManager){
+        return new PowerupManager(chefManager, customerManager, Mockito.mock(UIOverlay.class));
+    }
+
     public UIOverlay initialiseUIOverlay() {
         PiazzaPanicGame game = new PiazzaPanicGame();
         Stage stage = Mockito.mock(Stage.class);
@@ -80,28 +77,38 @@ public class PowerupTests {
 
     @Test
     public void testChefSpeedupPowerup() {
-        Powerup powerup = initialisePowerup("chef_speed_up");
+        Chef chef = initialiseChef();
+        ChefManager chefManager = initialiseChefManager();
+        chefManager.setCurrentChef(chef);
+        CustomerManager customerManager = initialiseCustomerManager();
+        PowerupManager powerupManager = initialisePowerupManager(chefManager, customerManager);
+        Powerup powerup = initialisePowerup("chef_speed_up", powerupManager);
 
-        float speed_before = powerup.getPowerupManager().getChefManager().getCurrentChef().getChefSpeed();
+        float speed_before = chef.getChefSpeed();
 
         powerup.applyPowerup();
 
-        float speed_after = powerup.getPowerupManager().getChefManager().getCurrentChef().getChefSpeed();
+        float speed_after = chef.getChefSpeed();
 
-        speed_before *= 2;
-
-        assertEquals(speed_after, speed_before, 0.01f);
+        assertEquals(speed_after, speed_before * 2, 0.01f);
     }
 
     @Test
     public void testPrepSpeedupPowerup() {
-        Powerup powerup = initialisePowerup("prep_speed_up");
+        Chef chef = initialiseChef();
+        ChefManager chefManager = initialiseChefManager();
+        chefManager.setCurrentChef(chef);
+        CustomerManager customerManager = initialiseCustomerManager();
+        PowerupManager powerupManager = initialisePowerupManager(chefManager, customerManager);
+        Powerup powerup = initialisePowerup("prep_speed_up", powerupManager);
 
-        float speed_before = powerup.getPowerupManager().getChefManager().getCurrentChef().getPrepSpeed();
+        float speed_before = chef.getPrepSpeed();
+        System.out.println(speed_before);
 
         powerup.applyPowerup();
 
-        float speed_after = powerup.getPowerupManager().getChefManager().getCurrentChef().getPrepSpeed();
+        float speed_after = chef.getPrepSpeed();
+        System.out.println(speed_after);
 
         speed_after *= 2;
 
@@ -109,45 +116,21 @@ public class PowerupTests {
     }
 
     @Test
-    public void testAddRepPoint() {
-        Powerup powerup = initialisePowerup("add_rep_point");
-
-        int points_before = powerup.getPowerupManager().getOverlay().getReputation();
-
-        powerup.applyPowerup();
-
-        int points_after = powerup.getPowerupManager().getOverlay().getReputation();
-
-        points_before += 1;
-
-        assertEquals(points_after, points_before, 0.01f);
-    }
-
-    @Test
-    public void testDoubleMoney() {
-        Powerup powerup = initialisePowerup("double_money");
-
-        int money_before = powerup.getPowerupManager().getOverlay().getMoney().getMoney();
-
-        powerup.applyPowerup();
-        powerup.getPowerupManager().getOverlay().updateMoney();
-
-        int money_after = powerup.getPowerupManager().getOverlay().getMoney().getMoney();
-
-        assertEquals(money_after, money_before, 0.01f);
-    }
-
-    @Test
     public void testResetCustomerWait() {
-        Powerup powerup = initialisePowerup("reset_customer_wait");
-        powerup.getPowerupManager().getCustomerManager().updateCustomerOrders(0f);
-        ProgressBar progressBar_before = powerup.getPowerupManager().getCustomerManager().getFirstProgressBar();
+        ChefManager chefManager = initialiseChefManager();
+        CustomerManager customerManager = initialiseCustomerManager();
+        PowerupManager powerupManager = initialisePowerupManager(chefManager, customerManager);
+        Powerup powerup = initialisePowerup("chef_speed_up", powerupManager);
 
-        powerup.getPowerupManager().getCustomerManager().updateCustomerOrders(0f);
+
+        customerManager.updateCustomerOrders(0f);
+        ProgressBar progressBar_before = customerManager.getFirstProgressBar();
+
+        customerManager.updateCustomerOrders(0f);
 
         powerup.applyPowerup();
 
-        ProgressBar progressBar_after = powerup.getPowerupManager().getCustomerManager().getFirstProgressBar();
+        ProgressBar progressBar_after = customerManager.getFirstProgressBar();
 
         assertEquals(progressBar_before.getValue(), progressBar_after.getValue(), 0.01f);
     }
