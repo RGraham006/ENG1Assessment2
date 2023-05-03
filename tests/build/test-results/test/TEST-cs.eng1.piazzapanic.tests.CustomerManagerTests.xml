@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-03T00:51:31" hostname="ROBINS-GAMING-D" time="0.07">
+<testsuite name="cs.eng1.piazzapanic.tests.CustomerManagerTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-03T01:08:52" hostname="ROBINS-GAMING-D" time="0.091">
   <properties/>
-  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.014"/>
-  <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="testCheckRecipe" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="testRemoveCustomerOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
-  <testcase name="testUpdateRemainingCustomers" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.003"/>
+  <testcase name="testGenerateOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.017"/>
+  <testcase name="testSubmitOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.004"/>
+  <testcase name="testCheckRecipe" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.005"/>
+  <testcase name="testRemoveCustomerOrder" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.004"/>
+  <testcase name="testUpdateRemainingCustomers" classname="cs.eng1.piazzapanic.tests.CustomerManagerTests" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
